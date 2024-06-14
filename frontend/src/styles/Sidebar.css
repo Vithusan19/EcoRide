@@ -1,0 +1,145 @@
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 4.3rem;
+    height: 100%;
+    background-color: #313834;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding-top: 20px; 
+    padding-bottom: 20px;
+    width: 25vh;
+  }
+  
+  .logo {
+    text-align: center;
+    padding: 12px;
+    color: #27374d;
+    align-items: center;
+    display: flex;
+    gap: 20px;
+    width: 100px;
+    margin-top: -25px;
+  }
+  
+  .logo.icon {
+    font-size: 0rem;
+  }
+  
+  .menu-toggle {
+    display: none;
+    cursor: pointer;
+    padding: 10px;
+    color: #fbfbfb;
+    font-size: 2rem;
+  }
+  
+  .menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px 0;
+  }
+  
+  .menu-list .item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 1.1rem;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 10px;
+    transition: 0.3s ease-in-out;
+    color: #fbfbfb;
+    margin-top: 10px;
+  }
+  
+  .menu-list .item:hover {
+    background: #27374d;
+    color: #dde6ed;
+  }
+  
+  .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 80px;
+  }
+  
+  .profileImg {
+    width: 80px;
+    height: 90px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .profile-heading {
+    color: white;
+  }
+  
+  .rating {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    margin-top: -50px;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .menu {
+      width: 20vh;
+    }
+  
+    .menu-list .item {
+      font-size: 1rem;
+      gap: 15px;
+    }
+  
+    .profileImg {
+      width: 70px;
+      height: 80px;
+    }
+  
+    .rating {
+      padding: 8px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .menu {
+      width: 18vh;
+    }
+  
+    .menu-toggle {
+      display: block;
+    }
+  
+    .menu-list {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .menu-list.open {
+      display: flex;
+    }
+  
+    .menu-list .item {
+      font-size: 0.9rem;
+      gap: 10px;
+    }
+  
+    .profileImg {
+      width: 60px;
+      height: 70px;
+    }
+  
+    .rating {
+      padding: 6px;
+    }
+  }
+  
