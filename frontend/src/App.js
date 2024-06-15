@@ -10,7 +10,7 @@ import Currentride from './pages/Currentride';
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Readmore from './pages/Readmore'; // Import Readmore component
-import Addmin from "./pages/Addmin";
+import Admin from "./pages/Admin";
 
 const MainLayout = ({ children }) => (
   <div className="dashboard">
@@ -26,7 +26,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         
-        <Route path="/" element={<Addmin />} />
+        <Route path="/" element={<Admin />} />
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/newsfeed" element={<MainLayout><Newsfeed /></MainLayout>} />

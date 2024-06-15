@@ -2,7 +2,7 @@ import React from 'react';
 import './style.css';
 import logo from '../assets/logo.png';
 
-const Sideaddmin = ({ setSelectedSection }) => {
+const SideAdmin = ({ setSelectedSection }) => {
   return (
     <>
       <div className="sidebar">
@@ -21,4 +21,4 @@ const Sideaddmin = ({ setSelectedSection }) => {
   );
 };
 
-export default Sideaddmin;
+export default SideAdmin;

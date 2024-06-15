@@ -6,8 +6,8 @@ import Interface from '../Admin/Interface'
 import Notification from '../Admin/Notification'
 import '../styles/Addmin.css'
 
-import Sideaddmin from '../Admin/Sideaddmin'
-const Addmin = () => {
+import SideAdmin from '../Admin/SideAdmin'
+const Admin = () => {
     const [selectedSection, setSelectedSection] = useState('dashboard');
     const renderSection = () => {
         switch (selectedSection) {
@@ -25,7 +25,7 @@ const Addmin = () => {
 
   return (
     <div className="admin-container">
-      <Sideaddmin setSelectedSection={setSelectedSection} />
+      <SideAdmin setSelectedSection={setSelectedSection} />
       <div className="content">
         {renderSection()}
       </div>
@@ -33,4 +33,4 @@ const Addmin = () => {
   )
 }
 
-export default Addmin
+export default Admin
