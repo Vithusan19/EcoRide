@@ -125,3 +125,31 @@
     background-color: #0056b3;
   }
   
+
+  @media (max-width: 768px) {
+
+    .search-bar{
+      margin-left: 141px;
+      
+    }
+   
+  }
+
+  @media (max-width:525px){
+    .search-bar{
+      margin-left: 125px;
+      width: 70vw;
+    }
+    
+  
+  }
+
+  @media (max-width: 480px) {
+
+    .search-bar{
+      margin-left: 130px;
+      width: 70vw;
+    }
+   
+  }
+
