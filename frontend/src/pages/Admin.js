@@ -26,7 +26,7 @@ const Admin = () => {
   return (
     <div className="admin-container">
       <SideAdmin setSelectedSection={setSelectedSection} />
-      <div className="content">
+      <div className="admin-content">
         {renderSection()}
       </div>
     </div>
