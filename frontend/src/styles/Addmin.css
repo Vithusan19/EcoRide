@@ -1,5 +1,6 @@
 .admin-container {
     display: flex;
+   
   }
   
   .content {
@@ -7,6 +8,6 @@
     padding: 20px;
     width: 80vw;
     background-color: rgb(240, 238, 236);
-    height: 100vh;
+    height: 100%;
   }
   

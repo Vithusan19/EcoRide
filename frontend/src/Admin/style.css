@@ -26,6 +26,7 @@
   .side-logo
   {
     width: 120px;
+    object-fit: cover;
   }
   
   .sidebar ul {
@@ -37,13 +38,29 @@
   .sidebar li {
     width: 100%;
     padding: 15px 0;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     text-align: center;
     color: rgb(255, 253, 253);
-   
+    display: flex;
+    align-items: center;
     border: 1px solid transparent;
     cursor: pointer;
+    justify-content: center;
+   
+    height: 50px;
     
+  }
+  .side-menu-img
+  {
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+    object-fit: cover;
+  }
+  .side-menu-name
+  {
+    font-size:medium;
+    font-weight: 550;
   }
   
   .sidebar li:hover {
@@ -54,19 +71,231 @@
   .side-button
   {
     padding: 5px 15px;
-    background-color: aliceblue;
+    background-color: #00f78d;
     border: none;
     border-radius: 10px;
     margin-top: 200px;
     font-size: 18px;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    color: rgb(39, 87, 146);
+    cursor: pointer;
   }
   .side-button:hover
   {
-    color: #00f78d;
+    background-color:#04de80;
     font-size: 19px;
+    color: white;
 
   }
+  .logout-img
+  {
+    width: 30px;
+    margin-right: 10px;
+    object-fit: cover;
+  }
+  @media (max-width: 900px) 
+  {
+    .side-menu-name
+    {
+        font-size: small;
 
-  /* dashboard */
+    }
+    .side-menu-img
+  {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    object-fit: cover;
+  }
+  
+  }
+  @media (max-width: 720px) 
+  {
+    .side-menu-name
+    {
+       display: none;
+
+    }
+    .side-menu-img
+  {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+   
+  }
+  
+  }
+  @media (max-width: 620px) 
+  {
+    .side-logo
+    {
+      width: 70px;
+      object-fit: cover;
+    }
+    .side-menu-img
+    {
+      width: 30px;
+      height: 30px;
+      object-fit: cover;
+     
+    }
+    
+  
+  }
+
+
+
+  /* Viewusers */
+  .search-users
+  {
+    border: none;
+    width: 50vw;
+    margin: 30px auto;
+    height: 2.6rem;
+    padding: 10px 20px;
+    border-radius: 1rem;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+
+  }
+  .users-img
+   {
+       width: 70px;
+       margin-right: 1rem;  
+       object-fit: cover;
+       border-radius: 100%;
+       background-color: #737c78;
+       padding: 5px;
+   }
+  .users-bars
+   {
+   margin: 1.5rem;
+   width: 100vw;
+   max-width: 80%;
+   text-align: left;
+    
+   }
+   .users-bar 
+   {
+   display: flex;
+   margin: 1rem;
+   padding: 1.2rem 1.5rem;
+   border-radius: 0.5rem;
+   background: rgb(216, 216, 216);
+   
+   
+   }
+   .users-bar-text p
+   {
+       font-size: medium;
+       margin-bottom: 5px;
+   
+   }
+   .users-bar-text h2
+   {
+   font-size: 1.3rem;
+   font-weight: 580;
+   color:rgb(27, 46, 70);
+   margin-bottom: 5px;
+   }
+   .user-button
+   {
+    padding: 6px 20px;
+    background: #9da2a0; 
+    font-weight: 600;  
+    color: white;
+    border-radius: 1rem;
+    cursor: pointer;
+
+    
+   }
+   /* Add this to your existing CSS */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 0.5rem;
+    width: 50%;
+    max-width: 500px;
+    margin-top: 0 auto;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    color:rgb(54, 95, 146);
+  }
+  
+  .modal-header h2 {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  .modal-content p
+  {
+    margin-bottom: 10px;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  .delete-button
+  {
+    padding: 5px 10px;
+    color: white;
+    border: none;
+    background-color: red;
+    margin-top: 20px;
+    border-radius: 1rem;
+  }
+  .delete-button {
+    padding: 5px 10px;
+    color: white;
+    border: none;
+    background-color: red;
+    margin-top: 20px;
+    border-radius: 1rem;
+  }
+  .confirm-delete-button {
+    padding: 6px 20px;
+    background: #eb0b0b;
+    font-weight: 600;
+    color: white;
+    border-radius: 1rem;
+    cursor: pointer;
+    margin-left: 10px;
+    border: none;
+  }
+  
+  
+  
+  .user-button {
+    padding: 6px 20px;
+    background: #9da2a0;
+    font-weight: 600;
+    color: white;
+    border-radius: 1rem;
+    cursor: pointer;
+    margin-left: 10px;
+    border: none;
+  }
+  
   

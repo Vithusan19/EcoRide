@@ -215,6 +215,9 @@ const Home = () => {
     const movePage = (e) => {
         navigate('/newsfeed'); // Navigate to Newsfeed page
     };
+    const movePage1 = (e) => {
+        navigate('/admin'); // Navigate to Newsfeed page
+    };
 
     const year = new Date();
 
@@ -328,6 +331,7 @@ const Home = () => {
                                         <input type="password" className="form-control" placeholder="Enter password" />
                                         <span className='forgot'>Forget Your Password?</span><br />
                                         <button className='login-but' onClick={movePage}>SIGN IN</button><br />
+                                        <button className='login-but' onClick={movePage1}>Admin</button><br />
                                         <span className='register-text'>Enter your personal details to use all of site features.<p>Don't you have an account?</p></span><br />
                                         <button className='log-but' onClick={toggleForm}>SIGN UP</button>
                                     </form>
