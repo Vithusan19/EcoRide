@@ -3,24 +3,22 @@ import "./style.css";
 import userIcon from '../assets/usersIcon.png';
 
 const users = [
-  { id: 1, name: "CST21012",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male"},
-  { id: 2, name: "CST21012",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 3, name: "CST21012",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 4, name: "CST21012",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 1, name: "CST21012",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male"},
-  { id: 2, name: "CST21012",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 3, name: "CST21012",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 4, name: "CST21012",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
- 
-  { id: 1, name: "CST21012",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male"},
-  { id: 2, name: "CST21012",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 3, name: "CST21012",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 4, name: "CST21012",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
- 
-  { id: 1, name: "CST21012",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male"},
-  { id: 2, name: "CST21012",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 3, name: "CST21012",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 4, name: "CST21012",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
+  { id: 1, name: "Abc",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male"},
+  { id: 2, name: "Bcd",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
+  { id: 3, name: "Fgf",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
+  { id: 4, name: "Jhh",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
+  { id: 5, name: "Ngg",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male"},
+  { id: 6, name: "Nhh",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
+  { id: 7, name: "NHH",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
+  { id: 8, name: "BGH",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
+  { id: 9, name: "CDRt",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male"},
+  { id: 10, name: "CF",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
+  { id: 11, name: "NNJJ",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
+  { id: 12, name: "jhjj",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
+  { id: 13, name: "NJji",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male"},
+  { id: 14, name: "BHj",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
+  { id: 15, name: "mnn",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
+  
  
  
 ];
@@ -51,7 +49,7 @@ const ViewUser = () => {
   };
 
   const handleDelete = () => {
-    // Perform delete action here
+   
     console.log(`User ${selectedUser.id} deleted`);
     hideDeleteDialog();
     closeModal();
