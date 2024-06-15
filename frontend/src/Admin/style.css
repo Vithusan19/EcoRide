@@ -1,0 +1,72 @@
+
+/* sidebar */
+.side-line {
+    width: 100%;
+    border: 0;
+    height: 10px; 
+   
+    margin: 20px 0;
+   
+  }
+
+.sidebar {
+    height: 100vh;
+    width: 20vw;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    background:#2C3E50;
+  }
+  .side-logo
+  {
+    width: 120px;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+  }
+  
+  .sidebar li {
+    width: 100%;
+    padding: 15px 0;
+    margin-bottom: 20px;
+    text-align: center;
+    color: rgb(255, 253, 253);
+   
+    border: 1px solid transparent;
+    cursor: pointer;
+    
+  }
+  
+  .sidebar li:hover {
+  
+    
+   color:  #00f78d;
+  }
+  .side-button
+  {
+    padding: 5px 15px;
+    background-color: aliceblue;
+    border: none;
+    border-radius: 10px;
+    margin-top: 200px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .side-button:hover
+  {
+    color: #00f78d;
+    font-size: 19px;
+
+  }
+
+  /* dashboard */
+  
