@@ -1,32 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
+import axios from 'axios';
 import userIcon from '../assets/usersIcon.png';
 
-const users = [
-  { id: 1, name: "Abc",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male"},
-  { id: 2, name: "Bcd",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 3, name: "Fgf",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 4, name: "Jhh",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 5, name: "Ngg",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male"},
-  { id: 6, name: "Nhh",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 7, name: "NHH",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 8, name: "BGH",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 9, name: "CDRt",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male"},
-  { id: 10, name: "CF",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 11, name: "NNJJ",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 12, name: "jhjj",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 13, name: "NJji",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male"},
-  { id: 14, name: "BHj",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  { id: 15, name: "mnn",nic:"200026303685",email:"vithu1909@gmail.com" ,phno:"0763456789",gender:"male" },
-  
- 
- 
-];
-
 const ViewUser = () => {
+  const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
   const [isDeleteDialogVisible, setDeleteDialogVisible] = useState(false);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const getUsers = async () => {
+    try {
+      const response = await axios.get('http://localhost/ecoride/api/');
+      setUsers(response.data);
+    } catch (error) {
+      console.error("There was an error fetching the users!", error);
+    }
+  };
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -48,21 +42,16 @@ const ViewUser = () => {
     setDeleteDialogVisible(false);
   };
 
-  const handleDelete = () => {
-   
-    console.log(`User ${selectedUser.id} deleted`);
-    hideDeleteDialog();
-    closeModal();
-  };
-
+ 
   const filteredUsers = users.filter(user =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    
+    (user.username?.toLowerCase().includes(searchTerm.toLowerCase())) ||
     user.id.toString().includes(searchTerm)
   );
 
   return (
     <>
-      <h1>User Details</h1>
+      <h1 className="userdetails-tittle">User Details</h1>
       <p>Here are the user details.</p>
       <div className="search-con">
         <input
@@ -79,7 +68,7 @@ const ViewUser = () => {
             <img className="users-img" src={userIcon} alt="" />
             <div className="users-bar-text">
               <h2>User-ID: {user.id}</h2>
-              <p>Name: {user.name}</p>
+              <p>Name: {user.username}</p>
               <button className="user-button" onClick={() => handleViewMore(user)}>
                 View more
               </button>
@@ -87,7 +76,7 @@ const ViewUser = () => {
           </div>
         ))}
       </div>
-      
+
       {selectedUser && (
         <div className="modal">
           <div className="modal-content">
@@ -98,10 +87,11 @@ const ViewUser = () => {
               </button>
             </div>
             <p><strong>ID:</strong> {selectedUser.id}</p>
-            <p><strong>Name:</strong> {selectedUser.name}</p>
-            <p><strong>Phonenumber:</strong> {selectedUser.phno}</p>
+            <p><strong>Name:</strong> {selectedUser.username}</p>
+            <p><strong>Phonenumber:</strong> {selectedUser.phone_no}</p>
+            <p><strong>NIC_Number:</strong> {selectedUser.nic_num}</p>
             <p><strong>Email:</strong> {selectedUser.email}</p>
-            <p><strong>Gender:</strong> {selectedUser.gender}</p>
+            <p><strong>Gender:</strong> {selectedUser.Gender}</p>
             <button className="delete-button" onClick={showDeleteDialog}>
               Delete User
             </button>
@@ -112,9 +102,10 @@ const ViewUser = () => {
       {isDeleteDialogVisible && (
         <div className="modal">
           <div className="modal-content">
-            <h2 >Confirm Deletion</h2>
+            <h2>Confirm Deletion</h2>
             <p>Are you sure you want to delete this user?</p>
-            <button className="confirm-delete-button" onClick={handleDelete}>
+            {/* <button className="confirm-delete-button" onClick={handleDelete}> */}
+             <button className="confirm-delete-button">
               Yes
             </button>
             <button className="user-button" onClick={hideDeleteDialog}>

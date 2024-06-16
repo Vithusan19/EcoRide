@@ -64,7 +64,7 @@ const Addride = () => {
 
   return (
     <div className="add-ride-container">
-      <h1>Create Ride</h1>
+      <h1 className='add-ride-tittle'>Create Ride</h1>
       <form onSubmit={handleSubmit} className="add-ride-form">
         {/* Existing form fields */}
         {/* ... */}
