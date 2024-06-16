@@ -1,0 +1,228 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  #root {
+    height: 100%;
+  }
+  
+  .profile-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+    padding: 2rem;
+    background-color: #f5f5f5;
+  }
+  
+  .profile-left {
+    margin-right: 2rem;
+  }
+  
+  .profile-photo {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .profile-right {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .profile-right h1 {
+    margin-bottom: 1rem;
+    /* padding: 10px; */
+    border-radius: 5px;
+    color: black;
+  }
+  
+  .profile-right p {
+    margin: 0.5rem 0;
+  }
+  
+  .profile-actions {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .profile-actions button {
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #3a3939; /* Dark Green */
+    color: white; /* White font color */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 500;
+  }
+  
+  .profile-actions button:hover {
+    background-color: #00C96D;
+  }
+  
+  
+  .ride-history {
+    margin-top: 2rem;
+  }
+  
+  .ride-history h2 {
+    margin-bottom: 1rem;
+    background-color: #00F78D;
+    padding: 10px;
+    border-radius: 5px;
+    color: black;
+    width: 28%;
+  }
+  
+  .ride-history-item {
+    background-color: white;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .ride-history-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .ride-history-item p {
+    margin: 0.5rem 0;
+    color: #333;
+  }
+  
+  @media (max-width: 768px) {
+    .profile-container {
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+    }
+  
+    .profile-left {
+      margin-right: 0;
+      margin-bottom: 2rem;
+    }
+  
+    .profile-photo {
+      width: 120px;
+      height: 120px;
+    }
+  
+    .profile-actions {
+      flex-direction: column;
+    }
+  
+    .profile-actions button {
+      width: 100%;
+    }
+  
+    .ride-history-item {
+      padding: 0.5rem;
+    }
+  
+    .ride-history-item p {
+      font-size: 14px;
+    }
+
+    .ride-history h2{
+      width:100%;
+    } 
+
+    
+  }
+  
+
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popup-inner {
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    position: relative;
+    width: 400px;
+    max-width: 90%;
+    z-index: 7;
+  }
+  
+  .popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .web-logo {
+    width: 80px;
+    height: auto;
+  }
+  
+  .close-btn {
+    background: #888888;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  .close-btn:hover {
+    background: #00f78d;
+    color: black;
+  }
+  
+  h2 {
+    text-align: center;
+    margin: 1rem 0;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-group input {
+    width: 95%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    padding: 0.7rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #00f78d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+  
+  .submit-btn:hover {
+    background-color: #00c96d;
+  }
+  
