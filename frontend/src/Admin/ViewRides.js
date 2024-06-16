@@ -6,6 +6,9 @@ const ViewRides = () => {
       <h1>Ride Details</h1>
       <p>Here are the ride details.</p>
       
+
+
+      
       
     </div>
 

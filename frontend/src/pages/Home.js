@@ -55,10 +55,10 @@ const Home = () => {
     return (
         <>
             {/* Navbar */}
-            <div className="navbar-container">
+            <div id="navbar-container">
                 <img src={logo} alt="logo" className="nav-img" />
                 <div className="nav-menu">
-                    <Link activeClass="active" to="intro" spy={true} smooth={true} offset={0} duration={100} className="nav-menu-item">Home</Link>
+                    <Link activeClass="active" to="navbar-container" spy={true} smooth={true} offset={0} duration={100} className="nav-menu-item">Home</Link>
                     <Link activeClass="active" to="about" spy={true} smooth={true} offset={0} duration={100} className="nav-menu-item">About Us</Link>
                     <Link activeClass="active" to="services" spy={true} smooth={true} offset={0} duration={100} className="nav-menu-item">Our Services</Link>
                     <Link activeClass="active" to="contact" spy={true} smooth={true} offset={0} duration={100} className="nav-menu-item">Contact Us</Link>
@@ -68,7 +68,7 @@ const Home = () => {
                 </button>
                 <img src={menu} alt="menu" className="nav-menu-img" onClick={() => setshowmenu(!showmenu)} />
                 <div className='navmenu' style={{ display: showmenu ? 'flex' : 'none' }}>
-                    <Link activeClass="active" to="intro" spy={true} smooth={true} offset={-100} duration={100} className="list-item" onClick={() => setshowmenu(false)}>Home</Link>
+                    <Link activeClass="active" to="navbar-container" spy={true} smooth={true} offset={-100} duration={100} className="list-item" onClick={() => setshowmenu(false)}>Home</Link>
                     <Link activeClass="active" to="about" spy={true} smooth={true} offset={-100} duration={100} className="list-item" onClick={() => setshowmenu(false)}>About Us</Link>
                     <Link activeClass="active" to="services" spy={true} smooth={true} offset={-100} duration={100} className="list-item" onClick={() => setshowmenu(false)}>Our Services</Link>
                     <Link activeClass="active" to="contact" spy={true} smooth={true} offset={-100} duration={100} className="list-item" onClick={() => setshowmenu(false)}>Contact Us</Link>
