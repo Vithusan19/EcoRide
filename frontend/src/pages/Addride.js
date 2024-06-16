@@ -129,16 +129,16 @@ const Addride = () => {
           <label>Preferences:</label>
           <textarea name="preferences" value={formData.preferences} onChange={handleChange} ></textarea>
         </div>
-        <button type="submit">Add Ride</button>
+        <button className='add-ride-button' type="submit">Add Ride</button>
       </form>
 
       {showModal && (
         <div className="modal">
           <div className="modal-content">
             <span className="close" onClick={() => setShowModal(false)}>&times;</span>
-            <h2>Card Payment</h2>
+            <h2 className='add-ride-card-tittle'>Card Payment</h2>
 
-          <p>
+          <p className='add-ride-payment'>
             All drivers are required to pay 10% of their earnings from each ride to the system.
           </p>
             <form onSubmit={handleCardSubmit} className="card-form">
@@ -156,7 +156,7 @@ const Addride = () => {
                 <label>CVV:</label>
                 <input type="text" name="cardCVV" value={cardData.cardCVV} onChange={handleCardChange} required />
               </div>
-              <button type="submit">Submit Payment</button>
+              <button type="submit" className='add-ride-button'>Submit Payment</button>
             </form>
           </div>
         </div>

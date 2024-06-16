@@ -268,12 +268,18 @@
     border-radius: 1rem;
   }
   .delete-button {
-    padding: 5px 10px;
+    padding: 10px 20px;
     color: white;
     border: none;
     background-color: red;
     margin-top: 20px;
     border-radius: 1rem;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .delete-button:hover
+  {
+    background: linear-gradient(rgb(180, 20, 20),rgb(183, 35, 35));
   }
   .confirm-delete-button {
     padding: 6px 20px;
