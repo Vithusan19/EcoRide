@@ -1,4 +1,4 @@
-.menu {
+ /* * .menu {
   display: flex;
   flex-direction: column;
   gap: 2.3rem;
@@ -88,7 +88,7 @@
   margin-top: -70px;
 }
 
-/* Responsive styles */
+
 @media (max-width: 768px) {
   .menu {
     width: 20vh;
@@ -140,5 +140,274 @@
 
   .rating {
     padding: 6px;
+  }
+} 
+   
+*/
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2.3rem;
+  height: 100%;
+  background-color: #313834;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  padding-top: 20px; 
+  padding-bottom: 20px;
+  width: 25vh;
+  transition: width 0.3s ease;
+  overflow: hidden; /* Ensure no overflow issues */
+}
+
+.logo {
+  text-align: center;
+  padding: 12px;
+  color: #27374d;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 100px;
+  margin-top: -25px;
+  transition: opacity 0.3s ease; /* Smooth transition for opacity */
+  opacity: 1; /* Ensure logo is initially visible */
+}
+
+.logo-img {
+  width: 50px;
+}
+
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+  padding: 10px;
+  color: #fbfbfb;
+  font-size: 2rem;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.mobmenu-icon {
+  font-size: 2rem;
+  color: #fbfbfb; /* Adjust the color to make it visible */
+}
+
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.menu-list .item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 1.1rem;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 10px;
+  transition: 0.3s ease-in-out;
+  color: #fbfbfb;
+}
+
+.menu-list .item:hover {
+  background: #27374d;
+  color: #dde6ed;
+}
+
+.menu-icons {
+  display: none;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px 0;
+  margin-top: 50px; /* Add space between the toggle and icons */
+}
+
+.menu-icons .item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  padding: 10px;
+  border-radius: 50%;
+  transition: 0.3s ease-in-out;
+  color: #fbfbfb;
+  margin-top: 10px; /* Add some space between icons */
+}
+
+.menu-icons .item:hover {
+  background: #27374d;
+  color: #dde6ed;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 50px;
+  opacity: 1; /* Ensure profile is initially visible */
+  transition: opacity 0.3s ease; /* Smooth transition for opacity */
+}
+
+.profile-img {
+  width: 80px;
+  height: 90px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.profile-heading {
+  color: white;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  margin-top: -70px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .menu {
+    width: 10vh; /* Increased width for better visibility */
+    transition: width 0.3s ease;
+  }
+
+  .menu.open {
+    width: 25vh;
+  }
+
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+
+  .menu-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
+    margin-top: 50px; /* Add space between the toggle and icons */
+  }
+
+  .menu-list .item {
+    font-size: 0.9rem;
+    gap: 10px;
+  }
+
+  .profile-img {
+    width: 60px;
+    height: 70px;
+  }
+
+  .rating {
+    padding: 6px;
+  }
+
+  .menu.open .logo,
+  .menu.open .profile,
+  .menu.open .rating {
+    opacity: 1; /* Ensure logo and profile are visible */
+  }
+
+  .logo,
+  .profile,
+  .rating {
+    opacity: 0; /* Hide logo and profile initially */
+    pointer-events: none; /* Disable pointer events */
+  }
+
+  .menu-list {
+    display: none;
+  }
+
+  .menu.open .menu-list {
+    display: flex;
+  }
+
+  .menu.open .menu-icons {
+    display: none;
+  }
+
+  .menu.open .logo {
+    margin-top: 10px; /* Adjust margin to show below the mobmenu icon */
+  }
+}
+
+@media (max-width: 480px) {
+  .menu {
+    width: 12vh; /* Increased width for better visibility */
+    transition: width 0.3s ease;
+  }
+
+  .menu.open {
+    width: 25vh;
+  }
+
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+
+  .menu-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
+    margin-top: 50px; /* Add space between the toggle and icons */
+  }
+
+  .menu-list .item {
+    font-size: 0.9rem;
+    gap: 10px;
+  }
+
+  .profile-img {
+    width: 60px;
+    height: 70px;
+  }
+
+  .rating {
+    padding: 6px;
+  }
+
+  .menu.open .logo,
+  .menu.open .profile,
+  .menu.open .rating {
+    opacity: 1; /* Ensure logo and profile are visible */
+  }
+
+  .logo,
+  .profile,
+  .rating {
+    opacity: 0; /* Hide logo and profile initially */
+    pointer-events: none; /* Disable pointer events */
+  }
+
+  .menu-list {
+    display: none;
+  }
+
+  .menu.open .menu-list {
+    display: flex;
+  }
+
+  .menu.open .menu-icons {
+    display: none;
+  }
+
+  .menu.open .logo {
+    margin-top: 10px; /* Adjust margin to show below the mobmenu icon */
   }
 }
