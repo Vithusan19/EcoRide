@@ -128,16 +128,18 @@ const ViewUser = () => {
 
       {isDeleteDialogVisible && (
         <div className="modal">
-          <div className="modal-content">
+          <div className="modal-content-delete">
             <h2>Confirm Deletion</h2>
-            <p>Are you sure you want to delete this user?</p>
-            {/* <button className="confirm-delete-button" onClick={handleDelete}> */}
-             <button className="confirm-delete-button">
+            <p>Are you sure you want to delete this ride?</p>
+            {/* <button className="confirm-delete-button" onClick={handleDeleteRide}> */}
+            <div className="modal-content-delete-button">
+            <button className="confirm-delete-button" >
               Yes
             </button>
             <button className="user-button" onClick={hideDeleteDialog}>
               No
             </button>
+            </div>
           </div>
         </div>
       )}

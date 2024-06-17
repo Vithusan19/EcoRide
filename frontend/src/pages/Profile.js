@@ -116,7 +116,7 @@ const Profile = () => {
     setShowEditPopup(!showEditPopup);
   };
 
-  const [searchQuery, setSearchQuery] = useState('');
+  // const [searchQuery, setSearchQuery] = useState('');
 
   return (
     <div>

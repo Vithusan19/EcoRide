@@ -234,6 +234,26 @@
     max-width: 500px;
     margin-top: 0 auto;
   }
+  .modal-content-delete
+  {
+    
+      background: white;
+      padding: 20px;
+      border-radius: 0.5rem;
+      width: 50%;
+      height: 200px;
+     display: flex;
+     flex-direction: column;
+      margin-top: 0 auto;
+      gap: 20px;
+    }
+    .modal-content-delete-button
+    {
+      display: flex;
+
+    }
+
+
   
   .modal-header {
     display: flex;
@@ -303,6 +323,122 @@
     cursor: pointer;
     margin-left: 10px;
     border: none;
+  }
+  /* viewRide */
+.search-con
+{
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  max-width: 60vw;
+  margin: 0 auto;
+}
+
+   
+  
+  .viewRide-bar
+  {
+    display: flex;
+    flex-direction: column;
+   
+   
+  }
+
+  .viewRide-bar
+  {
+    display: flex;
+    
+    background-color: white;
+    border-radius: 1rem;
+    flex-direction: column;
+   
+   
+    max-width: 60rem;
+    margin: 30px auto;
+
+  }
+  .viewRide-bar-up
+  {
+    display: flex;
+    
+   
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+  .viewRide-details
+  {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .timeplace
+  {
+    font-size: 17px;
+    font-weight: 600;
+    color: #11273c;
+  }
+  .viewRide-price
+  {
+    font-size: 20px;
+    font-weight: 650;
+    color: #11273c;
+
+  }
+  .viewRide-bar-down
+  {
+    display: flex;
+    gap: 30px;
+    padding: 10px;
+    align-items: center;
+    
+  
+  }
+  .user-details-vr,.car-details-vr
+  {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+   
+    padding: 5px;
+  }
+  .vr-carnumber,.vr-username
+  {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .vr-userimg
+  {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+       border-radius: 100%;
+       background-color: #737c78;
+       padding: 5px;
+
+  }
+  .vr-line
+  {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .vr-time
+  {
+    font-size: 14px;
+    margin-left: 20px;
+    font-weight: 600;
+  }
+  
+  .vr-button
+  {
+    padding: 10px 20px;
+    float: inline-end;
+  
+    background-color: #7c7573;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    margin-left: 300px;
   }
   
   
