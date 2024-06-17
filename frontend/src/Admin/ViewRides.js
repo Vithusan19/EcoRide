@@ -10,11 +10,10 @@ const ViewRides = () => {
   const [isDeleteDialogVisible, setIsDeleteDialogVisible] = useState(false);
 
   const rides = [
-    { id: 1, name: "CST21012", start_place: "Jaffna", end_place: "Colombo", car_number: "CAR-1909", cost: "500", start_time: "12.00", end_time: "15.00", published_time: "8.00", user: { name: "Vithusan", email: "vithu@example.com", phone: "1234567890" } },
-    { id: 2, name: "CST21013", start_place: "Kandy", end_place: "Badulla", car_number: "CAR-0602", cost: "1200", start_time: "15.00", end_time: "17.00", published_time: "12.00", user: { name: "Shan", email: "Shan@example.com", phone: "1234567890" } },
-    { id: 3, name: "CST21019", start_place: "Vavuniya", end_place: "Colombo", car_number: "CAR-0682", cost: "1900", start_time: "18.00", end_time: "6.00", published_time: "12.00", user: { name: "Rajah", email: "Rajah@example.com", phone: "1234567890" } },
-    { id: 4, name: "CST21073", start_place: "Colombo", end_place: "Jaffna", car_number: "CAR-0689", cost: "1200", start_time: "15.00", end_time: "17.00", published_time: "15.00", user: { name: "Malur", email: "Malur@example.com", phone: "1234567890" } },
-   
+    { id: 1, name: "CST21012", start_place: "Jaffna", end_place: "Colombo", car_number: "CAR-1909", cost: "500", Date: "June 18, 2024", start_time: "12.00", end_time: "15.00", published_time: "8.00", user: { name: "Vithusan", email: "vithu@example.com", phone: "1234567890" } },
+    { id: 2, name: "CST21013", start_place: "Kandy", end_place: "Badulla", car_number: "CAR-0602", cost: "1200", Date: "June 19, 2024",start_time: "15.00", end_time: "17.00", published_time: "12.00", user: { name: "Shan", email: "Shan@example.com", phone: "1234567890" } },
+    { id: 3, name: "CST21019", start_place: "Vavuniya", end_place: "Colombo", car_number: "CAR-0682", cost: "1900",Date: "June 19, 2024", start_time: "18.00", end_time: "6.00", published_time: "12.00", user: { name: "Rajah", email: "Rajah@example.com", phone: "1234567890" } },
+    { id: 4, name: "CST21073", start_place: "Colombo", end_place: "Jaffna", car_number: "CAR-0689", cost: "1200", Date: "June 17, 2024",start_time: "15.00", end_time: "17.00", published_time: "15.00", user: { name: "Malur", email: "Malur@example.com", phone: "1234567890" } },
   ];
 
   const handleUserSearchChange = (event) => {
@@ -45,15 +44,6 @@ const ViewRides = () => {
     setIsDeleteDialogVisible(false);
   };
 
-  // const handleDeleteRide = () => {
-  //   if (selectedRide) {
-  //     console.log(`Ride with id ${selectedRide.id} deleted`);
-     
-  //     hideDeleteDialog();
-  //     closeModal();
-  //   }
-  // };
-
   const calculateElapsedTime = (publishedTime) => {
     const currentTime = new Date();
     const [publishedHour, publishedMinute] = publishedTime.split('.').map(Number);
@@ -67,9 +57,24 @@ const ViewRides = () => {
     const minutes = elapsedTime % 60;
 
     if (hours > 0) {
-      return `${hours} hour(s) ago`;
+      return `${hours} hours ago`;
     } else {
-      return `${minutes} minute(s) ago`;
+      return `${minutes} minutes ago`;
+    }
+  };
+
+  const formatDate = (dateStr) => {
+    const rideDate = new Date(dateStr);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+
+    if (rideDate.toDateString() === today.toDateString()) {
+      return "Today";
+    } else if (rideDate.toDateString() === tomorrow.toDateString()) {
+      return "Tomorrow";
+    } else {
+      return rideDate.toDateString();
     }
   };
 
@@ -78,6 +83,8 @@ const ViewRides = () => {
     ride.start_place.toLowerCase().includes(searchTermStartPlace.toLowerCase()) &&
     ride.user.name.toLowerCase().includes(searchTermUser.toLowerCase())
   );
+
+  const sortedRides = filteredRides.sort((a, b) => new Date(a.Date) - new Date(b.Date));
 
   return (
     <>
@@ -109,13 +116,14 @@ const ViewRides = () => {
       </div>
 
       <div className="viewRide-bars">
-        {filteredRides.map((ride) => (
-          <div key={ride.id} className="viewRide-bar">
+        {sortedRides.map((ride) => (
+          <div key={ride.id} className="viewRide-bar" onClick={() => handleViewMore(ride)}> 
             <div className="viewRide-bar-up">
               <div className="viewRide-details">
                 <span className="timeplace">Departure</span>
                 <span className="timeplace">{ride.start_time}</span>
                 <span className="timeplace">{ride.start_place}</span>
+                <span className="timeplace">{formatDate(ride.Date)}</span>
               </div>
               <div className="viewRide-details">
                 <span className="timeplace">Destination</span>
@@ -139,9 +147,6 @@ const ViewRides = () => {
                 <span className="vr-username">{ride.user.name}</span>
               </div>
               <span className="vr-time">{calculateElapsedTime(ride.published_time)}</span>
-              <button className="vr-button" onClick={() => handleViewMore(ride)}>
-                View more
-              </button>
             </div>
           </div>
         ))}
@@ -178,12 +183,12 @@ const ViewRides = () => {
             <h2>Confirm Deletion</h2>
             <p>Are you sure you want to delete this ride?</p>
             <div className="modal-content-delete-button">
-            <button className="confirm-delete-button" >
-              Yes
-            </button>
-            <button className="user-button" onClick={hideDeleteDialog}>
-              No
-            </button>
+              <button className="confirm-delete-button">
+                Yes
+              </button>
+              <button className="user-button" onClick={hideDeleteDialog}>
+                No
+              </button>
             </div>
           </div>
         </div>
