@@ -179,7 +179,7 @@ const ViewRides = () => {
 
       {isDeleteDialogVisible && (
         <div className="modal">
-          <div className="modal-content">
+          <div className="modal-content-delete">
             <h2>Confirm Deletion</h2>
             <p>Are you sure you want to delete this ride?</p>
             <div className="modal-content-delete-button">
