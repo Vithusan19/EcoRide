@@ -345,7 +345,7 @@
   }
   
   .viewRide-bar:hover {
-    border: 2px solid rgb(18, 80, 180);
+    border: 2px solid #04de80;
   }
   
   .viewRide-bar-up {
@@ -457,4 +457,6 @@
       align-self: center;
     }
   }
+  /* interface */
+  
   
