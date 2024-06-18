@@ -120,7 +120,6 @@ const Profile = () => {
 
   return (
     <div>
-      <Searchbar onSearch={setSearchQuery} />
       <div className="profile-container">
         {showEditPopup && (
           <EditProfilePopup

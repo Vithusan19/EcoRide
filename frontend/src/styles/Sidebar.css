@@ -109,8 +109,8 @@
 }
 
 .profile-img {
-  width: 80px;
-  height: 90px;
+  width: 120px;
+  height: 130px;
   border-radius: 50%;
   margin-bottom: 10px;
 }
@@ -131,6 +131,8 @@
   color: #fbfbfb;
   margin-top: 5px;
 }
+
+
 
 /* Responsive styles */
 @media (max-width: 768px) {
