@@ -178,7 +178,7 @@ const Home = () => {
             {/* Login Popup */}
             {showLogin && (
                 <div className="popup">
-                    <div className="popup-inner">
+                    <div className="Home-popup-inner">
                         <div className='pop-imgs'>
                             <img className='web-logo' src={logo} alt='logo' />
                             <button className="close-btn" onClick={() => setShowLogin(false)}>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../styles/Profile.css';
 import userPhoto from '../assets/user.png';
 import webLogo from '../assets/weblogo.png';
-import Searchbar from '../components/Searchbar';
+//import Searchbar from '../components/Searchbar';
 
 const EditProfilePopup = ({ profileData, onSave, onClose }) => {
   const [formData, setFormData] = useState(profileData);
