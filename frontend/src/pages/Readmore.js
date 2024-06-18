@@ -1,68 +1,81 @@
-import React from "react";
-import vehicle1 from "../assets/1.jpg";
-import "../styles/Readmore.css";
+import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import '../styles/Readmore.css'; // Import the CSS file for Readmore styling
+import vehicle1 from "../assets/1.jpg"; // Import the image file
+import vehicle2 from "../assets/2.jpg";
+import vehicle3 from "../assets/3.jpg";
+import vehicle4 from "../assets/4.jpg";
+import vehicle5 from "../assets/5.jpg";
+import vehicle6 from "../assets/6.jpg";
+import vehicle7 from "../assets/7.jpg";
+import vehicle8 from "../assets/8.jpg";
+import vehicle9 from "../assets/9.jpg";
+import vehicle10 from "../assets/10.jpg";
+import vehicle11 from "../assets/11.jpg";
+import vehicle12 from "../assets/12.jpg";
 
-const Readmore = () => {
+const images = {
+  'Toyota KDH': vehicle1,
+  'Mercedes Benz': vehicle2,
+  'Toyota Axio': vehicle3,
+  'Ford Transit': vehicle4,
+  'Renault Trafic': vehicle5,
+  'Magic Wagon': vehicle6,
+  'Mercedes Vito': vehicle7,
+  'Maxus V80': vehicle8,
+  'Hyundai Starex': vehicle9,
+  'Volkswagen Crafter': vehicle10,
+  'Byd M6': vehicle11,
+  'Mercedes Sprinter': vehicle12
+};
+const Readmore = ({ cards }) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const card = cards[parseInt(id, 10)];
+
+  if (!card) {
+    return <div>Card not found</div>;
+  }
+
   return (
-    <div className="Readmore">
-      <div>
-        <h2>Carpooling From Malabe to Kirulapone</h2>
+    <div className="readmore-container">
+      <h2>{card.car}</h2>
+      <div className="image">
+        <img alt="img" src={images[card.car]} />
       </div>
-      <div className="first-read">
-        <div className="image">
-          <img alt="img" src={vehicle1} />
+      <div className="card-details">
+        <div className="detail">
+          <span className="label"><strong>Vehicle Number:</strong></span> {card.vehicleNumber}
         </div>
-        <div className="des">
-          <h2> Malabe - 7.15 AM</h2>
-
-          <h2>Kirulapone - 8.30 AM </h2>
-          <div className="des-text">
-            <h3>Route Plan:</h3>
-            <p className="para-text">
-              <strong>
-                Start at 7:15 am from Malabe &gt; Palawatta &gt; Chandrika
-                Kumarathunga Mawatha &gt; Beddagana &gt; Pitakotte &gt; Nugedoga
-                &gt; High Level Road &gt; Kirulapone &gt; Reach at 8.30am
-                Colombo 6 (Near Kirulapone). Leave at 6.00pm. Reach back at
-                7.00pm.
-              </strong>
-            </p>
-            <div className="list">
-              <ul>
-                <li>
-                  <strong>Vehicle Number: CAF-6228</strong>
-                </li>
-                <li>
-                  <strong>Vehicle Model: Suzuki WagonR</strong>
-                </li>
-                <li>
-                  <strong>Driver Name: Mr. Sadheera Gunawardena</strong>
-                </li>
-                <li>
-                  <strong>Driver Gender:Male</strong>
-                </li>
-                <li>
-                  <strong>Seat Cost: Rs. 4000</strong>
-                </li>
-                <li>
-                  <strong>Air Condition: AC</strong>
-                </li>
-                <li>
-                  <strong>No.Of Seats: 4</strong>
-                </li>
-                <li>
-                  <strong>Preference: Dont Smoke</strong>
-                </li>
-              </ul>
-            </div>
-          </div>
+        <div className="detail">
+          <span className="label"><strong>Driver Name:</strong></span> {card.driverName}
+        </div>
+        <div className="detail">
+          <span className="label"><strong>From:</strong></span> {card.from}
+        </div>
+        <div className="detail">
+          <span className="label"><strong>To:</strong></span> {card.to}
+        </div>
+        <div className="detail">
+          <span className="label"><strong>Route:</strong></span> {card.route.join(' ➜ ')}
+        </div>
+        <div className="detail">
+          <span className="label"><strong>Time Period:</strong></span> {card.timePeriod}
+        </div>
+        <div className="detail">
+          <span className="label"><strong>Available Seats:</strong></span> {card.seats}
+        </div>
+        <div className="detail">
+          <span className="label"><strong>Preferences:</strong></span> {card.preferences}
         </div>
       </div>
-      <div className="button-container">
-        <button className="requ-but">Request Ride</button>
+      <div className="btn-container">
+        <button className="back-button" onClick={() => navigate(-1)}>Back</button>
+        <button className="request-button">Request Ride</button>
       </div>
     </div>
   );
 };
+
 
 export default Readmore;
