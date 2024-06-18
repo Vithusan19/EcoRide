@@ -648,3 +648,32 @@
    }
    
    
+ /* .services-con-img
+ {
+  width: 30px;
+ }
+ #services
+ {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  max-width: 75rem;  
+  margin: 20px auto;
+
+ }
+ .services-con
+ {
+  background-color: #ebeff4;
+border-radius: 10px;
+padding: 20px;
+display: flex;
+flex-direction: column;
+
+justify-content: center;
+
+ }
+ .services-con-img
+ {
+
+ } */

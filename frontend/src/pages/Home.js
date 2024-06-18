@@ -13,6 +13,9 @@ import fb from '../assets/facebook.png';
 import header from '../assets/header.png';
 import arrow from '../assets/arrow.png';
 import loginbg from '../assets/loginbg.png';
+// import easy from '../assets/easy.png';
+// import execution from '../assets/execution.png';
+// import Secure from '../assets/Secure.png';
 
 const Home = () => {
     const [showmenu, setshowmenu] = useState(false);
@@ -92,6 +95,35 @@ const Home = () => {
                 <img src={aboutImg} alt="aboutImage" className="about-img" />
             </section>
             {/* services */}
+            {/* Effortless Ride Publishing and Booking
+            Drivers can easily publish their ride details and passengers can view the available ride.
+
+            Secure Communication and Payment Processing
+            System facilitates with getting inquires and secure payment process
+
+            Comprehensive User and Ride Management
+            offers robust user and ride management features that empower users to efficiently manage their profiles and travel plans */}
+            <section id='services'>
+          
+            {/* <div className='services-con'>
+
+                <img src={easy} alt='easy' className='services-con-img'/>
+                <span className='services-con-tittle'>Effortless Ride Publishing and Booking</span>
+                <span className='services-con-text'> Drivers can easily publish their ride details and passengers can view the available ride.</span>
+            </div>
+            <div className='services-con'>
+
+                <img src={Secure} alt='Secure' className='services-con-img'/>
+                <span className='services-con-tittle'> Secure Communication and Payment Processing</span>
+                <span className='services-con-text'>System facilitates with getting inquires and secure payment process
+                .</span>
+            </div>
+            <div className='services-con'>
+
+                <img src={execution} alt='easy' className='services-con-img'/>
+                <span className='services-con-tittle'>Comprehensive User and Ride Management</span>
+                <span className='services-con-text'>offers robust user and ride management features that empower users to efficiently manage their profiles and travel plans</span>
+            </div> */}
             <section id='services'>
                 <h2 className='services-tittle'>Our Services</h2>
                 <span className='services-para'>Welcome to our Carpooling Platform, your trusted solution for convenient and efficient ride-sharing. Our platform is designed to bring drivers and passengers together, <br />ensuring safe and affordable travel options</span>
@@ -118,6 +150,9 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
+            </section>
+        
+        
             </section>
             {/* contactus */}
             <section id="contactpage">

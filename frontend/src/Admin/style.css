@@ -458,5 +458,90 @@
     }
   }
   /* interface */
+  .dashboard-container
+  {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
   
+  }
+  
+  
+  .admin-user
+  {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 25vw;
+   border-top-left-radius:1rem ;
+   border-top-right-radius:1rem ;
+   
+
+  }
+  .admin-user-tittle
+  {
+    color:rgb(54, 95, 146);
+  }
+  .dashboard-count-imgs
+  {
+    width: 60px;
+    height: 60px;
+  }
+  .admin-user-img
+  {
+    width: 120px;
+    padding: 10px;
+    border-radius: 100%;
+    background-color: #737c78;
+    margin-top: 10px;
+  }
+  .admin-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .admin-info-label {
+    font-weight: bold;
+  }
+  
+  .admin-info-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+  }
+  
+.admin-info-button {
+    padding: 10px;
+    background: #04de80;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+  
+  .admin-info-button:hover {
+    background: #03c471;
+  }
+ 
+  .admin-user-info
+  {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 2.6rem;
+  }
+  .admin-user-edit-but
+  {
+    padding: 10px 40px;
+    background-color: #737c78;
+   color: white;
+    margin: 10px auto;
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+  }
   
