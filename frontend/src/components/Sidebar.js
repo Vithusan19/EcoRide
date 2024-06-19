@@ -231,10 +231,6 @@ const Sidebar = ({ children }) => {
             <BiCurrentLocation className="icon" />
             CurrentRide
           </Link>
-          <Link to="/profile" className="item">
-            <BiCurrentLocation className="icon" />
-            Profile
-          </Link>
         </div>
 
         <div className="menu-icons">
@@ -256,8 +252,10 @@ const Sidebar = ({ children }) => {
         </div>
 
         <div className="profile">
-          <img src={profile} alt="profile" className="profile-img" />
-          <h3 className="profile-heading">J.Abiraj</h3><br></br>
+          <Link to="/profile">
+            <img src={profile} alt="profile" className="profile-img" />
+          </Link>
+          <h3 className="profile-heading">J.Abiraj</h3>
         </div>
 
         <div className="rating">
