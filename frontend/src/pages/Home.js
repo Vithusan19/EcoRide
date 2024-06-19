@@ -13,9 +13,9 @@ import fb from '../assets/facebook.png';
 import header from '../assets/header.png';
 import arrow from '../assets/arrow.png';
 import loginbg from '../assets/loginbg.png';
-// import easy from '../assets/easy.png';
-// import execution from '../assets/execution.png';
-// import Secure from '../assets/Secure.png';
+import serve1 from '../assets/serve1.png';
+import serve2 from '../assets/serve2.png';
+import serve3 from '../assets/serve3.png';
 
 const Home = () => {
     const [showmenu, setshowmenu] = useState(false);
@@ -126,27 +126,27 @@ const Home = () => {
             </div> */}
             <section id='services'>
                 <h2 className='services-tittle'>Our Services</h2>
-                <span className='services-para'>Welcome to our Carpooling Platform, your trusted solution for convenient and efficient ride-sharing. Our platform is designed to bring drivers and passengers together, <br />ensuring safe and affordable travel options</span>
+                <span className='services-para'>At EcoRide, we strive to make commuting more efficient, affordable, and environmentally friendly. Our platform offers a range of services designed to enhance your travel experience by connecting you with fellow commuters, providing real-time updates, and ensuring your safety. Explore how EcoRide can simplify your daily journeys and contribute to a greener planet.</span>
                 <div className='services-bars'>
                     <div className='services-bar'>
-                        <img className='services-img' src={twi} alt='' />
+                        <img className='services-img' src={serve1} alt='' />
                         <div className='services-bar-text'>
-                            <h2>AAAA</h2>
-                            <p>aaaaaaaaaaaaaaaa</p>
+                            <h2>Convenience and Cost-Efficiency</h2>
+                            <p>EcoRide connects you with commuters sharing similar routes, ensuring convenient and eco-friendly travel. Effortlessly share travel costs with secure payment options. Flexible scheduling accommodates both daily and occasional trips.</p>
                         </div>
                     </div>
                     <div className='services-bar'>
-                        <img className='services-img' src={insta} alt='' />
+                        <img className='services-img' src={serve2} alt='' />
                         <div className='services-bar-text'>
-                            <h2>BBBB</h2>
-                            <p>bbbbbbbbbbbb</p>
+                            <h2>Real-Time Updates and Communication</h2>
+                            <p>Stay updated with real-time ride status and driver locations. Communicate via in-app messaging for coordination. Our 24/7 customer support ensures a smooth experience.</p>
                         </div>
                     </div>
                     <div className='services-bar'>
-                        <img className='services-img' src={fb} alt='' />
+                        <img className='services-img' src={serve3} alt='' />
                         <div className='services-bar-text'>
-                            <h2>CCCC</h2>
-                            <p>ccccccccccc</p>
+                            <h2>Safety and Environmental Impact</h2>
+                            <p>Track your reduced carbon footprint. User profiles and ratings ensure safe carpooling. verified profiles, guarantee secure travel. EcoRide is committed to eco-friendly commuting.</p>
                         </div>
                     </div>
                 </div>
