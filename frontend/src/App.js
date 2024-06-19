@@ -12,6 +12,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Readmore from './pages/Readmore'; // Import Readmore component
 import Admin from "./pages/Admin";
 import Profile from "./pages/Profile";
+import cards from "./Carddata";
 
 const MainLayout = ({ children }) => (
   <div className="dashboard">
@@ -33,7 +34,8 @@ function App() {
         <Route path="/newsfeed" element={<MainLayout><Newsfeed /></MainLayout>} />
         <Route path="/addride" element={<MainLayout><Addride /></MainLayout>} />
         <Route path="/currentride" element={<MainLayout><Currentride /></MainLayout>} />
-        <Route path="/readmore/:id" element={<Readmore />} /> 
+        <Route path="/readmore/:id" element={<MainLayout><Readmore cards={cards} /></MainLayout>} /> {/* Pass cards to Readmore */}
+
         <Route path="/admin" element={<Admin />} />
         <Route path="/profile" element={<MainLayout><Profile /></MainLayout>} />
       </Routes>
