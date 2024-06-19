@@ -171,8 +171,7 @@
   }
 
   .profile-img {
-    width: 60px;
-    height: 70px;
+    opacity: 0;
   }
 
   .rating {
@@ -211,7 +210,7 @@
 
 @media (max-width: 480px) {
   .menu {
-    width: 12vh; /* Increased width for better visibility */
+    width: 8vh; /* Increased width for better visibility */
     transition: width 0.3s ease;
   }
 
@@ -245,8 +244,7 @@
   }
 
   .profile-img {
-    width: 60px;
-    height: 70px;
+    opacity: 0;
   }
 
   .rating {
