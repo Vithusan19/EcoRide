@@ -12,8 +12,8 @@
   padding-bottom: 20px;
   width: 25vh;
   transition: width 0.3s ease;
-  overflow: hidden; /* Ensure no overflow issues */
-  align-items: center; /* Center content horizontally */
+  overflow: hidden;
+  align-items: center;
 }
 
 .logo {
@@ -22,14 +22,14 @@
   align-items: center;
   width: 100%;
   padding: 12px;
-  margin-top: 0; /* Adjusted margin */
-  transition: opacity 0.3s ease; /* Smooth transition for opacity */
-  opacity: 1; /* Ensure logo is initially visible */
+  margin-top: 0;
+  transition: opacity 0.3s ease;
+  opacity: 1;
 }
 
 .logo-img {
-  width: 100px; /* Increased logo size */
-  height: auto; /* Maintain aspect ratio */
+  width: 100px;
+  height: auto;
 }
 
 .menu-toggle {
@@ -45,7 +45,7 @@
 
 .mobmenu-icon {
   font-size: 2rem;
-  color: #fbfbfb; /* Adjust the color to make it visible */
+  color: #fbfbfb;
 }
 
 .menu-list {
@@ -76,21 +76,21 @@
 .menu-icons {
   display: none;
   flex-direction: column;
-  gap: 25px; /* Increased gap between menu icons */
+  gap: 25px;
   padding: 10px 0;
-  margin-top: 50px; /* Add space between the toggle and icons */
+  margin-top: 50px;
 }
 
 .menu-icons .item {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.7rem; /* Increased font size for menu icons */
-  padding: 12px; /* Increased padding for menu icons */
+  font-size: 1.7rem;
+  padding: 12px;
   border-radius: 50%;
   transition: 0.3s ease-in-out;
   color: #fbfbfb;
-  margin-top: 10px; /* Add some space between icons */
+  margin-top: 10px;
 }
 
 .menu-icons .item:hover {
@@ -103,14 +103,14 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
-  margin-top: auto; /* Push profile to the bottom */
-  opacity: 1; /* Ensure profile is initially visible */
-  transition: opacity 0.3s ease; /* Smooth transition for opacity */
+  margin-top: auto;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
 .profile-img {
-  width: 120px;
-  height: 130px;
+  width: 80px;
+  height: 90px;
   border-radius: 50%;
   margin-bottom: 10px;
 }
@@ -119,25 +119,9 @@
   color: white;
 }
 
-.rating {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  margin-top: -75px; /* Adjust the spacing as needed */
-}
-
-.rating-value {
-  color: #fbfbfb;
-  margin-top: 5px;
-}
-
-
-
-/* Responsive styles */
 @media (max-width: 768px) {
   .menu {
-    width: 10vh; /* Increased width for better visibility */
+    width: 10vh;
     transition: width 0.3s ease;
   }
 
@@ -155,14 +139,14 @@
   .menu-icons {
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Increased gap between menu icons */
+    gap: 20px;
     padding: 10px 0;
-    margin-top: 50px; /* Add space between the toggle and icons */
+    margin-top: 50px;
   }
 
   .menu-icons .item {
-    font-size: 1.7rem; /* Increased font size for menu icons */
-    padding: 12px; /* Increased padding for menu icons */
+    font-size: 1.7rem;
+    padding: 12px;
   }
 
   .menu-list .item {
@@ -171,24 +155,19 @@
   }
 
   .profile-img {
-    opacity: 0;
-  }
-
-  .rating {
-    padding: 6px;
+    width: 60px;
+    height: 70px;
   }
 
   .menu.open .logo,
-  .menu.open .profile,
-  .menu.open .rating {
-    opacity: 1; /* Ensure logo and profile are visible */
+  .menu.open .profile {
+    opacity: 1;
   }
 
   .logo,
-  .profile,
-  .rating {
-    opacity: 0; /* Hide logo and profile initially */
-    pointer-events: none; /* Disable pointer events */
+  .profile {
+    opacity: 0;
+    pointer-events: none;
   }
 
   .menu-list {
@@ -204,13 +183,21 @@
   }
 
   .menu.open .logo {
-    margin-top: 10px; /* Adjust margin to show below the mobmenu icon */
+    margin-top: 10px;
+  }
+
+  .menu-icons .item:last-child {
+    display: block;
+  }
+
+  .menu.open .menu-icons .item:last-child {
+    display: none;
   }
 }
 
 @media (max-width: 480px) {
   .menu {
-    width: 8vh; /* Increased width for better visibility */
+    width: 12vh;
     transition: width 0.3s ease;
   }
 
@@ -228,14 +215,14 @@
   .menu-icons {
     display: flex;
     flex-direction: column;
-    gap: 25px; /* Increased gap between menu icons */
+    gap: 25px;
     padding: 10px 0;
-    margin-top: 50px; /* Add space between the toggle and icons */
+    margin-top: 50px;
   }
 
   .menu-icons .item {
-    font-size: 1.7rem; /* Increased font size for menu icons */
-    padding: 12px; /* Increased padding for menu icons */
+    font-size: 1.7rem;
+    padding: 12px;
   }
 
   .menu-list .item {
@@ -244,24 +231,19 @@
   }
 
   .profile-img {
-    opacity: 0;
-  }
-
-  .rating {
-    padding: 6px;
+    width: 60px;
+    height: 70px;
   }
 
   .menu.open .logo,
-  .menu.open .profile,
-  .menu.open .rating {
-    opacity: 1; /* Ensure logo and profile are visible */
+  .menu.open .profile {
+    opacity: 1;
   }
 
   .logo,
-  .profile,
-  .rating {
-    opacity: 0; /* Hide logo and profile initially */
-    pointer-events: none; /* Disable pointer events */
+  .profile {
+    opacity: 0;
+    pointer-events: none;
   }
 
   .menu-list {
@@ -277,6 +259,14 @@
   }
 
   .menu.open .logo {
-    margin-top: 10px; /* Adjust margin to show below the mobmenu icon */
+    margin-top: 10px;
+  }
+
+  .menu-icons .item:last-child {
+    display: block;
+  }
+
+  .menu.open .menu-icons .item:last-child {
+    display: none;
   }
 }
