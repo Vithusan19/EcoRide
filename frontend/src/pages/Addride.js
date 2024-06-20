@@ -28,8 +28,7 @@ const Addride = () => {
     cardImage: null,
     cardName: '',
     cardNumber: '',
-    cardExpiryMonth: '',
-    cardExpiryYear: '',
+    cardExpiryDate: '',
     cardCVV: ''
   });
 
@@ -158,7 +157,7 @@ const Addride = () => {
             <form onSubmit={handleCardSubmit} className="card-form">
               <div className="form-group">
                 <label>Card Holder Name:</label>
-                <input type="text" name="cardNumber" value={cardData.cardName} onChange={handleCardChange} required />
+                <input type="text" name="cardName" value={cardData.cardName} onChange={handleCardChange} required />
               </div>
               <div className="form-group">
                 <label>Card Number:</label>
