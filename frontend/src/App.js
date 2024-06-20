@@ -24,7 +24,7 @@ const MainLayout = ({ children }) => (
 );
 
 function App() {
-  const userRole = 'passenger';
+  const userRole = 'driver';
   return (
     <BrowserRouter>
       <Routes>
