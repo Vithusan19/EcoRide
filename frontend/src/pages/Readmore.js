@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState}from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/Readmore.css'; // Import the CSS file for Readmore styling
 import vehicle1 from "../assets/1.jpg"; // Import the image file
@@ -32,11 +32,26 @@ const Readmore = ({ cards }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const card = cards[parseInt(id, 10)];
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [requestedSeats, setRequestedSeats] = useState(1);
 
   if (!card) {
     return <div>Card not found</div>;
   }
 
+  const handleRequestRide = () => {
+    setIsPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+  };
+
+  const handleSubmitRequest = () => {
+    // Handle the request submission logic here
+    console.log(`Requested ${requestedSeats} seats`);
+    setIsPopupOpen(true);
+  };
   return (
     <div className="readmore-container">
       <h2>{card.car}</h2>
@@ -71,8 +86,30 @@ const Readmore = ({ cards }) => {
       </div>
       <div className="btn-container">
         <button className="back-button" onClick={() => navigate(-1)}>Back</button>
-        <button className="request-button">Request Ride</button>
+        <button className="request-button" onClick={handleRequestRide}>Request Ride</button>
       </div>
+
+      {isPopupOpen && (
+        <div className="popup">
+          <div className="popup-Inner">
+            <h3>Request Seats</h3>
+            <label>
+              Number of Seats:
+              <input
+                type="number"
+                value={requestedSeats}
+                min="1"
+                max={card.seats}
+                onChange={(e) => setRequestedSeats(e.target.value)}
+              />
+            </label>
+            <div className="button-container">
+              <button className="action-button" onClick={handleClosePopup}>Cancel</button>
+              <button className="action-button" onClick={handleSubmitRequest}>Submit</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
