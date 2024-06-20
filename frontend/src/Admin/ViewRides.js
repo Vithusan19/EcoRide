@@ -14,6 +14,7 @@ const ViewRides = () => {
     { id: 2, name: "CST21013", start_place: "Kandy", end_place: "Badulla", car_number: "CAR-0602", cost: "1200", Date: "June 19, 2024", start_time: "15.00", end_time: "17.00", published_time: "12.00", published_date: "June 16, 2024", user: { name: "Shan", email: "Shan@example.com", phone: "1234567890" } },
     { id: 3, name: "CST21019", start_place: "Vavuniya", end_place: "Colombo", car_number: "CAR-0682", cost: "1900", Date: "June 19, 2024", start_time: "18.00", end_time: "6.00", published_time: "12.00", published_date: "June 11, 2024", user: { name: "Rajah", email: "Rajah@example.com", phone: "1234567890" } },
     { id: 4, name: "CST21073", start_place: "Colombo", end_place: "Jaffna", car_number: "CAR-0689", cost: "1200", Date: "June 17, 2024", start_time: "15.00", end_time: "17.00", published_time: "15.00", published_date: "June 13, 2024", user: { name: "Malur", email: "Malur@example.com", phone: "1234567890" } },
+    { id: 1, name: "CST21012", start_place: "Jaffna", end_place: "Colombo", car_number: "CAR-1909", cost: "1200", Date: "June 20, 2024", start_time: "15.00", end_time: "17.00", published_time: "11.00", published_date: "June 20, 2024", user: { name: "Vithusan", email: "vithu@example.com", phone: "1234567890" } },
   ];
 
   const handleUserSearchChange = (event) => {

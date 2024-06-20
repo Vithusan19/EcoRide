@@ -130,7 +130,7 @@ const ViewUser = () => {
         <div className="modal">
           <div className="modal-content-delete">
             <h2>Confirm Deletion</h2>
-            <p>Are you sure you want to delete this ride?</p>
+            <p>Are you sure you want to delete this user?</p>
             {/* <button className="confirm-delete-button" onClick={handleDeleteRide}> */}
             <div className="modal-content-delete-button">
             <button className="confirm-delete-button" >
