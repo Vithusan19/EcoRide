@@ -24,6 +24,7 @@ const MainLayout = ({ children }) => (
 );
 
 function App() {
+  const userRole = 'passenger';
   return (
     <BrowserRouter>
       <Routes>
@@ -33,7 +34,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/newsfeed" element={<MainLayout><Newsfeed /></MainLayout>} />
         <Route path="/addride" element={<MainLayout><Addride /></MainLayout>} />
-        <Route path="/currentride" element={<MainLayout><Currentride /></MainLayout>} />
+        <Route path="/currentride" element={<MainLayout><Currentride userRole={userRole} /></MainLayout>} />
         <Route path="/readmore/:id" element={<MainLayout><Readmore cards={cards} /></MainLayout>} /> {/* Pass cards to Readmore */}
 
         <Route path="/admin" element={<Admin />} />
