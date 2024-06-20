@@ -213,7 +213,7 @@
 
     
    }
-   /* Add this to your existing CSS */
+   
 .modal {
     position: fixed;
     top: 0;
@@ -464,18 +464,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-  
+    flex-wrap: wrap;
   }
   .dashboard-left-con
   {
     display: flex;
     flex-direction: column;
     gap: 30px;
+    flex-wrap: wrap;
   }
   .dashboard-left-up, .dashboard-left-down
   {
     display: flex;
     gap: 50px;
+    flex-wrap: wrap;
   }
   .dashboard-left-count
   {
