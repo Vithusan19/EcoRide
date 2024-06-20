@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import '../styles/Addride.css';
 import addride from '../assets/addride.png';
+import visa from '../assets/visacard.png';
+import master from '../assets/mastercard.png';
+
 
 const Addride = () => {
   const [formData, setFormData] = useState({
@@ -23,6 +26,7 @@ const Addride = () => {
   const [showModal, setShowModal] = useState(false);
   const [cardData, setCardData] = useState({
     cardImage: null,
+    cardName: '',
     cardNumber: '',
     cardExpiryMonth: '',
     cardExpiryYear: '',
@@ -138,18 +142,29 @@ const Addride = () => {
       </div>
 
       {showModal && (
-        <div className="modal">
-          <div className="modal-content">
+        <div className="add-ride-modal">
+          <div className="add-ride-modal-content">
             <span className="close" onClick={() => setShowModal(false)}>&times;</span>
             <h2 className='add-ride-card-title'>Card Payment</h2>
             <p className='add-ride-payment'>
               All drivers are required to pay 10% of their earnings from each ride to the system.
             </p>
+          
+            <div className='atm-container'>
+              <img src={visa} alt='visa' />
+              <img src={master} alt='master' />
+
+              </div>
             <form onSubmit={handleCardSubmit} className="card-form">
+              <div className="form-group">
+                <label>Card Holder Name:</label>
+                <input type="text" name="cardNumber" value={cardData.cardName} onChange={handleCardChange} required />
+              </div>
               <div className="form-group">
                 <label>Card Number:</label>
                 <input type="text" name="cardNumber" value={cardData.cardNumber} onChange={handleCardChange} required />
               </div>
+              <div className='date-cv'>
               <div className="form-group">
                 <label>Card Expiry Date:</label>
                 <input type="text" name="cardExpiryDate" value={cardData.cardExpiryDate} onChange={handleCardChange} required />
@@ -158,7 +173,8 @@ const Addride = () => {
                 <label>CVV:</label>
                 <input type="text" name="cardCVV" value={cardData.cardCVV} onChange={handleCardChange} required />
               </div>
-              <button type="submit" className='add-ride-button'>Submit Payment</button>
+              </div>
+              <button type="submit" className='add-ride-button'>Pay <span className='button-price'>LKR {formData.seatCost*formData.seats/10}</span></button>
             </form>
           </div>
         </div>
