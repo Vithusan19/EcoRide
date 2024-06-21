@@ -19,13 +19,13 @@ const Editride = ({ currentrightdata, onSave, onClose, userRole }) => {
   };
 
   return (
-    <div className="popup">
-      <div className="popup-Inner">
-        <div className="popup-header">
-          <button className="close-btn" onClick={onClose}>X</button>
+    <div className="currentride-popup">
+      <div className="currentride-popup-Inner">
+        <div className="currentride-popup-header">
+          <button className="currentride-close-btn" onClick={onClose}>X</button>
         </div>
         <h3>Edit Ride details</h3>
-        <div className='form'>
+        <div className='currentride-form'>
           {userRole === 'driver' && (
             <>
               <label>
@@ -85,7 +85,7 @@ const Editride = ({ currentrightdata, onSave, onClose, userRole }) => {
             </>
           )}
         </div>
-        <button className="action-button" onClick={handleSubmit}>
+        <button className="currentride-action-button" onClick={handleSubmit}>
           Save Changes
         </button>
       </div>
@@ -107,13 +107,13 @@ const Rating = ({ onClose }) => {
   };
 
   return (
-    <div className="popup">
-      <div className="popup-Inner">
-        <div className="popup-header">
-          <button className="close-btn" onClick={onClose}>X</button>
+    <div className="currentride-popup">
+      <div className="currentride-popup-Inner">
+        <div className="currentride-popup-header">
+          <button className="currentride-close-btn" onClick={onClose}>X</button>
         </div>
         <h3>Rate Your Ride</h3>
-        <div className='rating'>
+        <div className='currentride-rating'>
           <label >
             
             <ReactStars
@@ -126,7 +126,7 @@ const Rating = ({ onClose }) => {
           </label>
           <br />
         </div>
-        <button className="action-button" onClick={handleSubmitRating}>
+        <button className="currentride-action-button" onClick={handleSubmitRating}>
           Submit Rating
         </button>
       </div>
@@ -195,10 +195,10 @@ const Currentride = ({ userRole }) => {
 
   const DriverView = () => (
     <>
-      <div className='card-box'>
+      <div className='currentride-card-box'>
         <h3>Ride details</h3>
-        <div className='box-container'>
-          <div className='box'>
+        <div className='currentride-box-container'>
+          <div className='currentride-box'>
             <p><strong>Date:</strong> {currentrightdata.Date}</p>
             <p><strong>Pickup Location:</strong> {currentrightdata.PickupLocation}</p>
             <p><strong>Drop-off Location:</strong>{currentrightdata.DropoffLocation}</p>
@@ -208,8 +208,8 @@ const Currentride = ({ userRole }) => {
             <p><strong>Preference:</strong> {currentrightdata.Preference}</p>
           </div>
         </div>
-        <div className="button-container">
-          <button className='action-button' onClick={toggleopenpopup}>Edit Ride</button>
+        <div className="currentride-button-container">
+          <button className='currentride-action-button' onClick={toggleopenpopup}>Edit Ride</button>
           {openpopup && (
             <Editride
               currentrightdata={currentrightdata}
@@ -219,11 +219,11 @@ const Currentride = ({ userRole }) => {
             />
           )}
 
-<button className='action-button' onClick={handlecancel}>Cancel Ride</button>
+<button className='currentride-action-button' onClick={handlecancel}>Cancel Ride</button>
           {cancelride && (
-            <div className="popup">
-              <div className="popup-Inner">
-                <button className="close-btn" onClick={closeModel}>
+            <div className="currentride-popup">
+              <div className="currentride-popup-Inner">
+                <button className="currentride-close-btn" onClick={closeModel}>
                   &times;
                 </button><br />
                 <h2>Ride Details</h2><br />
@@ -233,22 +233,22 @@ const Currentride = ({ userRole }) => {
                 <p><strong>Time:</strong> {currentrightdata.Time}</p><br />
                 <p><strong>Pickup Location:</strong> {currentrightdata.PickupLocation}</p><br />
                 <p><strong>Drop-off Location:</strong> {currentrightdata.DropoffLocation}</p><br />
-                <button className="delete-button" onClick={showDeleteDialoge}>
+                <button className="currentride-delete-button" onClick={showDeleteDialoge}>
                   Delete Ride
                 </button>
               </div>
             </div>
           )}
           {isDeleteDialogVisible && (
-            <div className="popup">
-              <div className="popup-delete-inner">
+            <div className="currentride-popup">
+              <div className="currentride-popup-delete-inner">
                 <h2>Confirm Deletion</h2><br />
                 <p>Are you sure you want to delete this Ride?</p><br />
-                <div className='button-container'>
-                  <button className='yes-button'>
+                <div className='currentride-button-container'>
+                  <button className='currentride-yes-button'>
                     Yes
                   </button>
-                  <button className="No-button" onClick={hideDeleteDialoge}>
+                  <button className="currentride-No-button" onClick={hideDeleteDialoge}>
                     No
                   </button>
                 </div>
@@ -256,15 +256,15 @@ const Currentride = ({ userRole }) => {
             </div>
           )}
 
-          <button className='action-button' onClick={handleFinishRide}>Finish Ride</button>
+          <button className='currentride-action-button' onClick={handleFinishRide}>Finish Ride</button>
           {isFinishDialogVisible && (
-            <div className="popup">
-              <div className="popup-delete-inner">
+            <div className="currentride-popup">
+              <div className="currentride-popup-delete-inner">
                 <h2>Ride Finished!</h2>
                 <br />
                 <p>Your ride is finished!</p>
                 <br />
-                <button className="action-button" onClick={hideFinishDialog}>Close</button>
+                <button className="currentride-action-button" onClick={hideFinishDialog}>Close</button>
               </div>
             </div>
           )}
@@ -274,10 +274,10 @@ const Currentride = ({ userRole }) => {
   );
 
   const PassengerView = () => (
-    <div className='card-box'>
+    <div className='currentride-card-box'>
       <h3>Ride details</h3>
-      <div className='box-container'>
-        <div className='box'>
+      <div className='currentride-box-container'>
+        <div className='currentride-box'>
           <p><strong>Driver Name:</strong> {currentrightdata.DriverName}</p>
           <p><strong>Vehicle Number:</strong> {currentrightdata.VehicleNumber}</p>
           <p><strong>Date:</strong> {currentrightdata.Date}</p>
@@ -289,8 +289,8 @@ const Currentride = ({ userRole }) => {
           <p><strong>Preference:</strong> {currentrightdata.Preference}</p>
         </div>
       </div>
-      <div className="button-container">
-        <button className='action-button' onClick={toggleopenpopup}>Edit Ride</button>
+      <div className="currentride-button-container">
+        <button className='currentride-action-button' onClick={toggleopenpopup}>Edit Ride</button>
         {openpopup && (
           <Editride
             currentrightdata={currentrightdata}
@@ -300,11 +300,11 @@ const Currentride = ({ userRole }) => {
           />
         )}
 
-<button className='action-button' onClick={handlecancel}>Cancel Ride</button>
+<button className='currentride-action-button' onClick={handlecancel}>Cancel Ride</button>
           {cancelride && (
-            <div className="popup">
-              <div className="popup-Inner">
-                <button className="close-btn" onClick={closeModel}>
+            <div className="currentride-popup">
+              <div className="currentride-popup-Inner">
+                <button className="currentride-close-btn" onClick={closeModel}>
                   &times;
                 </button>
                 <h2>Ride Details</h2>
@@ -317,22 +317,22 @@ const Currentride = ({ userRole }) => {
           <p><strong>Route: </strong>{currentrightdata.Route.join(' ➜ ')}</p>
           <p><strong>Number of seats:</strong> {currentrightdata.Numberofseats}</p>
           <p><strong>Preference:</strong> {currentrightdata.Preference}</p>
-                <button className="delete-button" onClick={showDeleteDialoge}>
+                <button className="currentride-delete-button" onClick={showDeleteDialoge}>
                   Delete Ride
                 </button>
               </div>
             </div>
           )}
           {isDeleteDialogVisible && (
-            <div className="popup">
-              <div className="popup-delete-inner">
+            <div className="currentride-popup">
+              <div className="currentride-popup-delete-inner">
                 <h2>Confirm Deletion</h2><br />
                 <p>Are you sure you want to delete this Ride?</p><br />
-                <div className='button-container'>
-                  <button className='yes-button'>
+                <div className='currentride-button-container'>
+                  <button className='currentride-yes-button'>
                     Yes
                   </button>
-                  <button className="No-button" onClick={hideDeleteDialoge}>
+                  <button className="currentride-No-button" onClick={hideDeleteDialoge}>
                     No
                   </button>
                 </div>
@@ -341,15 +341,15 @@ const Currentride = ({ userRole }) => {
           )}
 
 
-        <button className='action-button' onClick={handleFinishRide}>Finish Ride</button>
+        <button className='currentride-action-button' onClick={handleFinishRide}>Finish Ride</button>
         {isFinishDialogVisible && (
-          <div className="popup">
-            <div className="popup-delete-inner">
+          <div className="currentride-popup">
+            <div className="currentride-popup-delete-inner">
               <h2>Ride Finished!</h2>
               <br />
               <p>Your ride is finished!</p>
               <br />
-              <button className="action-button" onClick={hideFinishDialog}>Close</button>
+              <button className="currentride-action-button" onClick={hideFinishDialog}>Close</button>
             </div>
           </div>
         )}
@@ -362,7 +362,7 @@ const Currentride = ({ userRole }) => {
 
   return (
     <div className='currentride'>
-      <div className='header-title'>
+      <div className='currentride-header-title'>
         <h1>Current Ride</h1>
       </div>
       {userRole === 'driver' ? <DriverView /> : <PassengerView />}
