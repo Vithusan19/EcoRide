@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Profile.css';
 import userPhoto from '../assets/user.png';
 import webLogo from '../assets/weblogo.png';
-//import Searchbar from '../components/Searchbar';
+import LogoutConfirmation from '../components/LogoutConfirmation';
 
 const EditProfilePopup = ({ profileData, onSave, onClose }) => {
   const [formData, setFormData] = useState(profileData);
@@ -107,6 +108,9 @@ const Profile = () => {
   const [profileData, setProfileData] = useState(initialProfileData);
   const [rideHistory] = useState(initialRideHistory);
   const [showEditPopup, setShowEditPopup] = useState(false);
+  const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSaveProfile = (formData) => {
     setProfileData(formData);
@@ -116,7 +120,14 @@ const Profile = () => {
     setShowEditPopup(!showEditPopup);
   };
 
-  // const [searchQuery, setSearchQuery] = useState('');
+  const toggleLogoutConfirmation = () => {
+    setShowLogoutConfirmation(!showLogoutConfirmation);
+  };
+
+  const handleLogoutConfirm = () => {
+    // Perform any logout logic here, like clearing tokens, etc.
+    navigate('/home');
+  };
 
   return (
     <div>
@@ -126,6 +137,13 @@ const Profile = () => {
             profileData={profileData}
             onSave={handleSaveProfile}
             onClose={toggleEditPopup}
+          />
+        )}
+        {showLogoutConfirmation && (
+          <LogoutConfirmation
+            message="Are you sure you want to logout?"
+            onConfirm={handleLogoutConfirm}
+            onCancel={toggleLogoutConfirmation}
           />
         )}
         <div className="profile-left">
@@ -143,7 +161,7 @@ const Profile = () => {
             <button onClick={toggleEditPopup}>Edit Profile</button>
             <button>Change Password</button>
             <button>Delete Account</button>
-            <button>Logout</button>
+            <button onClick={toggleLogoutConfirmation}>Logout</button>
           </div>
           <div className="ride-history">
             <h2>Ride History</h2>
