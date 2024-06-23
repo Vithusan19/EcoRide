@@ -586,4 +586,24 @@
     gap: 100px;
     margin: 50px 20px;
   }
+
+  /* notification */
+  .message-container
+  {
+    display: flex;
+   gap: 20px;
+   align-items: center;
+   flex-wrap: wrap;
+   flex: 3;
+   max-width: 70rem;
+   margin: 50px auto;
+  }
+  .message-bar
+  {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+   
+    background-color: #00f78d;
+  }
   
