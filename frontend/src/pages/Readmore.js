@@ -58,40 +58,40 @@ const Readmore = ({ cards }) => {
       <div className="image">
         <img alt="img" src={images[card.car]} />
       </div>
-      <div className="card-details">
-        <div className="detail">
-          <span className="label"><strong>Vehicle Number:</strong></span> {card.vehicleNumber}
+      <div className="readmore-card-details">
+        <div className="readmore-detail">
+          <span className="readmore-label"><strong>Vehicle Number:</strong></span> {card.vehicleNumber}
         </div>
-        <div className="detail">
-          <span className="label"><strong>Driver Name:</strong></span> {card.driverName}
+        <div className="readmore-detail">
+          <span className="readmore-label"><strong>Driver Name:</strong></span> {card.driverName}
         </div>
-        <div className="detail">
-          <span className="label"><strong>From:</strong></span> {card.from}
+        <div className="readmore-detail">
+          <span className="readmore-label"><strong>From:</strong></span> {card.from}
         </div>
-        <div className="detail">
-          <span className="label"><strong>To:</strong></span> {card.to}
+        <div className="readmore-detail">
+          <span className="readmore-label"><strong>To:</strong></span> {card.to}
         </div>
-        <div className="detail">
-          <span className="label"><strong>Route:</strong></span> {card.route.join(' ➜ ')}
+        <div className="readmore-detail">
+          <span className="readmore-label"><strong>Route:</strong></span> {card.route.join(' ➜ ')}
         </div>
-        <div className="detail">
-          <span className="label"><strong>Time Period:</strong></span> {card.timePeriod}
+        <div className="readmore-detail">
+          <span className="readmore-label"><strong>Time Period:</strong></span> {card.timePeriod}
         </div>
-        <div className="detail">
-          <span className="label"><strong>Available Seats:</strong></span> {card.seats}
+        <div className="readmore-detail">
+          <span className="readmore-label"><strong>Available Seats:</strong></span> {card.seats}
         </div>
-        <div className="detail">
-          <span className="label"><strong>Preferences:</strong></span> {card.preferences}
+        <div className="readmore-detail">
+          <span className="readmore-label"><strong>Preferences:</strong></span> {card.preferences}
         </div>
       </div>
-      <div className="btn-container">
-        <button className="back-button" onClick={() => navigate(-1)}>Back</button>
-        <button className="request-button" onClick={handleRequestRide}>Request Ride</button>
+      <div className="readmore-btn-container">
+        <button className="readmore-back-button" onClick={() => navigate(-1)}>Back</button>
+        <button className="readmore-request-button" onClick={handleRequestRide}>Request Ride</button>
       </div>
 
       {isPopupOpen && (
-        <div className="popup">
-          <div className="popup-Inner">
+        <div className="readmore-popup">
+          <div className="readmore-popup-Inner">
             <h3>Request Seats</h3>
             <label>
               Number of Seats:
@@ -103,9 +103,9 @@ const Readmore = ({ cards }) => {
                 onChange={(e) => setRequestedSeats(e.target.value)}
               />
             </label>
-            <div className="button-container">
-              <button className="action-button" onClick={handleClosePopup}>Cancel</button>
-              <button className="action-button" onClick={handleSubmitRequest}>Submit</button>
+            <div className="readmore-button-container">
+              <button className="readmore-action-button" onClick={handleClosePopup}>Cancel</button>
+              <button className="readmore-action-button" onClick={handleSubmitRequest}>Submit</button>
             </div>
           </div>
         </div>
