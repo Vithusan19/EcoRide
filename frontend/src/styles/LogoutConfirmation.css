@@ -1,4 +1,4 @@
-/* src/styles/LogoutConfirmation.css */
+src/styles/LogoutConfirmation.css
 .modal {
     position: fixed;
     top: 0;
@@ -24,7 +24,7 @@
   }
   
   .modal-confirm {
-    background: green;
+    background: #00f78d;
     color: white;
     padding: 10px 20px;
     margin-right: 10px;
@@ -32,14 +32,22 @@
     border-radius: 5px;
     cursor: pointer;
   }
+
+  .modal-confirm:hover {
+    background-color: #00c96d;
+  }
   
   .modal-cancel {
-    background: red;
+    background: rgb(255, 111, 111);
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+  }
+
+  .modal-cancel:hover{
+    background-color: #ef1c1c;
   }
 
   /* Responsive styles for buttons */

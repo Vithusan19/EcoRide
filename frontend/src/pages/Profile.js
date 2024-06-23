@@ -89,6 +89,88 @@ const EditProfilePopup = ({ profileData, onSave, onClose }) => {
   );
 };
 
+const ChangePasswordPopup = ({ onSave, onClose }) => {
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPasswordData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = () => {
+    if (passwordData.newPassword === passwordData.confirmPassword) {
+      onSave(passwordData);
+      onClose();
+    } else {
+      alert('New passwords do not match');
+    }
+  };
+
+  return (
+    <div className="popup">
+      <div className="popup-inner">
+        <div className="popup-header">
+          <img src={webLogo} alt="Website Logo" className="web-logo" />
+          <button className="close-btn" onClick={onClose}>X</button>
+        </div>
+        <h2>Change Password</h2>
+        <div className="form-group">
+          <label>Current Password</label>
+          <input
+            type="password"
+            name="currentPassword"
+            value={passwordData.currentPassword}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label>New Password</label>
+          <input
+            type="password"
+            name="newPassword"
+            value={passwordData.newPassword}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label>Confirm New Password</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            value={passwordData.confirmPassword}
+            onChange={handleChange}
+          />
+        </div>
+        <button className="submit-btn" onClick={handleSubmit}>Change Password</button>
+      </div>
+    </div>
+  );
+};
+
+const DeleteConfirmationPopup = ({ onConfirm, onCancel }) => (
+  <div className="popup">
+    <div className="popup-inner">
+      <div className="popup-header">
+        <img src={webLogo} alt="Website Logo" className="web-logo" />
+        <button className="close-btn" onClick={onCancel}>X</button>
+      </div>
+      <h2>Delete Account</h2>
+      <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+      <div className="form-group">
+        <button className="submit-btn" onClick={onConfirm}>Confirm</button>
+        <button className="submit-btn-cancel" onClick={onCancel}>Cancel</button>
+      </div>
+    </div>
+  </div>
+);
+
 const Profile = () => {
   const initialProfileData = {
     username: 'nithushan21',
@@ -108,8 +190,9 @@ const Profile = () => {
   const [profileData, setProfileData] = useState(initialProfileData);
   const [rideHistory] = useState(initialRideHistory);
   const [showEditPopup, setShowEditPopup] = useState(false);
-  const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const [showChangePasswordPopup, setShowChangePasswordPopup] = useState(false);
+  const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   const navigate = useNavigate();
 
@@ -121,12 +204,16 @@ const Profile = () => {
     setShowEditPopup(!showEditPopup);
   };
 
+  const toggleChangePasswordPopup = () => {
+    setShowChangePasswordPopup(!showChangePasswordPopup);
+  };
+
   const toggleLogoutConfirmation = () => {
     setShowLogoutConfirmation(!showLogoutConfirmation);
   };
 
-  const toggleChangePasswordPopup = () => {
-    setShowChangePasswordPopup(!showChangePasswordPopup);
+  const toggleDeleteConfirmation = () => {
+    setShowDeleteConfirmation(!showDeleteConfirmation);
   };
 
   const handleLogoutConfirm = () => {
@@ -134,70 +221,9 @@ const Profile = () => {
     navigate('/home');
   };
 
-  const ChangePasswordPopup = ({ onSave, onClose }) => {
-    const [formData, setFormData] = useState({
-      currentPassword: '',
-      newPassword: '',
-      confirmPassword: '',
-    });
-
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    };
-
-    const handleSubmit = () => {
-      // Add your password validation logic here
-      if (formData.newPassword === formData.confirmPassword) {
-        onSave(formData);
-        onClose();
-      } else {
-        alert("New passwords don't match!");
-      }
-    };
-
-    return (
-      <div className="popup">
-        <div className="popup-inner">
-          <div className="popup-header">
-            <img src={webLogo} alt="Website Logo" className="web-logo" />
-            <button className="close-btn" onClick={onClose}>X</button>
-          </div>
-          <h2>Change Password</h2>
-          <div className="form-group">
-            <label>Current Password</label>
-            <input
-              type="password"
-              name="currentPassword"
-              value={formData.currentPassword}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>New Password</label>
-            <input
-              type="password"
-              name="newPassword"
-              value={formData.newPassword}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Confirm New Password</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-            />
-          </div>
-          <button className="submit-btn" onClick={handleSubmit}>Save Changes</button>
-        </div>
-      </div>
-    );
+  const handleDeleteAccountConfirm = () => {
+    // Redirect to home page after confirmation
+    navigate('/home');
   };
 
   return (
@@ -223,6 +249,12 @@ const Profile = () => {
             onCancel={toggleLogoutConfirmation}
           />
         )}
+        {showDeleteConfirmation && (
+          <DeleteConfirmationPopup
+            onConfirm={handleDeleteAccountConfirm}
+            onCancel={toggleDeleteConfirmation}
+          />
+        )}
         <div className="profile-left">
           <img src={userPhoto} alt="User Profile" className="profile-photo" />
         </div>
@@ -237,7 +269,7 @@ const Profile = () => {
           <div className="profile-actions">
             <button onClick={toggleEditPopup}>Edit Profile</button>
             <button onClick={toggleChangePasswordPopup}>Change Password</button>
-            <button>Delete Account</button>
+            <button onClick={toggleDeleteConfirmation}>Delete Account</button>
             <button onClick={toggleLogoutConfirmation}>Logout</button>
           </div>
           <div className="ride-history">
