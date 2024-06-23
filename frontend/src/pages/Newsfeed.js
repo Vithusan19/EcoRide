@@ -142,11 +142,14 @@
 
 // export default Newsfeed;
 
+
+//After i insert icons to newsfeed
 import React, { useState } from 'react';
 import Searchbar from '../components/Searchbar';
 import '../styles/Newsfeed.css';
 import { Link } from 'react-router-dom'; // Import Link component
 import ReactStars from 'react-rating-stars-component'; // Import ReactStars component
+import { FaClock, FaMapMarkerAlt, FaUsers } from 'react-icons/fa'; // Import icons from react-icons/fa
 
 const Newsfeed = () => {
   const [cards, setCards] = useState([
@@ -286,11 +289,13 @@ const Newsfeed = () => {
             {filteredCards.map((card, index) => (
               <div key={index} className="card">
                 <h3>{card.car}</h3>
-                <p><strong>From:</strong> {card.from}</p>
-                <p><strong>To:</strong> {card.to}</p>
-                <p><strong>Route:</strong> {card.route.join(' ➜ ')}</p> {/* Display the route */}
-                <p><strong>Time Period:</strong> <span className="time-period">{card.timePeriod}</span></p>
-                <p><strong>Available Seats:</strong> <span className="seats">{card.seats}</span></p>
+                <p><FaMapMarkerAlt /> <strong>From:</strong> {card.from}</p>
+                <p><FaMapMarkerAlt /> <strong>To:</strong> {card.to}</p>
+                <p><FaClock /> <strong>Time Period:</strong> <span className="time-period">{card.timePeriod}</span></p>
+                <p><FaUsers /> <strong>Available Seats:</strong> <span className="seats">{card.seats}</span></p>
+                <p><strong>Route:</strong> {card.route.map((point, i) => (
+                  <React.Fragment key={i}>{i > 0 && ' ➜ '}{point}</React.Fragment>
+                ))}</p>
                 <div className="rating-stars">
                   <ReactStars
                     count={5}
@@ -312,4 +317,3 @@ const Newsfeed = () => {
 };
 
 export default Newsfeed;
-
