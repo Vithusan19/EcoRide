@@ -25,6 +25,7 @@ section {
   padding: 20px;
   background-color: #ffffff;
   margin-left: 100px;
+  margin-top: -50px;
 }
 
 /* Cards wrapper */
@@ -33,78 +34,87 @@ section {
   flex-wrap: wrap;
   justify-content: space-between;
   background: #ffffff;
+  text-align: center;
 }
 
-/* Individual card styles */
+.head-card{
+
+  background-color: #fcc6c6;
+  color: #000000;
+
+}
+
+
 .card {
-  width: calc(33.33% - 20px); /* Three cards per row with spacing */
+  width: calc(33.33% - 20px); 
   margin: 10px;
   background-color: rgb(255, 255, 255);
   border-radius: 8px;
   padding: 20px;
-  box-shadow: rgba(0, 0, 0, 0.5) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.005) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.02) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.3) 0px 2px 1px, rgba(0, 0, 0, 0.05) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.02) 0px 16px 8px, rgba(0, 0, 0, 0) 0px 32px 16px;
   transition: transform 0.3s ease-in-out;
 }
 
-/* Card hover effect */
+
 .card:hover {
   transform: scale(1.05);
 }
 
-/* Heading for card */
+
 .card h3 {
   margin: 0 0 10px;
   font-size: 1.5em;
 }
 
-/* Paragraphs inside card */
+
 .card p {
   margin: 10px 0;
 }
 
-/* Styling for location symbol */
+
 .location-symbol {
   font-weight: bold;
   color: #2c3e50;
 }
 
-/* Arrow symbol styling */
+
 .arrow-symbol {
   margin: 0 5px;
   color: #2980b9;
 }
 
-/* Time period styling */
+
 .time-period {
   font-style: italic;
   color: #8e44ad;
 }
 
-/* Available seats styling */
+
 .seats {
   font-weight: bold;
   color: #27ae60;
 }
 
-/* Read more link styling */
+
 .read-more {
   display: block;
   margin-top: 10px;
   text-decoration: none;
-  color: rgb(16, 0, 0);
-  background: #00f78d;
+  color: rgb(255, 255, 255);
+  background-color: #313834;
   border-radius: 5px;
   padding: 5px;
-  margin: 0 auto; /* Center the button horizontally */
+  margin: 0 auto;
   width: fit-content;
 }
 
-/* Read more link hover effect */
+
 .read-more:hover {
-  text-decoration: underline;
+  text-decoration: none;
+  background: #0ae385;
 }
 
-/* Media queries for responsive design */
+/* Media queries for responsive  */
 @media screen and (max-width: 1200px) {
   section {
     margin-left: 100px;
@@ -117,7 +127,7 @@ section {
   }
 
   .card {
-    width: calc(50% - 20px); /* Two cards per row on medium screens */
+    width: calc(50% - 20px); 
   }
 }
 
@@ -127,7 +137,7 @@ section {
   }
 
   .card {
-    width: calc(50% - 20px); /* Two cards per row on small tablets */
+    width: calc(50% - 20px); 
   }
 }
 
@@ -137,34 +147,34 @@ section {
   }
 
   .card {
-    width: calc(100% - 20px); /* One card per row on mobile screens */
+    width: calc(100% - 20px); 
   }
 }
 
 @media screen and (max-width: 425px) {
   section {
-    margin-left: 10px; /* Adjust margin as needed */
-    overflow-x: auto; /* Enable horizontal scrolling for content overflow */
+    margin-left: 10px;
+    overflow-x: auto; 
   }
 
   .card {
-    width: calc(100% - 20px); /* One card per row on smaller mobile screens */
+    width: calc(100% - 20px); 
   }
 
   .card p {
-    white-space: nowrap; /* Prevent text wrapping */
-    overflow: hidden; /* Hide overflowing text */
-    text-overflow: ellipsis; /* Display ellipsis (...) for overflow text */
-    margin: 0; /* Remove any default margin */
-    padding: 5px; /* Add padding for better readability */
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    margin: 0; 
+    padding: 5px;
   }
 }
 
-/* Styling for rating stars */
+
 .rating-stars {
   display: flex;
-  align-items: center; /* Center items vertically */
-  justify-content: center; /* Center items horizontally */
+  align-items: center; 
+  justify-content: center; 
   margin-top: 10px;
 }
 
