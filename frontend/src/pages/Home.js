@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
@@ -13,14 +11,19 @@ import fb from '../assets/facebook.png';
 import header from '../assets/header.png';
 import arrow from '../assets/arrow.png';
 import loginbg from '../assets/loginbg.png';
+import signupBg from '../assets/signupBg.png';
 import serve1 from '../assets/serve1.png';
 import serve2 from '../assets/serve2.png';
 import serve3 from '../assets/serve3.png';
+import axios from 'axios';
 
 const Home = () => {
     const [showmenu, setshowmenu] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
     const [isLogin, setIsLogin] = useState(true); // Default to true for login view
+    const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+    const [signupForm, setSignupForm] = useState({ name: '', username: '', email: '', phone: '', nic: '', gender: '', password: '', confirmPassword: '' });
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -40,17 +43,60 @@ const Home = () => {
 
     const toggleForm = () => {
         setIsLogin(!isLogin);
+        setErrors({});
     };
 
-    const handleLogin = () => {
-        setShowLogin(true);
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost/ecoRide/PHP/login.php', loginForm);
+            if (response.data.userrole === 'admin') {
+                navigate('/admin');
+            } else if (response.data.userrole === 'user') {
+                navigate('/newsfeed');
+            } else {
+                setErrors({ login: 'Username or password incorrect' });
+            }
+        } catch (error) {
+            setErrors({ login: 'Username or password incorrect' });
+        }
     };
 
-    const movePage = (e) => {
-        navigate('/newsfeed'); // Navigate to Newsfeed page
+    const validateSignupForm = () => {
+        let formErrors = {};
+        const { name, username, email, phone, nic, gender, password, confirmPassword } = signupForm;
+        if (!name || !username || !email || !phone || !nic || !gender || !password || !confirmPassword) {
+            formErrors.message = 'All fields are required';
+        }
+        if (password !== confirmPassword) {
+            formErrors.password = 'Passwords do not match';
+        }
+        setErrors(formErrors);
+        return Object.keys(formErrors).length === 0;
     };
-    const movePage1 = (e) => {
-        navigate('/admin'); // Navigate to Newsfeed page
+
+    const handleSignupSubmit = async (e) => {
+        e.preventDefault();
+        if (validateSignupForm()) {
+            try {
+                const response = await axios.post('http://localhost/ecoRide/PHP/signup.php', signupForm);
+                
+                setIsLogin(true); 
+                setErrors({}); 
+                setShowLogin(true); 
+            } catch (error) {
+                setErrors({ signup: 'Signup failed' }); 
+            }
+        }
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        if (isLogin) {
+            setLoginForm({ ...loginForm, [name]: value });
+        } else {
+            setSignupForm({ ...signupForm, [name]: value });
+        }
     };
 
     const year = new Date();
@@ -66,7 +112,7 @@ const Home = () => {
                     <Link activeClass="active" to="services" spy={true} smooth={true} offset={0} duration={100} className="nav-menu-item">Our Services</Link>
                     <Link activeClass="active" to="contact" spy={true} smooth={true} offset={0} duration={100} className="nav-menu-item">Contact Us</Link>
                 </div>
-                <button className="nav-button" onClick={handleLogin}>
+                <button className="nav-button" onClick={() => setShowLogin(true)}>
                     Login | Register
                 </button>
                 <img src={menu} alt="menu" className="nav-menu-img" onClick={() => setshowmenu(!showmenu)} />
@@ -75,7 +121,7 @@ const Home = () => {
                     <Link activeClass="active" to="about" spy={true} smooth={true} offset={-100} duration={100} className="list-item" onClick={() => setshowmenu(false)}>About Us</Link>
                     <Link activeClass="active" to="services" spy={true} smooth={true} offset={-100} duration={100} className="list-item" onClick={() => setshowmenu(false)}>Our Services</Link>
                     <Link activeClass="active" to="contact" spy={true} smooth={true} offset={-100} duration={100} className="list-item" onClick={() => setshowmenu(false)}>Contact Us</Link>
-                    <Link className="list-item" onClick={() => { handleLogin(); setshowmenu(false); }}>Login</Link>
+                    <Link className="list-item" onClick={() => { setShowLogin(true); setshowmenu(false); }}>Login</Link>
                 </div>
             </div>
             <div className="header-image">
@@ -95,35 +141,6 @@ const Home = () => {
                 <img src={aboutImg} alt="aboutImage" className="about-img" />
             </section>
             {/* services */}
-            {/* Effortless Ride Publishing and Booking
-            Drivers can easily publish their ride details and passengers can view the available ride.
-
-            Secure Communication and Payment Processing
-            System facilitates with getting inquires and secure payment process
-
-            Comprehensive User and Ride Management
-            offers robust user and ride management features that empower users to efficiently manage their profiles and travel plans */}
-            <section id='services'>
-          
-            {/* <div className='services-con'>
-
-                <img src={easy} alt='easy' className='services-con-img'/>
-                <span className='services-con-tittle'>Effortless Ride Publishing and Booking</span>
-                <span className='services-con-text'> Drivers can easily publish their ride details and passengers can view the available ride.</span>
-            </div>
-            <div className='services-con'>
-
-                <img src={Secure} alt='Secure' className='services-con-img'/>
-                <span className='services-con-tittle'> Secure Communication and Payment Processing</span>
-                <span className='services-con-text'>System facilitates with getting inquires and secure payment process
-                .</span>
-            </div>
-            <div className='services-con'>
-
-                <img src={execution} alt='easy' className='services-con-img'/>
-                <span className='services-con-tittle'>Comprehensive User and Ride Management</span>
-                <span className='services-con-text'>offers robust user and ride management features that empower users to efficiently manage their profiles and travel plans</span>
-            </div> */}
             <section id='services'>
                 <h2 className='services-tittle'>Our Services</h2>
                 <span className='services-para'>At EcoRide, we strive to make commuting more efficient, affordable, and environmentally friendly. Our platform offers a range of services designed to enhance your travel experience by connecting you with fellow commuters, providing real-time updates, and ensuring your safety. Explore how EcoRide can simplify your daily journeys and contribute to a greener planet.</span>
@@ -146,13 +163,10 @@ const Home = () => {
                         <img className='services-img' src={serve3} alt='' />
                         <div className='services-bar-text'>
                             <h2>Safety and Environmental Impact</h2>
-                            <p>Track your reduced carbon footprint. User profiles and ratings ensure safe carpooling. verified profiles, guarantee secure travel. EcoRide is committed to eco-friendly commuting.</p>
+                            <p>Track your reduced carbon footprint. User profiles and ratings ensure safe carpooling. Verified profiles, guarantee secure travel. EcoRide is committed to eco-friendly commuting.</p>
                         </div>
                     </div>
                 </div>
-            </section>
-        
-        
             </section>
             {/* contactus */}
             <section id="contactpage">
@@ -193,20 +207,59 @@ const Home = () => {
                                 <div className='Rightside'>
                                     <h1 className="log-title">Login here</h1>
                                     <form className="log-form">
-                                        <input type="text" className="form-control" placeholder="Enter username" />
-                                        <input type="password" className="form-control" placeholder="Enter password" />
+                                        <input type="text" className="form-control" placeholder="Enter username" name="username" value={loginForm.username} onChange={handleInputChange} required/>
+                                        <input type="password" className="form-control" placeholder="Enter password" name="password" value={loginForm.password} onChange={handleInputChange} required/>
+                                        {errors.login && <div className="signup-error">{errors.login}</div>}
                                         <span className='forgot'>Forget Your Password?</span><br />
-                                        <button className='login-but' onClick={movePage}>SIGN IN</button><br />
-                                        <button className='login-but' onClick={movePage1}>Admin</button><br />
-                                        <span className='register-text'>Enter your personal details to use all of site features.<p>Don't you have an account?</p></span><br />
+                                        <button className='login-but' onClick={handleLogin}>SIGN IN</button><br /><br />
+                                        <span className='register-text'>Don't you have an account?</span><br />
                                         <button className='log-but' onClick={toggleForm}>SIGN UP</button>
                                     </form>
                                 </div>
                             </div>
                         ) : (
-                            <div>
-                                <h2>Login Form</h2>
-                                <button className='log-but' onClick={toggleForm}>Login</button>
+                            <div className='signup-con'>
+                                <div className='left-signup'>
+                                    <h1 className="log-title">Signup here</h1>
+                                    <form className="log-form" onSubmit={handleSignupSubmit}>
+                                        <div className='col'>
+                                            <input type="text" className="form-control" placeholder="Enter Name" name="name" value={signupForm.name} onChange={handleInputChange} />
+                                            <input type="text" className="form-control" placeholder="Enter username" name="username" value={signupForm.username} onChange={handleInputChange} />
+                                        </div>
+                                        <div className='col'>
+                                            <input type="text" className="form-control" placeholder="Enter Email" name="email" value={signupForm.email} onChange={handleInputChange} />
+                                            <input type="text" className="form-control" placeholder="Enter Phone number" name="phone" value={signupForm.phone} onChange={handleInputChange} />
+                                        </div>
+                                        <div className='col'>
+                                            <input type="text" className="form-control" placeholder="Enter Nic-Number" name="nic" value={signupForm.nic} onChange={handleInputChange} />
+                                            <input type="file" className="form-control" name="file" onChange={handleInputChange} />
+                                        </div>
+                                        <div className='col'>
+                                            <label>Gender</label>
+                                            <label>
+                                                <input type="radio" className="form-check-input" name="gender" value="male" onChange={handleInputChange} /> Male
+                                            </label>
+                                            <label>
+                                                <input type="radio" className="form-check-input" name="gender" value="female" onChange={handleInputChange} /> Female
+                                            </label>
+                                        </div>
+                                        <div className='col'>
+                                            <input type="password" className="form-control" placeholder="Enter Password" name="password" value={signupForm.password} onChange={handleInputChange} />
+                                            <input type="password" className="form-control" placeholder="Confirm password" name="confirmPassword" value={signupForm.confirmPassword} onChange={handleInputChange} />
+                                        </div>
+                                        {errors.message && <div className="signup-error">{errors.message}</div>}
+                                        {errors.password && <div className="signup-error">{errors.password}</div>}
+                                        {errors.signup && <div className="signup-error">{errors.signup}</div>}
+                                        <div className='col'>
+                                            <button className='login-but' type="submit">SIGN UP</button><br />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div className='right-signup'>
+                                    <img src={signupBg} alt='signupBg' className='signupBg' />
+                                    <span className='login-text'>Enter your personal details to use all of site features.<p>if you have an account?</p></span><br />
+                                    <button className='log-but' onClick={toggleForm}>Login</button>
+                                </div>
                             </div>
                         )}
                     </div>
@@ -217,4 +270,3 @@ const Home = () => {
 }
 
 export default Home;
-

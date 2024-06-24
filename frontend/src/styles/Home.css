@@ -427,14 +427,14 @@
   background-color: #00F78D;
   font-weight: 600;
   font-size: 15px;
-  margin-top: 20px;
+  margin-top: 10px;
 
 
 }
 
 .log-but {
 
-  margin: 5px auto;
+  margin: 0 auto;
   padding: 10px 70px;
   border-radius: 20px;
   border: solid 2px #000000;
@@ -553,6 +553,69 @@
 
 
 }
+.signup-con
+{
+  display: flex;
+  justify-content: space-between;
+}
+.letf-signup
+{
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+.col
+{
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+  
+ 
+}
+.signupBg
+{
+  width: 70%;
+  margin: 0 auto;
+}
+.right-signup
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+ 
+}
+.login-but
+{
+  margin: 0 auto;
+}
+.signup-error
+{
+  color: red;
+  font-size: medium;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* services */
 #services {
