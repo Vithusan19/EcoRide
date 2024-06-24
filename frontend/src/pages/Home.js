@@ -25,6 +25,12 @@ const Home = () => {
     const [signupForm, setSignupForm] = useState({ name: '', username: '', email: '', phone: '', nic: '', gender: '', password: '', confirmPassword: '' });
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
+    const movePage = (e) => {
+        navigate('/newsfeed'); // Navigate to Newsfeed page
+    };
+    const movePage1 = (e) => {
+        navigate('/admin'); // Navigate to Newsfeed page
+    };
 
     useEffect(() => {
         // Dynamically load Bootstrap CSS
@@ -212,6 +218,9 @@ const Home = () => {
                                         {errors.login && <div className="signup-error">{errors.login}</div>}
                                         <span className='forgot'>Forget Your Password?</span><br />
                                         <button className='login-but' onClick={handleLogin}>SIGN IN</button><br /><br />
+                                        <button className='login-but1' onClick={movePage}>SIGN IN</button><br /><br/>
+                                        <button className='login-but1' onClick={movePage1}>Admin</button><br />
+
                                         <span className='register-text'>Don't you have an account?</span><br />
                                         <button className='log-but' onClick={toggleForm}>SIGN UP</button>
                                     </form>
