@@ -100,12 +100,13 @@ html, body {
     margin: 0.5rem 0;
     color: #333;
   }
-  
-  @media (max-width: 768px) {
+
+  @media (max-width: 1300px) {
     .profile-container {
       flex-direction: column;
       text-align: center;
       align-items: center;
+      margin-left: 70%;
     }
   
     .profile-left {
