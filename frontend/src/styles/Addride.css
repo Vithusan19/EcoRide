@@ -9,22 +9,20 @@
   margin-left: 25vh; 
   min-height: calc(100vh - 100px); 
   overflow-x: hidden;
-  overflow-y: auto; 
+  overflow-y: hidden; /* changed to hidden to remove scrollbar */
 }
 
 .ride-image-top {
-  width: 80%;
+  width: 30%; /* decreased image size */
   height: auto;
   border-radius: 8px;
   margin-bottom: 20px;
 }
 
-
 .add-ride-title {
   text-align: center;
   margin-bottom: 20px;
   font-size: 1.8rem;
-  font: weight 900px;;
   padding: 10px;
   border-radius: 10px;
   width: 100%;
@@ -82,8 +80,6 @@
   align-items: center;
   gap: 15px;
 }
-
-
 
 .add-ride-modal {
   position: fixed;
@@ -160,7 +156,6 @@
 }
 
 .add-ride-button {
- 
   background: #00f78d;
   color: black;
   border: none;
@@ -176,18 +171,16 @@
 .add-ride-button:hover {
   background: #0ae385;
 }
-.button-price
-{
+
+.button-price {
   font-size: 14px;
   font-weight: 600;
 }
 
-
-
 @media (min-width: 1025px) {
   .add-ride-container {
-    margin-left: 30%; 
-    width: 70vw; 
+    margin-left: 40%; 
+    width: 60vw; 
     min-height: calc(100vh - 100px); 
   }
 
@@ -196,11 +189,9 @@
   }
 
   .ride-image-top {
-    width: 70%; 
+    width: 50%; 
   }
 }
-
-
 
 @media (max-width: 1024px) {
   .add-ride-container {
@@ -243,18 +234,18 @@
     padding: 6px;
   }
 }
-.atm-container
-{
+
+.atm-container {
   display: flex;
   gap: 5px;
 }
-.atm-container img
-{
+
+.atm-container img {
   width: 30px;
   object-fit: cover;
 }
-.date-cv
-{
+
+.date-cv {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
