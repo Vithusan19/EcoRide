@@ -84,15 +84,15 @@ const Home = () => {
     const handleSignupSubmit = async (e) => {
         e.preventDefault();
         if (validateSignupForm()) {
-            try {
-                const response = await axios.post('http://localhost/ecoRide/PHP/signup.php', signupForm);
+            // try {
+            //     const response = await axios.post('http://localhost/ecoRide/PHP/signup.php', signupForm);
                 
-                setIsLogin(true); 
-                setErrors({}); 
-                setShowLogin(true); 
-            } catch (error) {
-                setErrors({ signup: 'Signup failed' }); 
-            }
+            //     setIsLogin(true); 
+            //     setErrors({}); 
+            //     setShowLogin(true); 
+            // } catch (error) {
+            //     setErrors({ signup: 'Signup failed' }); 
+            // }
         }
     };
 
