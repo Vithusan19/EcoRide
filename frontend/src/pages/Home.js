@@ -64,7 +64,7 @@ const Home = () => {
                 setErrors({ login: 'Username or password incorrect' });
             }
         } catch (error) {
-            setErrors({ login: 'Username or password incorrect' });
+            setErrors({ login: 'not connected' });
         }
     };
 
