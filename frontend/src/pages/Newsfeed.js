@@ -3,7 +3,7 @@ import Searchbar from '../components/Searchbar';
 import '../styles/Newsfeed.css';
 import { Link } from 'react-router-dom'; // Import Link component
 import ReactStars from 'react-rating-stars-component'; // Import ReactStars component
-import { FaClock, FaMapMarkerAlt, FaUsers, FaCar } from 'react-icons/fa'; // Import icons from react-icons/fa
+import { FaClock, FaMapMarkerAlt, FaUsers, FaCar,FaCalendarAlt } from 'react-icons/fa'; // Import icons from react-icons/fa
 
 const Newsfeed = () => {
   const [cards, setCards] = useState([
@@ -13,6 +13,7 @@ const Newsfeed = () => {
       to: 'Colombo',
       route: ['Jaffna', 'Vavuniya', 'Colombo'],
       timePeriod: '6 AM - 12 PM',
+      date: 'Today',
       seats: 4,
       rating: 3.5,
     },
@@ -22,6 +23,7 @@ const Newsfeed = () => {
       to: 'Kandy',
       route: ['Anuradhapura', 'Kandy'],
       timePeriod: '7 AM - 1 PM',
+      date: 'Tomorrow',
       seats: 3,
       rating: 4.2,
     },
@@ -31,6 +33,7 @@ const Newsfeed = () => {
       to: 'Galle',
       route: ['Jaffna', 'Colombo', 'Galle'],
       timePeriod: '8 AM - 2 PM',
+      date: 'Today',
       seats: 5,
       rating: 3.8,
     },
@@ -40,6 +43,7 @@ const Newsfeed = () => {
       to: 'Colombo',
       route: ['Jaffna', 'Vavuniya', 'Colombo'],
       timePeriod: '6 AM - 12 PM',
+      date: 'Tomorrow',
       seats: 4,
       rating: 3.0,
     },
@@ -49,6 +53,7 @@ const Newsfeed = () => {
       to: 'Kandy',
       route: ['Anuradhapura', 'Kandy'],
       timePeriod: '7 AM - 1 PM',
+      date: 'Today',
       seats: 3,
       rating: 4.5,
     },
@@ -58,6 +63,7 @@ const Newsfeed = () => {
       to: 'Galle',
       route: ['Jaffna', 'Colombo', 'Galle'],
       timePeriod: '8 AM - 2 PM',
+      date: 'Tomorrow',
       seats: 5,
       rating: 3.2,
     },
@@ -67,6 +73,7 @@ const Newsfeed = () => {
       to: 'Galle',
       route: ['Jaffna', 'Colombo', 'Galle'],
       timePeriod: '8 AM - 2 PM',
+      date: 'Today',
       seats: 5,
       rating: 4.0,
     },
@@ -76,6 +83,7 @@ const Newsfeed = () => {
       to: 'Colombo',
       route: ['Jaffna', 'Vavuniya', 'Colombo'],
       timePeriod: '6 AM - 12 PM',
+      date: 'Tomorrow',
       seats: 4,
       rating: 3.7,
     },
@@ -85,6 +93,7 @@ const Newsfeed = () => {
       to: 'Kandy',
       route: ['Anuradhapura', 'Kandy'],
       timePeriod: '7 AM - 1 PM',
+      date: 'Today',
       seats: 3,
       rating: 4.1,
     },
@@ -94,6 +103,7 @@ const Newsfeed = () => {
       to: 'Galle',
       route: ['Jaffna', 'Colombo', 'Galle'],
       timePeriod: '8 AM - 2 PM',
+      date: 'Tomorrow',
       seats: 5,
       rating: 3.9,
     },
@@ -103,6 +113,7 @@ const Newsfeed = () => {
       to: 'Galle',
       route: ['Jaffna', 'Colombo', 'Galle'],
       timePeriod: '8 AM - 2 PM',
+      date: 'Today',
       seats: 5,
       rating: 4.2,
     },
@@ -112,6 +123,7 @@ const Newsfeed = () => {
       to: 'Colombo',
       route: ['Jaffna', 'Vavuniya', 'Colombo'],
       timePeriod: '6 AM - 12 PM',
+      date: 'Tomorrow',
       seats: 4,
       rating: 3.8,
     },
@@ -143,10 +155,11 @@ const Newsfeed = () => {
             {filteredCards.map((card, index) => (
               <div key={index} className="card">
                 <h3 className="head-card"><FaCar /> {card.car}</h3>
-                <p><FaMapMarkerAlt /> <strong>From: <span> <i class="fas fa-arrow-left"></i> 
-                <i class="fas fa-arrow-right"></i></span></strong> {card.from}</p>
+                <p><FaMapMarkerAlt /> <strong>From: <span> <i className="fas fa-arrow-left"></i> 
+                <i className="fas fa-arrow-right"></i></span></strong> {card.from}</p>
                 <p><FaMapMarkerAlt /> <strong>To:</strong> {card.to}</p>
-                <p><FaClock /> <strong>Time Period:</strong> <span className="time-period">{card.timePeriod}</span></p>
+                <p><FaClock /> <strong>Ride Schedule:</strong> <span className="time-period">{card.timePeriod}</span></p>
+                <p><FaCalendarAlt /> <strong>Date:</strong> {card.date}</p>
                 <p><FaUsers /> <strong>Available Seats:</strong> <span className="seats">{card.seats}</span></p>
                 <p><strong>Route:</strong> {card.route.map((point, i) => (
                   <React.Fragment key={i}>{i > 0 && ' ➜ '}{point}</React.Fragment>

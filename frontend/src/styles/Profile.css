@@ -1,247 +1,312 @@
 html, body {
-    height: 100%;
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  #root {
-    height: 100%;
-  }
-  
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+#root {
+  height: 100%;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background-color: #f5f5f5;
+  width: 100%;
+  margin-left: 23vw;
+}
+
+.profile-left {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.profile-photo {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-right h1 {
+  margin-bottom: 1rem;
+  color: black;
+}
+
+.profile-right p {
+  margin: 0.5rem 0;
+  text-align: center;
+}
+
+.profile-actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.profile-actions button {
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #3a3939; /* Dark Green */
+  color: white; /* White font color */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 500;
+}
+
+.profile-actions button:hover {
+  background-color: #00C96D;
+}
+
+.ride-history {
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.ride-history h2 {
+  margin-bottom: 1rem;
+  background-color: #00F78D;
+  padding: 10px;
+  border-radius: 5px;
+  color: black;
+  text-align: center;
+}
+
+.ride-history-item {
+  background-color: white;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ride-history-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.ride-history-item p {
+  margin: 0.5rem 0;
+  color: #333;
+}
+
+@media (max-width: 1300px) {
   .profile-container {
-    margin-left: 40%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    height: auto;
-    padding: 2rem;
-    background-color: #f5f5f5;
-    width: 100%;
-  }
-  
-  .profile-left {
-    margin-right: 2rem;
+    padding: 1rem;
+    margin-left: 22vw;
   }
   
   .profile-photo {
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    object-fit: cover;
+    width: 200px;
+    height: 200px;
   }
 
-  .profile-right {
-    display: flex;
-    flex-direction: column;
+  .ride-history-item {
+    padding: 0.8rem;
   }
-  
-  .profile-right h1 {
-    margin-bottom: 1rem;
-    /* padding: 10px; */
-    border-radius: 5px;
-    color: black;
+
+  .ride-history-item p {
+    font-size: 14px;
   }
-  
-  .profile-right p {
-    margin: 0.5rem 0;
-  }
-  
-  .profile-actions {
-    margin-top: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
-  .profile-actions button {
-    padding: 0.7rem 1.5rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #3a3939; /* Dark Green */
-    color: white; /* White font color */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-weight: 500;
-  }
-  
-  .profile-actions button:hover {
-    background-color: #00C96D;
-  }
-  
-  
-  .ride-history {
-    margin-top: 2rem;
-  }
-  
+
   .ride-history h2 {
-    margin-bottom: 1rem;
-    background-color: #00F78D;
-    padding: 10px;
-    border-radius: 5px;
-    color: black;
-    width: 40%;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .profile-container {
+    margin-left: 20vw; /* Adjust as needed */
+  }
+
+  .profile-photo {
+    width: 180px;
+    height: 180px;
   }
   
   .ride-history-item {
-    background-color: white;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 0.7rem;
   }
-  
-  .ride-history-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
+
   .ride-history-item p {
-    margin: 0.5rem 0;
-    color: #333;
+    font-size: 13px;
   }
 
-  @media (max-width: 1300px) {
-    .profile-container {
-      flex-direction: column;
-      text-align: center;
-      align-items: center;
-      margin-left: 70%;
-    }
-  
-    .profile-left {
-      margin-right: 0;
-      margin-bottom: 2rem;
-    }
-  
-    .profile-photo {
-      width: 120px;
-      height: 120px;
-    }
-  
-    .profile-actions {
-      flex-direction: column;
-    }
-  
-    .profile-actions button {
-      width: 100%;
-    }
-  
-    .ride-history-item {
-      padding: 0.5rem;
-    }
-  
-    .ride-history-item p {
-      font-size: 14px;
-    }
-
-    .ride-history h2{
-      width:100%;
-    } 
-
-    
+  .ride-history h2 {
+    font-size: 1rem;
   }
-  
+}
 
-  .popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .popup-inner {
-    background: white;
+@media (max-width: 768px) {
+  .profile-container {
     padding: 1rem;
-    border-radius: 10px;
-    position: relative;
-    width: 400px;
-    max-width: 90%;
-    z-index: 7;
-  }
-  
-  .popup-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .web-logo {
-    width: 80px;
-    height: auto;
-  }
-  
-  .close-btn {
-    background: #888888;
-    color: white;
-    border: none;
-    cursor: pointer;
-    padding: 0.2rem 0.5rem;
-    border-radius: 5px;
-    font-size: 16px;
+    margin-left: 22vw;
+    width: 80%;
   }
 
-  .close-btn:hover {
-    background: #00f78d;
-    color: black;
+  .profile-photo {
+    width: 150px;
+    height: 150px;
   }
-  
-  h2 {
-    text-align: center;
-    margin: 1rem 0;
+
+  .ride-history-item {
+    padding: 0.6rem;
   }
-  
-  .form-group {
-    margin-bottom: 1rem;
+
+  .ride-history-item p {
+    font-size: 12px;
   }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
+
+  .ride-history h2 {
+    font-size: 1rem;
   }
-  
-  .form-group input {
-    width: 95%;
+}
+
+@media (max-width: 480px) {
+  .profile-container {
     padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .submit-btn {
-    width: 100%;
-    padding: 0.7rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #00f78d;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 1rem;
   }
 
-  .submit-btn-cancel {
-    width: 100%;
-    padding: 0.7rem;
-    border: none;
-    border-radius: 5px;
-    background: rgb(255, 111, 111);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 1rem;
-  }
-  
-  .submit-btn:hover {
-    background-color: #00c96d;
+  .profile-photo {
+    width: 120px;
+    height: 120px;
   }
 
-  .submit-btn-cancel:hover{
-    background-color: #ef1c1c;
+  .ride-history-item {
+    padding: 0.5rem;
   }
-  
+
+  .ride-history-item p {
+    font-size: 10px;
+  }
+
+  .ride-history h2 {
+    font-size: 0.8rem;
+  }
+
+  .profile-actions button {
+    padding: 0.5rem 1rem;
+  }
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-inner {
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  position: relative;
+  width: 400px;
+  max-width: 90%;
+  z-index: 7;
+}
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.web-logo {
+  width: 80px;
+  height: auto;
+}
+
+.close-btn {
+  background: #888888;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.close-btn:hover {
+  background: #00f78d;
+  color: black;
+}
+
+h2 {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input {
+  width: 95%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #00f78d;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.submit-btn-cancel {
+  width: 100%;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 5px;
+  background: rgb(255, 111, 111);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.submit-btn:hover {
+  background-color: #00c96d;
+}
+
+.submit-btn-cancel:hover {
+  background-color: #ef1c1c;
+}
+
+@media (max-width: 960px) {
+  html, body {
+    overflow-x: hidden;
+  }
+  .profile-container {
+    margin-left: 18vw;
+  }
+}
