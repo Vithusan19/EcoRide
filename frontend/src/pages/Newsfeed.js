@@ -158,8 +158,8 @@ const Newsfeed = () => {
                 <p><FaMapMarkerAlt /> <strong>From: <span> <i className="fas fa-arrow-left"></i> 
                 <i className="fas fa-arrow-right"></i></span></strong> {card.from}</p>
                 <p><FaMapMarkerAlt /> <strong>To:</strong> {card.to}</p>
-                <p><FaClock /> <strong>Ride Schedule:</strong> <span className="time-period">{card.timePeriod}</span></p>
                 <p><FaCalendarAlt /> <strong>Date:</strong> {card.date}</p>
+                <p><FaClock /> <strong>Ride Schedule:</strong> <span className="time-period">{card.timePeriod}</span></p>
                 <p><FaUsers /> <strong>Available Seats:</strong> <span className="seats">{card.seats}</span></p>
                 <p><strong>Route:</strong> {card.route.map((point, i) => (
                   <React.Fragment key={i}>{i > 0 && ' ➜ '}{point}</React.Fragment>
