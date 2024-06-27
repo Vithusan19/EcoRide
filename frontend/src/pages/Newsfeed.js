@@ -16,6 +16,9 @@ const Newsfeed = () => {
       date: 'Today',
       seats: 4,
       rating: 3.5,
+      vehicleNumber: 'ABC-1234',
+      driverName: 'John Doe',
+      preferences: 'None'
     },
     {
       car: 'Mercedes Benz',
@@ -26,6 +29,9 @@ const Newsfeed = () => {
       date: 'Tomorrow',
       seats: 3,
       rating: 4.2,
+      vehicleNumber: 'XYZ-5678',
+        driverName: 'Jane Smith',
+        preferences: 'Music available, No pets'
     },
     {
       car: 'Toyota Axio',
@@ -36,6 +42,9 @@ const Newsfeed = () => {
       date: 'Today',
       seats: 5,
       rating: 3.8,
+      vehicleNumber: 'LMN-9101',
+      driverName: 'Mike Johnson',
+      preferences: 'Non-smoking, WiFi available'
     },
     {
       car: 'Toyota KDH',
@@ -46,6 +55,9 @@ const Newsfeed = () => {
       date: 'Tomorrow',
       seats: 4,
       rating: 3.0,
+      vehicleNumber: 'ASD-9101',
+        driverName: 'Mike John',
+        preferences: 'Non-smoking, WiFi available'
     },
     {
       car: 'Mercedes Benz',
@@ -56,6 +68,9 @@ const Newsfeed = () => {
       date: 'Today',
       seats: 3,
       rating: 4.5,
+      vehicleNumber: 'WER-9101',
+        driverName: 'Rangan',
+        preferences: 'Non-smoking, WiFi available'
     },
     {
       car: 'Toyota Axio',
@@ -66,6 +81,9 @@ const Newsfeed = () => {
       date: 'Tomorrow',
       seats: 5,
       rating: 3.2,
+      vehicleNumber: 'LMN-8901',
+        driverName: 'Perera Rathna',
+        preferences: 'Non-smoking, AC available'
     },
     {
       car: 'Toyota Axio',
@@ -76,6 +94,9 @@ const Newsfeed = () => {
       date: 'Today',
       seats: 5,
       rating: 4.0,
+      vehicleNumber: 'NML-9101',
+        driverName: 'John Vishmi',
+        preferences: 'Pet not allow, WiFi available'
     },
     {
       car: 'Toyota KDH',
@@ -86,6 +107,9 @@ const Newsfeed = () => {
       date: 'Tomorrow',
       seats: 4,
       rating: 3.7,
+      vehicleNumber: 'CBA-9101',
+        driverName: 'Rajan Rarnasiri',
+        preferences: 'AC available, WiFi available'
     },
     {
       car: 'Mercedes Benz',
@@ -96,6 +120,9 @@ const Newsfeed = () => {
       date: 'Today',
       seats: 3,
       rating: 4.1,
+      vehicleNumber: 'CAB-1234',
+        driverName: 'John Doe',
+        preferences: 'No smoking, AC available'
     },
     {
       car: 'Toyota Axio',
@@ -106,6 +133,9 @@ const Newsfeed = () => {
       date: 'Tomorrow',
       seats: 5,
       rating: 3.9,
+      vehicleNumber: 'MLK-1234',
+        driverName: 'Athi sarma',
+        preferences: 'Not allow pets, AC available'
     },
     {
       car: 'Toyota Axio',
@@ -116,6 +146,9 @@ const Newsfeed = () => {
       date: 'Today',
       seats: 5,
       rating: 4.2,
+      vehicleNumber: 'ABC-1834',
+      driverName: 'John Shakthi',
+      preferences: 'No smoking, Non-AC '
     },
     {
       car: 'Toyota KDH',
@@ -126,6 +159,9 @@ const Newsfeed = () => {
       date: 'Tomorrow',
       seats: 4,
       rating: 3.8,
+      vehicleNumber: 'CBC-1234',
+        driverName: 'Rajah Doe',
+        preferences: 'No smoking, AC available'
     },
     // Add more cards as needed
   ]);
@@ -174,7 +210,7 @@ const Newsfeed = () => {
                   />
                   <span className="rating-value">{card.rating.toFixed(1)}/5</span>
                 </div>
-                <Link to={`/readmore/${index}`} className="read-more">Read More</Link> {/* Link to Readmore */}
+                <Link to={`/readmore/${index}`} className="read-more" state={{ card }}>Read More</Link>
               </div>
             ))}
           </div>

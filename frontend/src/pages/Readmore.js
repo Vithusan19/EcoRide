@@ -1,6 +1,6 @@
-import React ,{useState}from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import '../styles/Readmore.css'; // Import the CSS file for Readmore styling
+import React, { useState } from 'react';
+import {useNavigate, useLocation } from 'react-router-dom';
+import '../styles/Readmore.css';
 import vehicle1 from "../assets/1.jpg"; // Import the image file
 import vehicle2 from "../assets/2.jpg";
 import vehicle3 from "../assets/3.jpg";
@@ -13,6 +13,7 @@ import vehicle9 from "../assets/9.jpg";
 import vehicle10 from "../assets/10.jpg";
 import vehicle11 from "../assets/11.jpg";
 import vehicle12 from "../assets/12.jpg";
+
 
 const images = {
   'Toyota KDH': vehicle1,
@@ -28,10 +29,12 @@ const images = {
   'Byd M6': vehicle11,
   'Mercedes Sprinter': vehicle12
 };
-const Readmore = ({ cards }) => {
-  const { id } = useParams();
+
+const Readmore = () => {
+ // const { id } = useParams();
   const navigate = useNavigate();
-  const card = cards[parseInt(id, 10)];
+  const location = useLocation();
+  const { card } = location.state || {}; // Access the card data from state
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [requestedSeats, setRequestedSeats] = useState(1);
 
@@ -48,15 +51,15 @@ const Readmore = ({ cards }) => {
   };
 
   const handleSubmitRequest = () => {
-    // Handle the request submission logic here
     console.log(`Requested ${requestedSeats} seats`);
-    setIsPopupOpen(true);
+    setIsPopupOpen(false);
   };
+
   return (
     <div className="readmore-container">
       <h2>{card.car}</h2>
       <div className="image">
-        <img alt="img" src={images[card.car]} />
+        <img alt="Vehicle" src={images[card.car]} />
       </div>
       <div className="readmore-card-details">
         <div className="readmore-detail">
@@ -91,7 +94,7 @@ const Readmore = ({ cards }) => {
 
       {isPopupOpen && (
         <div className="readmore-popup">
-          <div className="readmore-popup-Inner">
+          <div className="readmore-popup-inner">
             <h3>Request Seats</h3>
             <label>
               Number of Seats:
@@ -113,6 +116,5 @@ const Readmore = ({ cards }) => {
     </div>
   );
 };
-
 
 export default Readmore;
