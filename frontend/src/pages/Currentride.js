@@ -145,6 +145,10 @@ const Currentride = ({ userRole }) => {
     Time: '5 AM - 11 AM',
     Numberofseats: '5',
     Preference: 'No smoking',
+    Passengers: [
+      { name: 'Alice', seat: '1' },
+      { name: 'Bob', seat: '2' }
+    ]
   };
 
   const [currentrightdata, setcurrentridedata] = useState(initialcurrentridedata);
@@ -206,6 +210,12 @@ const Currentride = ({ userRole }) => {
             <p><strong>Time Period:</strong> {currentrightdata.Time}</p>
             <p><strong>Number of seats:</strong> {currentrightdata.Numberofseats}</p>
             <p><strong>Preference:</strong> {currentrightdata.Preference}</p>
+            <p><strong>Passengers:</strong></p>
+          
+            {currentrightdata.Passengers.map((passenger, index) => (
+              <p key={index}>{passenger.name} ➜ Seat: {passenger.seat}</p>
+            ))}
+          
           </div>
         </div>
         <div className="currentride-button-container">
