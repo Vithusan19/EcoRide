@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
 import logo from '../assets/weblogo.png';
@@ -32,20 +32,20 @@ const Home = () => {
         navigate('/admin'); // Navigate to Newsfeed page
     };
 
-    useEffect(() => {
-        // Dynamically load Bootstrap CSS
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css';
-        link.integrity = 'sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH';
-        link.crossOrigin = 'anonymous';
-        document.head.appendChild(link);
+    // useEffect(() => {
+    //     // Dynamically load Bootstrap CSS
+    //     const link = document.createElement('link');
+    //     link.rel = 'stylesheet';
+    //     link.href = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css';
+    //     link.integrity = 'sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH';
+    //     link.crossOrigin = 'anonymous';
+    //     document.head.appendChild(link);
 
-        // Clean up the link when the component is unmounted
-        return () => {
-            document.head.removeChild(link);
-        };
-    }, []);
+    //     // Clean up the link when the component is unmounted
+    //     return () => {
+    //         document.head.removeChild(link);
+    //     };
+    // }, []);
 
     const toggleForm = () => {
         setIsLogin(!isLogin);
