@@ -182,6 +182,7 @@ const ViewRides = () => {
                 <img src={userIcon} alt="user" className="vr-userimg" />
                 <span className="vr-username">{ride.driverName}</span>
               </div>
+              
               <span className="vr-time">{calculateElapsedTime(ride.publishedTime, ride.publishedDate)}</span>
               <div className="delete-details-vr" onClick={showDeleteDialog}>
                 <img src={deleteIcon} alt="delete" className="vr-deleteimg" />
@@ -206,6 +207,33 @@ const ViewRides = () => {
               <p><strong>Email:</strong> {selectedRide.driverEmail}</p>
               <p><strong>Phone:</strong> {selectedRide.driverPhoneNo}</p>
               <p><strong>Nic-Number:</strong> {selectedRide.driverNicNo}</p>
+              <hr />
+              <br/>
+            </div>
+            <div className="modal-header">
+            <h2>Passenger Details</h2><br/><br/>
+              
+            </div>
+            <div className="user-details">
+             
+              
+              {selectedRide.passengers ? (
+                selectedRide.passengers.split(';').map((passenger, index) => {
+                  const [PassengerID, PassengerName, PassengerEmail, PassengerPhoneNo, PassengerNicNo] = passenger.split(',');
+                  return (
+                    <div key={index}>
+                      <p><strong>Passenger ID:</strong> {PassengerID.split(':')[1]}</p>
+                      <p><strong>Passenger Name:</strong> {PassengerName.split(':')[1]}</p>
+                      <p><strong>Email:</strong> {PassengerEmail.split(':')[1]}</p>
+                      <p><strong>Phone:</strong> {PassengerPhoneNo.split(':')[1]}</p>
+                      <p><strong>Nic-Number:</strong> {PassengerNicNo.split(':')[1]}</p><br/>
+                      
+                    </div>
+                  );
+                })
+              ) : (
+                <p>No passengers</p>
+              )}
             </div>
           </div>
         </div>
