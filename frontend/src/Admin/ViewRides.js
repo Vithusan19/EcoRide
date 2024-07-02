@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import userIcon from '../assets/usersIcon.png';
+import deleteIcon from '../assets/delete.png';
 import car from '../assets/car.png';
+import axios from 'axios';
 
 const ViewRides = () => {
   const [searchTermUser, setSearchTermUser] = useState("");
@@ -8,16 +10,25 @@ const ViewRides = () => {
   const [searchTermEndPlace, setSearchTermEndPlace] = useState("");
   const [selectedRide, setSelectedRide] = useState(null);
   const [isDeleteDialogVisible, setIsDeleteDialogVisible] = useState(false);
+  const [rides, setRides] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const rides = [
-    { id: 1, name: "CST21012", start_place: "Jaffna", end_place: "Colombo", car_number: "CAR-1909", cost: "500", Date: "June 18, 2024", start_time: "12.00", end_time: "15.00", published_time: "8.00", published_date: "June 17, 2024", user: { name: "Vithusan", email: "vithu@example.com", phone: "1234567890" } },
-    { id: 1, name: "CST21012", start_place: "Jaffna", end_place: "Colombo", car_number: "CAR-1909", cost: "1500", Date: "June 24, 2024", start_time: "15.00", end_time: "23.00", published_time: "11.33", published_date: "June 24, 2024", user: { name: "Vithusan", email: "vithu@example.com", phone: "1234567890" } },
-    { id: 2, name: "CST21013", start_place: "Kandy", end_place: "Badulla", car_number: "CAR-0602", cost: "1200", Date: "June 19, 2024", start_time: "15.00", end_time: "17.00", published_time: "12.00", published_date: "June 16, 2024", user: { name: "Shan", email: "Shan@example.com", phone: "1234567890" } },
-    { id: 3, name: "CST21019", start_place: "Vavuniya", end_place: "Colombo", car_number: "CAR-0682", cost: "1900", Date: "June 19, 2024", start_time: "18.00", end_time: "6.00", published_time: "12.00", published_date: "June 11, 2024", user: { name: "Rajah", email: "Rajah@example.com", phone: "1234567890" } },
-    { id: 4, name: "CST21073", start_place: "Colombo", end_place: "Jaffna", car_number: "CAR-0689", cost: "1200", Date: "June 17, 2024", start_time: "15.00", end_time: "17.00", published_time: "15.00", published_date: "June 13, 2024", user: { name: "Malur", email: "Malur@example.com", phone: "1234567890" } },
-    { id: 1, name: "CST21012", start_place: "Jaffna", end_place: "Colombo", car_number: "CAR-1909", cost: "1200", Date: "June 20, 2024", start_time: "15.00", end_time: "17.00", published_time: "11.00", published_date: "June 20, 2024", user: { name: "Vithusan", email: "vithu@example.com", phone: "1234567890" } },
-    { id: 1, name: "CST21012", start_place: "Jaffna", end_place: "Colombo", car_number: "CAR-1909", cost: "1200", Date: "June 26, 2024", start_time: "23.50", end_time: "17.00", published_time: "11.00", published_date: "June 26, 2024", user: { name: "Vithusan", email: "vithu@example.com", phone: "1234567890" } },
-  ];
+  useEffect(() => {
+    getRides();
+  }, []);
+
+  const getRides = async () => {
+    try {
+      const response = await axios.get('http://localhost/ecoRide-Backend/Connection/Ride/DisplayRide.php');
+      setRides(response.data);
+    } catch (error) {
+      setError("There was an error fetching the rides!");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleUserSearchChange = (event) => {
     setSearchTermUser(event.target.value);
@@ -49,12 +60,7 @@ const ViewRides = () => {
 
   const calculateElapsedTime = (publishedTime, publishedDate) => {
     const currentTime = new Date();
-    const publishedDateTime = new Date(publishedDate);
-    const [publishedHour, publishedMinute] = publishedTime.split('.').map(Number);
-
-    publishedDateTime.setHours(publishedHour);
-    publishedDateTime.setMinutes(publishedMinute);
-
+    const publishedDateTime = new Date(`${publishedDate}T${publishedTime}`);
     const elapsedTime = currentTime - publishedDateTime;
     const elapsedMinutes = Math.floor(elapsedTime / (1000 * 60));
     const elapsedHours = Math.floor(elapsedTime / (1000 * 60 * 60));
@@ -85,9 +91,9 @@ const ViewRides = () => {
   };
 
   const filteredRides = rides.filter(ride =>
-    ride.end_place.toLowerCase().includes(searchTermEndPlace.toLowerCase()) &&
-    ride.start_place.toLowerCase().includes(searchTermStartPlace.toLowerCase()) &&
-    ride.user.name.toLowerCase().includes(searchTermUser.toLowerCase())
+    ride.destinationPoint.toLowerCase().includes(searchTermEndPlace.toLowerCase()) &&
+    ride.departurePoint.toLowerCase().includes(searchTermStartPlace.toLowerCase()) &&
+    ride.driverName.toLowerCase().includes(searchTermUser.toLowerCase())
   );
 
   const sortedRides = filteredRides.sort((a, b) => {
@@ -95,26 +101,34 @@ const ViewRides = () => {
     const today = new Date(currentDate.setHours(0, 0, 0, 0));
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
-    const dateA = new Date(a.Date);
-    const dateB = new Date(b.Date);
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
 
-    if (dateA < today && dateB >= today) return 1; 
-    if (dateA >= today && dateB < today) return -1; 
-    if (dateA.toDateString() === today.toDateString() && dateB.toDateString() !== today.toDateString()) return -1; 
+    if (dateA < today && dateB >= today) return 1;
+    if (dateA >= today && dateB < today) return -1;
+    if (dateA.toDateString() === today.toDateString() && dateB.toDateString() !== today.toDateString()) return -1;
     if (dateA.toDateString() !== today.toDateString() && dateB.toDateString() === today.toDateString()) return 1;
-    if (dateA.toDateString() === tomorrow.toDateString() && dateB.toDateString() !== tomorrow.toDateString()) return -1; 
+    if (dateA.toDateString() === tomorrow.toDateString() && dateB.toDateString() !== tomorrow.toDateString()) return -1;
     if (dateA.toDateString() !== tomorrow.toDateString() && dateB.toDateString() === tomorrow.toDateString()) return 1;
 
     return dateA - dateB;
   });
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
     <>
-      <h1>Ride details</h1>
+      <h1>Ride Details</h1>
       <p>Here are the user details.</p>
 
       <div className="search-con">
-      <input
+        <input
           type="text"
           placeholder="Search by Destination"
           className="search-users"
@@ -128,8 +142,7 @@ const ViewRides = () => {
           value={searchTermStartPlace}
           onChange={handleStartPlaceSearchChange}
         />
-     
-         <input
+        <input
           type="text"
           placeholder="Search by username"
           className="search-users"
@@ -140,21 +153,21 @@ const ViewRides = () => {
 
       <div className="viewRide-bars">
         {sortedRides.map((ride) => (
-          <div key={ride.id} className="viewRide-bar" onClick={() => handleViewMore(ride)}> 
+          <div key={ride.rideID} className="viewRide-bar">
             <div className="viewRide-bar-up">
               <div className="viewRide-details">
                 <span className="timeplace">Departure</span>
-                <span className="timeplace">{ride.start_time}</span>
-                <span className="timeplace">{ride.start_place}</span>
-                <span className="timeplace">{formatDate(ride.Date)}</span>
+                <span className="timeplace">{ride.departureTime}</span>
+                <span className="timeplace">{ride.departurePoint}</span>
+                <span className="timeplace">{formatDate(ride.date)}</span>
               </div>
               <div className="viewRide-details">
                 <span className="timeplace">Destination</span>
-                <span className="timeplace">{ride.end_time}</span>
-                <span className="timeplace">{ride.end_place}</span>
+                <span className="timeplace">{ride.destinationTime}</span>
+                <span className="timeplace">{ride.destinationPoint}</span>
               </div>
               <div className="viewRide-details">
-                <span className="viewRide-price">LKR {ride.cost}</span>
+                <span className="viewRide-price">LKR {ride.seatCost}</span>
               </div>
             </div>
             <div className="viewRide-bar-middle">
@@ -163,40 +176,65 @@ const ViewRides = () => {
             <div className="viewRide-bar-down">
               <div className="car-details-vr">
                 <img src={car} alt="car" className="vr-car" />
-                <span className="vr-carnumber">{ride.car_number}</span>
+                <span className="vr-carnumber">{ride.vehicleNo}</span>
               </div>
-              <div className="user-details-vr">
+              <div className="user-details-vr" onClick={() => handleViewMore(ride)}>
                 <img src={userIcon} alt="user" className="vr-userimg" />
-                <span className="vr-username">{ride.user.name}</span>
+                <span className="vr-username">{ride.driverName}</span>
               </div>
-              <span className="vr-time">{calculateElapsedTime(ride.published_time, ride.published_date)}</span>
+              
+              <span className="vr-time">{calculateElapsedTime(ride.publishedTime, ride.publishedDate)}</span>
+              <div className="delete-details-vr" onClick={showDeleteDialog}>
+                <img src={deleteIcon} alt="delete" className="vr-deleteimg" />
+              </div>
             </div>
           </div>
         ))}
-
       </div>
 
       {selectedRide && (
         <div className="modal">
           <div className="modal-content">
             <div className="modal-header">
-              <h2>Ride Details</h2>
+              <h2>Driver Details</h2>
               <button className="close-button" onClick={closeModal}>
                 &times;
               </button>
             </div>
-            <div className="ride-details">
-              <p><strong>Car Number:</strong> {selectedRide.car_number}</p>
-              <p><strong>Cost:</strong> {selectedRide.cost}</p>
+            <div className="user-details">
+              <p><strong>Driver ID:</strong> {selectedRide.driver_ID}</p>
+              <p><strong>Driver Name:</strong> {selectedRide.driverName}</p>
+              <p><strong>Email:</strong> {selectedRide.driverEmail}</p>
+              <p><strong>Phone:</strong> {selectedRide.driverPhoneNo}</p>
+              <p><strong>Nic-Number:</strong> {selectedRide.driverNicNo}</p>
+              <hr />
+              <br/>
+            </div>
+            <div className="modal-header">
+            <h2>Passenger Details</h2><br/><br/>
+              
             </div>
             <div className="user-details">
-              <p><strong>User Name:</strong> {selectedRide.user.name}</p>
-              <p><strong>Email:</strong> {selectedRide.user.email}</p>
-              <p><strong>Phone:</strong> {selectedRide.user.phone}</p>
+             
+              
+              {selectedRide.passengers ? (
+                selectedRide.passengers.split(';').map((passenger, index) => {
+                  const [PassengerID, PassengerName, PassengerEmail, PassengerPhoneNo, PassengerNicNo] = passenger.split(',');
+                  return (
+                    <div key={index}>
+                      <p><strong>Passenger ID:</strong> {PassengerID.split(':')[1]}</p>
+                      <p><strong>Passenger Name:</strong> {PassengerName.split(':')[1]}</p>
+                      <p><strong>Email:</strong> {PassengerEmail.split(':')[1]}</p>
+                      <p><strong>Phone:</strong> {PassengerPhoneNo.split(':')[1]}</p>
+                      <p><strong>Nic-Number:</strong> {PassengerNicNo.split(':')[1]}</p><br/>
+                      
+                    </div>
+                  );
+                })
+              ) : (
+                <p>No passengers</p>
+              )}
             </div>
-            <button className="delete-button" onClick={showDeleteDialog}>
-              Delete Ride
-            </button>
           </div>
         </div>
       )}
