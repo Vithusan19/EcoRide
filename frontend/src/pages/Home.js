@@ -16,9 +16,11 @@ import serve1 from '../assets/serve1.png';
 import serve2 from '../assets/serve2.png';
 import serve3 from '../assets/serve3.png';
 import axios from 'axios';
+import Forgot from './Forgot';
 
 const Home = () => {
     const [showmenu, setshowmenu] = useState(false);
+    const [showForgot, setShowForgot] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
     const [isLogin, setIsLogin] = useState(true); // Default to true for login view
     const [loginForm, setLoginForm] = useState({ username: '', password: '' });
@@ -55,7 +57,7 @@ const Home = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost/ecoRide/PHP/login.php', loginForm);
+            const response = await axios.post('http://localhost/ecoRide-Backend/Connection/User/Login.php', loginForm);
             if (response.data.userrole === 'admin') {
                 navigate('/admin');
             } else if (response.data.userrole === 'user') {
@@ -84,17 +86,31 @@ const Home = () => {
     const handleSignupSubmit = async (e) => {
         e.preventDefault();
         if (validateSignupForm()) {
-            // try {
-            //     const response = await axios.post('http://localhost/ecoRide/PHP/signup.php', signupForm);
-                
-            //     setIsLogin(true); 
-            //     setErrors({}); 
-            //     setShowLogin(true); 
-            // } catch (error) {
-            //     setErrors({ signup: 'Signup failed' }); 
-            // }
+            const url = "http://localhost/ecoRide-Backend/Connection/User/Register.php";
+            const formData = new FormData();
+            for (const key in signupForm) {
+                formData.append(key, signupForm[key]);
+            }
+    
+            try {
+                const response = await axios.post(url, formData);
+                console.log(response.data);
+                if (response.data.message === "User Added Successfully") {
+                    toggleForm();
+                } else {
+                    setErrors({ signup: 'User already added' });
+                    //toggleForm();
+                   
+                   
+                }
+            } catch (error) {
+                console.error('Error during signup:', error);
+                setErrors({ signup: 'Signup failed' });
+            }
         }
     };
+    
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -212,12 +228,12 @@ const Home = () => {
                                 </div>
                                 <div className='Rightside'>
                                     <h1 className="log-title">Login here</h1>
-                                    <form className="log-form">
-                                        <input type="text" className="form-control" placeholder="Enter username" name="username" value={loginForm.username} onChange={handleInputChange} required/>
-                                        <input type="password" className="form-control" placeholder="Enter password" name="password" value={loginForm.password} onChange={handleInputChange} required/>
+                                    <form className="log-form" method='post'>
+                                        <input type="text" className="log-form-control" placeholder="Enter username" name="username" value={loginForm.username} onChange={handleInputChange} required/><br />
+                                        <input type="password" className="log-form-control" placeholder="Enter password" name="password" value={loginForm.password} onChange={handleInputChange} required/><br />
                                         {errors.login && <div className="signup-error">{errors.login}</div>}
-                                        <span className='forgot'>Forget Your Password?</span><br />
-                                        <button className='login-but' onClick={handleLogin}>SIGN IN</button><br /><br />
+                                        <span className='forgot' onClick={() => setShowForgot(true)}>Forget Your Password?</span><br /><br />
+                                        <button className='log-login-but' onClick={handleLogin}>SIGN IN</button><br />
                                         <button className='login-but1' onClick={movePage}>SIGN IN</button><br /><br/>
                                         <button className='login-but1' onClick={movePage1}>Admin</button><br />
 
@@ -230,7 +246,7 @@ const Home = () => {
                             <div className='signup-con'>
                                 <div className='left-signup'>
                                     <h1 className="log-title">Signup here</h1>
-                                    <form className="log-form" onSubmit={handleSignupSubmit}>
+                                    <form className="log-form" onSubmit={handleSignupSubmit} method='post'>
                                         <div className='col'>
                                             <input type="text" className="form-control" placeholder="Enter Name" name="name" value={signupForm.name} onChange={handleInputChange} />
                                             <input type="text" className="form-control" placeholder="Enter username" name="username" value={signupForm.username} onChange={handleInputChange} />
@@ -271,6 +287,7 @@ const Home = () => {
                                 </div>
                             </div>
                         )}
+                         {showForgot && <Forgot onClose={() => setShowForgot(false)} />}
                     </div>
                 </div>
             )}

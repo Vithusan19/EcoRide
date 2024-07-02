@@ -336,7 +336,7 @@
   .viewRide-bar {
     display: flex;
     flex-direction: column;
-    cursor: pointer;
+    /* cursor: pointer; */
     background-color: white;
     border-radius: 1rem;
     flex-direction: column;
@@ -386,6 +386,7 @@
     gap: 10px;
     align-items: center;
     padding: 5px;
+    cursor: pointer;
   }
   
   .vr-carnumber,
@@ -410,9 +411,31 @@
   
   .vr-time {
     font-size: 14px;
-    margin-left: 20px;
+    margin-left: 50px;
     font-weight: 600;
   }
+  .vr-deleteimg
+  {
+    width: 30px;
+    height: 30px;
+
+  }
+  .delete-details-vr
+  {
+    display: flex;
+    gap: 2px;
+    justify-content: center;
+    align-items: center;
+    background-color: #bbc2bf;
+    padding: 5px;
+    border-radius: 100%;
+    font-size: small;
+    font-weight: 600;
+    cursor: pointer;
+   
+    
+  }
+
   
  
   
