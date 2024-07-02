@@ -19,6 +19,9 @@ import axios from 'axios';
 import Forgot from './Forgot';
 
 const Home = () => {
+    const [MsgName, setMsgName] = useState("");
+  const [MsgEmail, setMsgEmail] = useState("");
+  const [Message, setMessage] = useState("");
     const [showmenu, setshowmenu] = useState(false);
     const [showForgot, setShowForgot] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
@@ -26,6 +29,9 @@ const Home = () => {
     const [loginForm, setLoginForm] = useState({ username: '', password: '' });
     const [signupForm, setSignupForm] = useState({ name: '', username: '', email: '', phone: '', nic: '', gender: '', password: '', confirmPassword: '' });
     const [errors, setErrors] = useState({});
+    const [successMessage, setSuccessMessage] = useState("");
+    
+
     const navigate = useNavigate();
     const movePage = (e) => {
         navigate('/newsfeed'); // Navigate to Newsfeed page
@@ -53,7 +59,37 @@ const Home = () => {
         setIsLogin(!isLogin);
         setErrors({});
     };
-
+    const resetForm = () => {
+        setMessage("");
+        setMsgEmail("");
+        setMsgName("");
+    };
+       
+        
+       
+    const handleMessageSubmit = (e) => {
+        e.preventDefault(); // Prevent default form submission behavior
+        const url = "http://localhost/ecoRide-Backend/Connection/User/Addmessage.php";
+        let fdata = new FormData();
+        fdata.append("Msgname", MsgName);
+        fdata.append("Msgemail", MsgEmail);
+        fdata.append("Message", Message);
+        axios
+            .post(url, fdata)
+            .then((response) => {
+                console.log(response.data);
+                if (response.data.message === "Message Added Successfully") {
+                    resetForm();
+                    setSuccessMessage("Message sent successfully!");
+                    setTimeout(() => setSuccessMessage(""), 3000); // Hide message after 3 seconds
+                } else {
+                    setErrors({ message: "Message submission failed." });
+                }
+            })
+            .catch((error) => {
+                setErrors({ message: "Message not connected." });
+            });
+    };
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
@@ -195,10 +231,12 @@ const Home = () => {
                 <div id="contact">
                     <h2 className="contact-tittle">ContactUs</h2>
                     <form className="contact-form">
-                        <input type="text" className="name" placeholder="Your Name" name="user_name" />
-                        <input type="email" className="email" placeholder="Your Email" name="user_email" />
-                        <textarea className="message" name="message" rows="5" placeholder="Your Message" />
-                        <button className="sub-but" type="submit" value="sent">Submit</button>
+                        <input type="text" className='name' Name="Msgname" placeholder="Your Name" name="user_name"  onChange={(e) => setMsgName(e.target.value)}  value={MsgName}required/>
+                        <input type="email" className='email' Name="Msgemail" placeholder="Your Email" name="user_email"  onChange={(e) => setMsgEmail(e.target.value)} value={MsgEmail}required/>
+                        <textarea className="message" Name="Message" rows="5" placeholder="Your Message" onChange={(e) => setMessage(e.target.value)}required value={Message}/>
+                        <button className="sub-but" type="submit" value="sent" onClick={handleMessageSubmit}>Submit</button>
+                        {successMessage && <p className="success-message">{successMessage}</p>}
+
                         <div className="links">
                             <img className="link" src={fb} alt="Facebook" />
                             <img className="link" src={insta} alt="Instagram" />
