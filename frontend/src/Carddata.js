@@ -1,10 +1,10 @@
 const cards = [
     {
         car: 'Toyota KDH',
-        from: 'Kandy',
-        to: 'Galle',
-        route: ['Kandy', 'Matara', 'Galle'],
-        timePeriod: '5 AM - 11 AM',
+        from: 'Jaffna',
+        to: 'Colombo',
+        route: ['Jaffna', 'Vavuniya', 'Colombo'],
+        timePeriod: '6 AM - 12 PM',
         seats: 2,
         vehicleNumber: 'ABC-1234',
         driverName: 'John Doe',
