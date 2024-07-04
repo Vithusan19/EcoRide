@@ -20,28 +20,19 @@ import Forgot from './Forgot';
 
 const Home = () => {
     const [MsgName, setMsgName] = useState("");
-  const [MsgEmail, setMsgEmail] = useState("");
-  const [Message, setMessage] = useState("");
+    const [MsgEmail, setMsgEmail] = useState("");
+    const [Message, setMessage] = useState("");
     const [showmenu, setshowmenu] = useState(false);
     const [showForgot, setShowForgot] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
-    const [isLogin, setIsLogin] = useState(true); // Default to true for login view
+    const [isLogin, setIsLogin] = useState(true); 
     const [loginForm, setLoginForm] = useState({ username: '', password: '' });
     const [signupForm, setSignupForm] = useState({ name: '', username: '', email: '', phone: '', nic: '', gender: '', password: '', confirmPassword: '' });
     const [errors, setErrors] = useState({});
     const [successMessage, setSuccessMessage] = useState("");
-    
 
     const navigate = useNavigate();
-    const movePage = (e) => {
-        navigate('/newsfeed'); // Navigate to Newsfeed page
-    };
-    const movePage1 = (e) => {
-        navigate('/admin'); // Navigate to Newsfeed page
-    };
-
-    
-
+   
     const toggleForm = () => {
         setIsLogin(!isLogin);
         setErrors({});
@@ -51,9 +42,23 @@ const Home = () => {
         setMsgEmail("");
         setMsgName("");
     };
-       
+    const resetSignupForm = () => {
         
+        
+       // const value="";
        
+            setSignupForm( "");
+      
+    };
+    const resetLoginForm = () => {
+        
+        
+        // const value="";
+        
+             setLoginForm( "");
+       
+     };
+
     const handleMessageSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission behavior
         const url = "http://localhost/ecoRide-Backend/Connection/User/Addmessage.php";
@@ -62,35 +67,69 @@ const Home = () => {
         fdata.append("Msgemail", MsgEmail);
         fdata.append("Message", Message);
         axios
-            .post(url, fdata)
-            .then((response) => {
-                console.log(response.data);
-                if (response.data.message === "Message Added Successfully") {
-                    resetForm();
-                    setSuccessMessage("Message sent successfully!");
-                    setTimeout(() => setSuccessMessage(""), 3000); // Hide message after 3 seconds
-                } else {
-                    setErrors({ message: "Message submission failed." });
-                }
-            })
+        .post(url, fdata)
+        .then((response) => {
+            console.log(response.data);
+            if (response.data.message === "Message Added Successfully") {
+                resetForm();
+                setSuccessMessage("Message sent successfully!");
+                setTimeout(() => setSuccessMessage(""), 3000); 
+            } else {
+                setErrors({ message: "Message submission failed." });
+            }
+        })
             .catch((error) => {
                 setErrors({ message: "Message not connected." });
             });
     };
+
     const handleLogin = async (e) => {
         e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost/ecoRide-Backend/Connection/User/Login.php', loginForm);
-            if (response.data.userrole === 'admin') {
-                navigate('/admin');
-            } else if (response.data.userrole === 'user') {
-                navigate('/newsfeed');
-            } else {
-                setErrors({ login: 'Username or password incorrect' });
-            }
-        } catch (error) {
-            setErrors({ login: 'not connected' });
-        }
+        // const url = "http://localhost/ecoRide-Backend/Connection/User/Login.php";
+        // const formData = new FormData();
+        //         formData.append("username", loginForm.username);
+        //         formData.append("password", loginForm.password);
+        //         console.log(loginForm.username)
+        //         console.log(loginForm.password)
+        //         axios
+        //         .post(url, formData)
+        //         .then((response) => {
+                    
+        //     if (response.data.userrole === "admin") {
+        //         navigate('/admin');
+        //     } else if (response.data.userrole === "user") {
+        //         navigate('/newsfeed');
+        //     } else {
+        //         setErrors({ login: 'Username or password incorrect' });
+        //     }
+
+        //         })
+        //         .catch((error) => {
+        //             setErrors({ message: " Not connected." });
+        //         });
+
+    axios
+    .post("http://localhost/ecoRide-Backend/Connection/User/Login.php", {
+      username:  loginForm.username,
+      password: loginForm.password,
+    })
+    .then((response) => {
+        if (response.data.userrole === "admin") {
+                    navigate('/admin');
+                    resetLoginForm()
+                } else if (response.data.userrole === "user") {
+                    navigate('/newsfeed');
+                    resetLoginForm()
+                } else {
+                    setErrors({ login: 'Username or password incorrect' });
+                }
+
+    })
+    .catch((error) => {
+        setErrors({ message: " Not connected." });
+      });
+
+       
     };
 
     const validateSignupForm = () => {
@@ -111,29 +150,44 @@ const Home = () => {
         if (validateSignupForm()) {
             const url = "http://localhost/ecoRide-Backend/Connection/User/Register.php";
             const formData = new FormData();
-            for (const key in signupForm) {
-                formData.append(key, signupForm[key]);
-            }
-    
-            try {
-                const response = await axios.post(url, formData);
-                console.log(response.data);
-                if (response.data.message === "User Added Successfully") {
-                    toggleForm();
-                } else {
-                    setErrors({ signup: 'User already added' });
-                    //toggleForm();
-                   
-                   
-                }
-            } catch (error) {
-                console.error('Error during signup:', error);
-                setErrors({ signup: 'Signup failed' });
-            }
+           
+                formData.append("name", signupForm.name);
+                formData.append("username", signupForm.username);
+                formData.append("email", signupForm.email);
+                formData.append("phone", signupForm.phone);
+                formData.append("nic", signupForm.nic);
+                formData.append("gender", signupForm.gender);
+                formData.append("password", signupForm.password);
+                console.log(signupForm.username)
+                console.log(signupForm.password)
+                console.log(signupForm.email)
+                console.log(signupForm.phone)
+                console.log(signupForm.name)
+                console.log(signupForm.nic)
+                console.log(signupForm.gender)
+                
+                axios
+                .post(url, formData)
+                .then((response) => {
+                    if (response.data.message ==="User Added Successfully") {
+                        resetSignupForm();
+                        toggleForm();
+                    } else {
+                        setErrors({ signup: 'User already added' });
+                    }
+
+                })
+                .catch((error) => {
+                    setErrors({ message: " Not connected." });
+                });
+                
+           
+           
+
+               
+          
         }
     };
-    
-
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -172,8 +226,8 @@ const Home = () => {
             <div className="header-image">
                 <img src={header} alt='headerimage' className='header-image' />
             </div>
-            {/* about */}
-            <section id="about">
+              {/* about */}
+              <section id="about">
                 <h2 className="about-tit">About Us</h2>
                 <div className="about-container">
                     <p className="about-text">
@@ -213,27 +267,31 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-            {/* contactus */}
+            {/* Contact */}
             <section id="contactpage">
                 <div id="contact">
                     <h2 className="contact-tittle">ContactUs</h2>
-                    <form className="contact-form">
-                        <input type="text" className='name' Name="Msgname" placeholder="Your Name" name="user_name"  onChange={(e) => setMsgName(e.target.value)}  value={MsgName}required/>
-                        <input type="email" className='email' Name="Msgemail" placeholder="Your Email" name="user_email"  onChange={(e) => setMsgEmail(e.target.value)} value={MsgEmail}required/>
-                        <textarea className="message" Name="Message" rows="5" placeholder="Your Message" onChange={(e) => setMessage(e.target.value)}required value={Message}/>
-                        <button className="sub-but" type="submit" value="sent" onClick={handleMessageSubmit}>Submit</button>
+                    <form onSubmit={handleMessageSubmit} className="contact-form">
+                       
+                        <input type="text" id="name" name="MsgName" value={MsgName} placeholder="Your Name"   onChange={(e) => setMsgName(e.target.value)} className="name" required />
+                       
+                        <input type="email" id="email" name="MsgEmail" value={MsgEmail}  placeholder="Your Email"  onChange={(e) => setMsgEmail(e.target.value)} className="email" required />
+                       
+                        <textarea rows="5" id="message" name="Message" value={Message} placeholder=" Message"   onChange={(e) => setMessage(e.target.value)} className="message" required></textarea>
                         {successMessage && <p className="success-message">{successMessage}</p>}
-
+                        {errors.message && <p className="error-message">{errors.message}</p>}
+                        <button type="submit" className="sub-but">Send</button>
                         <div className="links">
                             <img className="link" src={fb} alt="Facebook" />
                             <img className="link" src={insta} alt="Instagram" />
                             <img className="link" src={twi} alt="Twitter" />
                         </div>
+
                     </form>
                 </div>
             </section>
-            {/* Footer */}
-            <footer className="footer">
+              {/* Footer */}
+              <footer className="footer">
                 Copyright &#169; {year.getFullYear()} <span>ecoRide</span>. All rights reserved.
             </footer>
             {/* Login Popup */}
@@ -253,17 +311,18 @@ const Home = () => {
                                 </div>
                                 <div className='Rightside'>
                                     <h1 className="log-title">Login here</h1>
-                                    <form className="log-form" method='post'>
+                                    <form className="log-form" method='post' onSubmit={handleLogin}>
                                         <input type="text" className="log-form-control" placeholder="Enter username" name="username" value={loginForm.username} onChange={handleInputChange} required/><br />
                                         <input type="password" className="log-form-control" placeholder="Enter password" name="password" value={loginForm.password} onChange={handleInputChange} required/><br />
                                         {errors.login && <div className="signup-error">{errors.login}</div>}
                                         <span className='forgot' onClick={() => setShowForgot(true)}>Forget Your Password?</span><br /><br />
-                                        <button className='log-login-but' onClick={handleLogin}>SIGN IN</button><br />
-                                        <button className='login-but1' onClick={movePage}>SIGN IN</button><br /><br/>
-                                        <button className='login-but1' onClick={movePage1}>Admin</button><br />
-
+                                        <button className='log-login-but'>SIGN IN</button><br />
+                                        <div className='register-details-1'>
+                                             
                                         <span className='register-text'>Don't you have an account?</span><br />
-                                        <button className='log-but' onClick={toggleForm}>SIGN UP</button>
+                                        <button className='log-but'  onClick={toggleForm}>SIGN UP</button>
+                                        </div>
+                                       
                                     </form>
                                 </div>
                             </div>
@@ -277,7 +336,7 @@ const Home = () => {
                                             <input type="text" className="form-control" placeholder="Enter username" name="username" value={signupForm.username} onChange={handleInputChange} />
                                         </div>
                                         <div className='col'>
-                                            <input type="text" className="form-control" placeholder="Enter Email" name="email" value={signupForm.email} onChange={handleInputChange} />
+                                            <input type="email" className="form-control" placeholder="Enter Email" name="email" value={signupForm.email} onChange={handleInputChange} />
                                             <input type="text" className="form-control" placeholder="Enter Phone number" name="phone" value={signupForm.phone} onChange={handleInputChange} />
                                         </div>
                                         <div className='col'>
@@ -287,10 +346,10 @@ const Home = () => {
                                         <div className='col'>
                                             <label>Gender</label>
                                             <label>
-                                                <input type="radio" className="form-check-input" name="gender" value="male" onChange={handleInputChange} /> Male
+                                                <input type="radio" className="form-check-input" name="gender" value="Male" onChange={handleInputChange} /> Male
                                             </label>
                                             <label>
-                                                <input type="radio" className="form-check-input" name="gender" value="female" onChange={handleInputChange} /> Female
+                                                <input type="radio" className="form-check-input" name="gender" value="Female" onChange={handleInputChange} /> Female
                                             </label>
                                         </div>
                                         <div className='col'>

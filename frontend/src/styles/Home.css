@@ -379,6 +379,10 @@
 
   margin: 0 auto;
 }
+.register-details-1
+  {
+    margin-top: 50px;
+  }
 
 .pop-imgs {
   display: flex;
@@ -586,6 +590,7 @@
   {
     font-size: small;
   }
+  
 
   
 
