@@ -17,6 +17,7 @@ import serve2 from '../assets/serve2.png';
 import serve3 from '../assets/serve3.png';
 import axios from 'axios';
 import Forgot from './Forgot';
+import { RotatingLines } from "react-loader-spinner";
 
 const Home = () => {
     const [MsgName, setMsgName] = useState("");
@@ -30,6 +31,7 @@ const Home = () => {
     const [signupForm, setSignupForm] = useState({ name: '', username: '', email: '', phone: '', nic: '', gender: '', password: '', confirmPassword: '' });
     const [errors, setErrors] = useState({});
     const [successMessage, setSuccessMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
    
@@ -61,6 +63,7 @@ const Home = () => {
 
     const handleMessageSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission behavior
+        setIsLoading(true)
         const url = "http://localhost/ecoRide-Backend/Connection/User/Addmessage.php";
         let fdata = new FormData();
         fdata.append("Msgname", MsgName);
@@ -71,9 +74,11 @@ const Home = () => {
         .then((response) => {
             console.log(response.data);
             if (response.data.message === "Message Added Successfully") {
-                resetForm();
+                setIsLoading(false)
                 setSuccessMessage("Message sent successfully!");
+                resetForm();
                 setTimeout(() => setSuccessMessage(""), 3000); 
+                
             } else {
                 setErrors({ message: "Message submission failed." });
             }
@@ -84,26 +89,52 @@ const Home = () => {
     };
 
     const handleLogin = async (e) => {
-
-        
         e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost/EcoRide/ecoRide-Backend/PHP/login.php', loginForm, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
+        // const url = "http://localhost/ecoRide-Backend/Connection/User/Login.php";
+        // const formData = new FormData();
+        //         formData.append("username", loginForm.username);
+        //         formData.append("password", loginForm.password);
+        //         console.log(loginForm.username)
+        //         console.log(loginForm.password)
+        //         axios
+        //         .post(url, formData)
+        //         .then((response) => {
+                    
+        //     if (response.data.userrole === "admin") {
+        //         navigate('/admin');
+        //     } else if (response.data.userrole === "user") {
+        //         navigate('/newsfeed');
+        //     } else {
+        //         setErrors({ login: 'Username or password incorrect' });
+        //     }
+
+        //         })
+        //         .catch((error) => {
+        //             setErrors({ message: " Not connected." });
+        //         });
+
+    axios
+    .post("http://localhost/ecoRide-Backend/Connection/User/Login.php", {
+      username:  loginForm.username,
+      password: loginForm.password,
+    })
+    .then((response) => {
+        if (response.data.userrole === "admin") {
+                    navigate('/admin');
+                    resetLoginForm()
+                } else if (response.data.userrole === "user") {
+                    navigate('/newsfeed');
+                    resetLoginForm()
+                } else {
+                    setErrors({ login: 'Username or password incorrect' });
                 }
-            });
-            console.log(response.data.user_role);
-            if (response.data.user_role == 'admin') {
-                navigate('/admin');
-            } else if (response.data.user_role =='user') {
-                navigate('/newsfeed');
-            } else {
-                setErrors({ login: 'Username or password incorrect' });
-            }
-        } catch (error) {
-            setErrors({ login: 'not connected' });
-        }
+
+    })
+    .catch((error) => {
+        setErrors({ message: " Not connected." });
+      });
+
+       
     };
 
     const validateSignupForm = () => {
@@ -119,51 +150,59 @@ const Home = () => {
         return Object.keys(formErrors).length === 0;
     };
 
-
     const handleSignupSubmit = async (e) => {
-
         e.preventDefault();
-        // if (validateSignupForm()) {
+        if (validateSignupForm()) {
+            const url = "http://localhost/ecoRide-Backend/Connection/User/Register.php";
             const formData = new FormData();
-            for (const key in signupForm) {
-                formData.append(key, signupForm[key]);
-            }
-    
-            try {
-                const response = await axios.post('http://localhost/EcoRide/ecoRide-Backend/PHP/signup.php', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
+           
+                formData.append("name", signupForm.name);
+                formData.append("username", signupForm.username);
+                formData.append("email", signupForm.email);
+                formData.append("phone", signupForm.phone);
+                formData.append("nic", signupForm.nic);
+                formData.append("gender", signupForm.gender);
+                formData.append("password", signupForm.password);
+                console.log(signupForm.username)
+                console.log(signupForm.password)
+                console.log(signupForm.email)
+                console.log(signupForm.phone)
+                console.log(signupForm.name)
+                console.log(signupForm.nic)
+                console.log(signupForm.gender)
+                
+                axios
+                .post(url, formData)
+                .then((response) => {
+                    if (response.data.message ==="User Added Successfully") {
+                        resetSignupForm();
+                        toggleForm();
+                    } else {
+                        setErrors({ signup: 'User already added' });
                     }
+
+                })
+                .catch((error) => {
+                    setErrors({ message: " Not connected." });
                 });
-                if (response.data.message === 'User created successfully') {
-                    console.log('sae')
-                    setIsLogin(true);
-                    setErrors({});
-                    setShowLogin(true);
-                } else {
-                    console.log('saes')
-                    setErrors({ signup: response.data.message });
-                }
-            } catch (error) {
-                console.log('sassse')
-                setErrors({ signup: 'Signup failed: ' + error.message });
-            }
-        // }
+                
+           
+           
+
+               
+          
+        }
     };
-    
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         if (isLogin) {
             setLoginForm({ ...loginForm, [name]: value });
         } else {
-            if (name === 'file') {
-                setSignupForm({ ...signupForm, [name]: e.target.files[0] }); // Handle file input
-            } else {
-                setSignupForm({ ...signupForm, [name]: value });
-            }
+            setSignupForm({ ...signupForm, [name]: value });
         }
     };
-    
+
     const year = new Date();
 
     return (
@@ -237,6 +276,8 @@ const Home = () => {
             <section id="contactpage">
                 <div id="contact">
                     <h2 className="contact-tittle">ContactUs</h2>
+                  
+  
                     <form onSubmit={handleMessageSubmit} className="contact-form">
                        
                         <input type="text" id="name" name="MsgName" value={MsgName} placeholder="Your Name"   onChange={(e) => setMsgName(e.target.value)} className="name" required />
@@ -247,6 +288,19 @@ const Home = () => {
                         {successMessage && <p className="success-message">{successMessage}</p>}
                         {errors.message && <p className="error-message">{errors.message}</p>}
                         <button type="submit" className="sub-but">Send</button>
+                        {isLoading &&(
+                           <RotatingLines
+                           visible={true}
+                           height="50"
+                           width="50"
+                           color="grey"
+                           strokeWidth="5"
+                           animationDuration="0.75"
+                           ariaLabel="rotating-lines-loading"
+                           wrapperStyle={{}}
+                           wrapperClass=""
+                           />
+                        )}
                         <div className="links">
                             <img className="link" src={fb} alt="Facebook" />
                             <img className="link" src={insta} alt="Instagram" />

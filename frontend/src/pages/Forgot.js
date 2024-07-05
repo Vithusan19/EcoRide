@@ -75,7 +75,7 @@ const Forgot = ({ onClose }) => {
                             ))}
                         </div>
                         <button className="action-button green-bg" onClick={handleSubmitOtp}>Submit OTP</button>
-                        {message && <div className="message">{message}</div>}
+                        {message && <div className="otp-message">{message}</div>}
                         {errors && <div className="error">{errors}</div>}
                     </>
                 )}
