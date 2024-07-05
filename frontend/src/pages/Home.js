@@ -84,52 +84,26 @@ const Home = () => {
     };
 
     const handleLogin = async (e) => {
+
+        
         e.preventDefault();
-        // const url = "http://localhost/ecoRide-Backend/Connection/User/Login.php";
-        // const formData = new FormData();
-        //         formData.append("username", loginForm.username);
-        //         formData.append("password", loginForm.password);
-        //         console.log(loginForm.username)
-        //         console.log(loginForm.password)
-        //         axios
-        //         .post(url, formData)
-        //         .then((response) => {
-                    
-        //     if (response.data.userrole === "admin") {
-        //         navigate('/admin');
-        //     } else if (response.data.userrole === "user") {
-        //         navigate('/newsfeed');
-        //     } else {
-        //         setErrors({ login: 'Username or password incorrect' });
-        //     }
-
-        //         })
-        //         .catch((error) => {
-        //             setErrors({ message: " Not connected." });
-        //         });
-
-    axios
-    .post("http://localhost/ecoRide-Backend/Connection/User/Login.php", {
-      username:  loginForm.username,
-      password: loginForm.password,
-    })
-    .then((response) => {
-        if (response.data.userrole === "admin") {
-                    navigate('/admin');
-                    resetLoginForm()
-                } else if (response.data.userrole === "user") {
-                    navigate('/newsfeed');
-                    resetLoginForm()
-                } else {
-                    setErrors({ login: 'Username or password incorrect' });
+        try {
+            const response = await axios.post('http://localhost/EcoRide/ecoRide-Backend/PHP/login.php', loginForm, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
                 }
-
-    })
-    .catch((error) => {
-        setErrors({ message: " Not connected." });
-      });
-
-       
+            });
+            console.log(response.data.user_role);
+            if (response.data.user_role == 'admin') {
+                navigate('/admin');
+            } else if (response.data.user_role =='user') {
+                navigate('/newsfeed');
+            } else {
+                setErrors({ login: 'Username or password incorrect' });
+            }
+        } catch (error) {
+            setErrors({ login: 'not connected' });
+        }
     };
 
     const validateSignupForm = () => {
@@ -145,59 +119,51 @@ const Home = () => {
         return Object.keys(formErrors).length === 0;
     };
 
+
     const handleSignupSubmit = async (e) => {
+
         e.preventDefault();
-        if (validateSignupForm()) {
-            const url = "http://localhost/ecoRide-Backend/Connection/User/Register.php";
+        // if (validateSignupForm()) {
             const formData = new FormData();
-           
-                formData.append("name", signupForm.name);
-                formData.append("username", signupForm.username);
-                formData.append("email", signupForm.email);
-                formData.append("phone", signupForm.phone);
-                formData.append("nic", signupForm.nic);
-                formData.append("gender", signupForm.gender);
-                formData.append("password", signupForm.password);
-                console.log(signupForm.username)
-                console.log(signupForm.password)
-                console.log(signupForm.email)
-                console.log(signupForm.phone)
-                console.log(signupForm.name)
-                console.log(signupForm.nic)
-                console.log(signupForm.gender)
-                
-                axios
-                .post(url, formData)
-                .then((response) => {
-                    if (response.data.message ==="User Added Successfully") {
-                        resetSignupForm();
-                        toggleForm();
-                    } else {
-                        setErrors({ signup: 'User already added' });
+            for (const key in signupForm) {
+                formData.append(key, signupForm[key]);
+            }
+    
+            try {
+                const response = await axios.post('http://localhost/EcoRide/ecoRide-Backend/PHP/signup.php', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
                     }
-
-                })
-                .catch((error) => {
-                    setErrors({ message: " Not connected." });
                 });
-                
-           
-           
-
-               
-          
-        }
+                if (response.data.message === 'User created successfully') {
+                    console.log('sae')
+                    setIsLogin(true);
+                    setErrors({});
+                    setShowLogin(true);
+                } else {
+                    console.log('saes')
+                    setErrors({ signup: response.data.message });
+                }
+            } catch (error) {
+                console.log('sassse')
+                setErrors({ signup: 'Signup failed: ' + error.message });
+            }
+        // }
     };
-
+    
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         if (isLogin) {
             setLoginForm({ ...loginForm, [name]: value });
         } else {
-            setSignupForm({ ...signupForm, [name]: value });
+            if (name === 'file') {
+                setSignupForm({ ...signupForm, [name]: e.target.files[0] }); // Handle file input
+            } else {
+                setSignupForm({ ...signupForm, [name]: value });
+            }
         }
     };
-
+    
     const year = new Date();
 
     return (
