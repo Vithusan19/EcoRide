@@ -21,7 +21,7 @@
     position: relative; /* Ensure relative positioning for absolute elements */
 }
 
-.close-button {
+.close-button-otp {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -32,7 +32,7 @@
     color: #999;
 }
 
-.close-button:hover {
+.close-button-otp:hover {
     color: #04f310;
 }
 
@@ -151,4 +151,11 @@ h2 {
         width: calc(50% - 10px);
         margin: 5px;
     }
+}
+.loading-otp
+{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 10px auto;
 }
