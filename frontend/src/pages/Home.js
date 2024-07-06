@@ -90,29 +90,7 @@ const Home = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        // const url = "http://localhost/ecoRide-Backend/Connection/User/Login.php";
-        // const formData = new FormData();
-        //         formData.append("username", loginForm.username);
-        //         formData.append("password", loginForm.password);
-        //         console.log(loginForm.username)
-        //         console.log(loginForm.password)
-        //         axios
-        //         .post(url, formData)
-        //         .then((response) => {
-                    
-        //     if (response.data.userrole === "admin") {
-        //         navigate('/admin');
-        //     } else if (response.data.userrole === "user") {
-        //         navigate('/newsfeed');
-        //     } else {
-        //         setErrors({ login: 'Username or password incorrect' });
-        //     }
-
-        //         })
-        //         .catch((error) => {
-        //             setErrors({ message: " Not connected." });
-        //         });
-
+       
     axios
     .post("http://localhost/ecoRide-Backend/Connection/User/Login.php", {
       username:  loginForm.username,
@@ -291,8 +269,8 @@ const Home = () => {
                         {isLoading &&(
                            <RotatingLines
                            visible={true}
-                           height="50"
-                           width="50"
+                           height="30"
+                           width="30"
                            color="grey"
                            strokeWidth="5"
                            animationDuration="0.75"
