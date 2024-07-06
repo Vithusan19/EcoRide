@@ -173,6 +173,7 @@ const Forgot = ({ onClose }) => {
                         <button className="close-button-otp" onClick={handleClose}>
                             &times;
                         </button>
+                        <div className="otp-Check">Check your email and get the OTP</div>
                         <div className="otp-inputs">
                             {otp.map((digit, index) => (
                                 <input

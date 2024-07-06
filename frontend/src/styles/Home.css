@@ -845,9 +845,10 @@
 }
 
 @media (max-width: 462px) {
-  .services-img {
-    width: 60px;
-  }
+ .services-img
+ {
+  display: none;
+ }
 }
 
 @media (max-width: 402px) {
