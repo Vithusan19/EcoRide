@@ -42,7 +42,7 @@ const SideAdmin = ({ setSelectedSection }) => {
           </li>
           <li onClick={() => setSelectedSection('notification')}>
             <img src={notification} alt='side-menu-img' className='side-menu-img'/>
-            <span className='side-menu-name'>Notification</span>
+            <span className='side-menu-name'>Messages</span>
           </li>
         </ul>
         <button className='side-button' onClick={toggleLogoutConfirmation}>
