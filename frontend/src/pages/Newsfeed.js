@@ -12,7 +12,21 @@ const Newsfeed = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
- 
+  useEffect(() => {
+    getRides();
+  }, []);
+
+  const getRides = async () => {
+    try {
+      const response = await axios.get('http://localhost/ecoRide-Backend/Connection/Ride/DisplayRide.php');
+      setCards(response.data);
+    } catch (error) {
+      setError("There was an error fetching the rides!");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const formatTime = (timeString) => {
     const [hours, minutes] = timeString.split(':');
