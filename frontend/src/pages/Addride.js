@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import '../styles/Addride.css';
 import addride from '../assets/addride.png';
 import visa from '../assets/visacard.png';
 import master from '../assets/mastercard.png';
+import axios from 'axios';
+
 
 const Addride = () => {
   const [formData, setFormData] = useState({
@@ -17,10 +19,20 @@ const Addride = () => {
     destinationTime: '',
     seatCost: '',
     gender: '',
-    image: null,
+   // image: null,
     route: '',
     preferences: ''
   });
+  const[userid,setuserid]=useState("");
+  useEffect(() => {
+    const userID = sessionStorage.getItem("UserID");
+    setuserid(userID)
+    //const userRole = sessionStorage.getItem("UserRole");
+    console.log("UserID:", userID);
+   // console.log("UserRole:", userRole);
+}, []);
+  
+ 
 
   const [showModal, setShowModal] = useState(false);
   const [cardData, setCardData] = useState({
@@ -55,6 +67,42 @@ const Addride = () => {
     e.preventDefault();
     console.log(formData);
     setShowModal(true);
+    const url = "http://localhost/ecoRide-Backend/Connection/Ride/Addride.php";
+    const Data = new FormData();
+   
+        Data.append("vehicleNo", formData.vehicleNo);
+        Data.append("vehicleModel", formData.vehicleModel);
+        Data.append("seats", formData.seats);
+        Data.append("airCondition", formData.airCondition);
+        Data.append("departurePoint", formData.departurePoint);
+        Data.append("destinationPoint", formData.destinationPoint);
+        Data.append("date", formData.date);
+        Data.append("seatCost", formData.seatCost);
+        Data.append("departureTime", formData.departureTime);
+        Data.append("destinationTime", formData.destinationTime);
+        Data.append("gender", formData.gender);
+        Data.append("route", formData.route);
+        Data.append("preferences", formData.preferences);
+        Data.append("DriverID",userid)
+        
+        
+        axios
+        .post(url, Data)
+        .then((response) => {
+            if (response.data.status ===1) {
+                // resetSignupForm();
+                // toggleForm();
+                console.log(response.data.message)
+              
+            } else {
+               // setErrors({ signup: 'User already added' });
+               console.log(response.data.message)
+            }
+
+        })
+        .catch((error) => {
+            //setErrors({ message: " Not connected." });
+        });
   };
 
   const handleCardSubmit = (e) => {
@@ -131,10 +179,10 @@ const Addride = () => {
                 <option value="female">Female</option>
               </select>
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
               <label>Add Image:</label>
               <input type="file" name="image" onChange={handleChange} />
-            </div>
+            </div> */}
           </div>
           <div className="form-group">
             <label>Route:</label>

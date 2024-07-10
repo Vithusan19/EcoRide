@@ -20,6 +20,7 @@ import Forgot from './Forgot';
 import { RotatingLines } from "react-loader-spinner";
 
 const Home = () => {
+    //const [UserID, setUserID] = useState("");
     const [MsgName, setMsgName] = useState("");
     const [MsgEmail, setMsgEmail] = useState("");
     const [Message, setMessage] = useState("");
@@ -79,6 +80,7 @@ const Home = () => {
                 resetForm();
                 setTimeout(() => setSuccessMessage(""), 3000); 
                 
+                
             } else {
                 setErrors({ message: "Message submission failed." });
             }
@@ -96,18 +98,25 @@ const Home = () => {
       username:  loginForm.username,
       password: loginForm.password,
     })
-    .then((response) => {
-        if (response.data.userrole === "admin") {
-                    navigate('/admin');
-                    resetLoginForm()
-                } else if (response.data.userrole === "user") {
-                    navigate('/newsfeed');
-                    resetLoginForm()
-                } else {
-                    setErrors({ login: 'Username or password incorrect' });
-                }
 
-    })
+    .then((response) => {
+        const UserID=response.data.userID;
+        const userrole=response.data.userrole ;
+
+         if (userrole) {
+                sessionStorage.setItem("UserID", UserID);
+                sessionStorage.setItem("UserRole", userrole);
+                if (userrole === "admin") {
+                    sessionStorage.setItem("admin", true);
+                    navigate('/admin');
+                } else if (userrole === "user") {
+                    navigate('/newsfeed');
+                }
+                resetLoginForm();
+            } else {
+                setErrors({ login: 'Username or password incorrect' });
+            }
+        })
     .catch((error) => {
         setErrors({ message: " Not connected." });
       });

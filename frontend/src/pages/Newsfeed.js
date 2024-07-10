@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
 import Searchbar from '../components/Searchbar';
 import '../styles/Newsfeed.css';
 import { Link } from 'react-router-dom'; // Import Link component
@@ -167,6 +167,12 @@ const Newsfeed = () => {
   ]);
 
   const [searchQuery, setSearchQuery] = useState('');
+  useEffect(() => {
+    const userID = sessionStorage.getItem("UserID");
+    //const userRole = sessionStorage.getItem("UserRole");
+    console.log("UserID:", userID);
+    //console.log("UserRole:", userRole);
+}, []);
 
   const filteredCards = cards.filter((card) =>
     card.car.toLowerCase().includes(searchQuery.toLowerCase()) ||
