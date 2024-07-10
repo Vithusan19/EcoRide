@@ -112,6 +112,9 @@ const Home = () => {
                 } else if (userrole === "user") {
                     navigate('/newsfeed');
                 }
+             else if (userrole === "driver") {
+                navigate('/newsfeed');
+            }
                 resetLoginForm();
             } else {
                 setErrors({ login: 'Username or password incorrect' });

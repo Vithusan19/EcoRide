@@ -41,6 +41,10 @@ const Readmore = () => {
   if (!card) {
     return <div>Card not found</div>;
   }
+  const formatTime = (timeString) => {
+    const [hours, minutes] = timeString.split(':');
+    return `${hours}:${minutes}`;
+  };
 
   const handleRequestRide = () => {
     setIsPopupOpen(true);
@@ -57,28 +61,28 @@ const Readmore = () => {
 
   return (
     <div className="readmore-container">
-      <h2>{card.car}</h2>
+      <h2>{card.vehicleModel}</h2>
       <div className="image">
-        <img alt="Vehicle" src={images[card.car]} />
+        <img alt="Vehicle" src={images["Toyota KDH"]} />
       </div>
       <div className="readmore-card-details">
         <div className="readmore-detail">
-          <span className="readmore-label"><strong>Vehicle Number:</strong></span> {card.vehicleNumber}
+          <span className="readmore-label"><strong>Vehicle Number:</strong></span> {card.vehicleNo}
         </div>
         <div className="readmore-detail">
           <span className="readmore-label"><strong>Driver Name:</strong></span> {card.driverName}
         </div>
         <div className="readmore-detail">
-          <span className="readmore-label"><strong>From:</strong></span> {card.from}
+          <span className="readmore-label"><strong>From:</strong></span> {card.departurePoint}
         </div>
         <div className="readmore-detail">
-          <span className="readmore-label"><strong>To:</strong></span> {card.to}
+          <span className="readmore-label"><strong>To:</strong></span> {card.destinationPoint}
         </div>
         <div className="readmore-detail">
-          <span className="readmore-label"><strong>Route:</strong></span> {card.route.join(' ➜ ')}
+          <span className="readmore-label"><strong>Route:</strong></span> {card.route}
         </div>
         <div className="readmore-detail">
-          <span className="readmore-label"><strong>Time Period:</strong></span> {card.timePeriod}
+          <span className="readmore-label"><strong>Time Period:</strong></span> {formatTime(card.departureTime)} - {formatTime(card.destinationTime)}
         </div>
         <div className="readmore-detail">
           <span className="readmore-label"><strong>Available Seats:</strong></span> {card.seats}
