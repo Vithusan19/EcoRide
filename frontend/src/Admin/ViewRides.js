@@ -21,6 +21,7 @@ const ViewRides = () => {
   const getRides = async () => {
     try {
       const response = await axios.get('http://localhost/ecoRide-Backend/Connection/Ride/DisplayRide.php');
+      sessionStorage.setItem("RideCount", response.data.length);
       setRides(response.data);
     } catch (error) {
       setError("There was an error fetching the rides!");

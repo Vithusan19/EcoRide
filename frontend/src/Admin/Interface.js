@@ -1,40 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import users from "../assets/users.png";
 import userIcon from "../assets/usersIcon.png";
 import rides from "../assets/rideIcon.png";
 import revenue from "../assets/revenue.png";
 import message from "../assets/message.png";
+import axios from 'axios';
 import { PieChart, Pie, BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-const counts = {
-  driverCount: 250,
-  passengerCount: 450,
-  messageCount: 500,
-  revenue: 67000,
-  availableRide: 30
-};
-
-const usersMessageData = [
-  { name: 'Users', count: counts.driverCount+counts.passengerCount },
-  { name: 'Messages', count: counts.messageCount },
-];
-
-const revenueData = [
-  { month: 'Jan', revenue: 5000 },
-  { month: 'Feb', revenue: 7000 },
-  { month: 'Mar', revenue: 10000 },
-  { month: 'Apr', revenue: 15000 },
-  { month: 'May', revenue: 20000 },
-  { month: 'Jun', revenue: 25000 },
-  { month: 'Jul', revenue: 30000 },
-  { month: 'Aug', revenue: 35000 },
-  { month: 'Sep', revenue: 40000 },
-  { month: 'Oct', revenue: 45000 },
-  { month: 'Nov', revenue: 50000 },
-  { month: 'Dec', revenue: counts.revenue },
-];
-
 const Interface = () => {
+  const [usercount, setusercount] = useState("");
+  const [drivercount, setdrivercount] = useState("");
+  const [messagecount, setmessagecount] = useState("");
+  const [ridecount, setridecount] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [adminDetails, setAdminDetails] = useState({
     email: "admin@example.com",
@@ -42,7 +19,76 @@ const Interface = () => {
     password: "password123",
     phoneNumber: "0763915184",
   });
+  const [userinfo, setuserinfo] = useState([]);
   const [formDetails, setFormDetails] = useState({ ...adminDetails });
+
+  useEffect(() => {
+    const UserCount = sessionStorage.getItem("UserCount");
+    const DriverCount = sessionStorage.getItem("DriverCount");
+    const MCount = sessionStorage.getItem("messageCount");
+    const RideCount = sessionStorage.getItem("RideCount");
+    
+
+
+    setusercount(UserCount || "");
+    setdrivercount(DriverCount || "");
+    setmessagecount(MCount || "");
+    setridecount(RideCount || "");
+  }, []);
+  useEffect(() => {
+    // axios
+    // .post("http://localhost/ecoRide-Backend/Connection/User/SelectUser.php", {
+    //   userID:sessionStorage.getItem("UserID")
+     
+    // })
+    const url = "http://localhost/ecoRide-Backend/Connection/User/SelectUser.php";
+        let fdata = new FormData();
+        fdata.append("userID",sessionStorage.getItem("UserID") );
+        
+        axios
+        .post(url, fdata)
+        .then((response) => {
+            console.log(response.data.res);
+            setuserinfo(response.data.res);
+          
+        })
+            .catch((error) => {
+                //setErrors({ message: "Message not connected." });
+            });
+    
+
+    
+  }, []);
+
+
+  const counts = {
+    driverCount: parseInt(drivercount) || 0,
+    passengerCount: parseInt(usercount) || 0,
+    messageCount: parseInt(messagecount) || 0,
+    availableRide: parseInt(ridecount) || 0,
+    revenue: 67000,
+    
+  };
+
+  const usersMessageData = [
+    { name: 'Users', count: counts.driverCount + counts.passengerCount },
+    { name: 'Messages', count: counts.messageCount },
+  ];
+
+  const revenueData = [
+    { month: 'Jan', revenue: 5000 },
+    { month: 'Feb', revenue: 7000 },
+    { month: 'Mar', revenue: 10000 },
+    { month: 'Apr', revenue: 15000 },
+    { month: 'May', revenue: 20000 },
+    { month: 'Jun', revenue: 25000 },
+    { month: 'Jul', revenue: 30000 },
+    { month: 'Aug', revenue: 35000 },
+    { month: 'Sep', revenue: 40000 },
+    { month: 'Oct', revenue: 45000 },
+    { month: 'Nov', revenue: 50000 },
+    { month: 'Dec', revenue: counts.revenue },
+  ];
 
   const handleEditClick = () => {
     setFormDetails({ ...adminDetails });
@@ -111,9 +157,9 @@ const Interface = () => {
               <h3 className="admin-user-title">Admin information</h3>
               <img src={userIcon} alt="userIcon" className="admin-user-img" />
               <div className="admin-user-info">
-                <p>Email: {adminDetails.email}</p>
-                <p>Username: {adminDetails.username}</p>
-                <p>Phone Number: {adminDetails.phoneNumber}</p>
+                <p>Email: {userinfo.Email}</p>
+                <p>Username: {userinfo.UserName}</p>
+                <p>Phone Number: {userinfo.PhoneNo}</p>
               </div>
 
               <button className="admin-user-edit-but" onClick={handleEditClick}>
@@ -169,7 +215,7 @@ const Interface = () => {
                 className="admin-info-input"
                 type="email"
                 name="email"
-                value={formDetails.email}
+                value={userinfo.Email}
                 onChange={handleChange}
               />
               <label className="admin-info-label">Username:</label>
@@ -177,7 +223,7 @@ const Interface = () => {
                 className="admin-info-input"
                 type="text"
                 name="username"
-                value={formDetails.username}
+                value={userinfo.UserName}
                 onChange={handleChange}
               />
               <label className="admin-info-label">Phone Number:</label>
@@ -185,7 +231,7 @@ const Interface = () => {
                 className="admin-info-input"
                 type="text"
                 name="phoneNumber"
-                value={formDetails.phoneNumber}
+                value={userinfo.PhoneNo}
                 onChange={handleChange}
               />
               <label className="admin-info-label">Password:</label>
@@ -193,7 +239,7 @@ const Interface = () => {
                 className="admin-info-input"
                 type="password"
                 name="password"
-                value={formDetails.password}
+                value={userinfo.Password}
                 onChange={handleChange}
               />
               <button

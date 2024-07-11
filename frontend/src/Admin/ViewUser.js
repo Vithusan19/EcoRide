@@ -16,7 +16,15 @@ const ViewUser = () => {
   const getUsers = async () => {
     try {
       const response = await axios.get('http://localhost/ecoRide-Backend/Connection/User/Displayuser.php');
-      setUsers(response.data);
+      setUsers(response.data.users);
+      sessionStorage.setItem("total", response.data.users.length);
+      sessionStorage.setItem("UserCount", response.data.user_count);
+      sessionStorage.setItem("DriverCount", response.data.driver_count);
+      
+      // console.log(response.data.users.length);
+      // console.log(response.data.user_count);
+      // console.log(response.data.driver_count);
+      
     } catch (error) {
       console.error("There was an error fetching the users!", error);
     }

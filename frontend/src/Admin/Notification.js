@@ -15,6 +15,7 @@ const Notification = () => {
   const getUsers = async () => {
     try {
       const response = await axios.get('http://localhost/ecoRide-Backend/Connection/User/Displaymessage.php');
+      sessionStorage.setItem("messageCount", response.data.length);
       const sortedMessages = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
       setMessages(sortedMessages);
     } catch (error) {
