@@ -33,25 +33,12 @@ const Newsfeed = () => {
     return `${hours}:${minutes}`;
   };
 
-  const filterRides = (cards) => {
-    const now = new Date();
-    const twoHoursLater = new Date(now.getTime() + 10 * 60 * 1000);
-
-    return cards.filter((card) => {
-      const [depHours, depMinutes] = card.departureTime.split(':');
-      const departureTime = new Date(card.date);
-      departureTime.setHours(depHours, depMinutes);
-
-      return departureTime > twoHoursLater;
-    }).filter((card) =>
-      card.vehicleModel.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      card.departurePoint.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      card.destinationPoint.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      card.route.some(routePoint => routePoint.toLowerCase().includes(searchQuery.toLowerCase()))
-    );
-  };
-
-  const filteredCards = filterRides(cards);
+  const filteredCards = cards.filter((card) =>
+    card.vehicleModel.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    card.departurePoint.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    card.destinationPoint.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    card.route.some(routePoint => routePoint.toLowerCase().includes(searchQuery.toLowerCase()))
+  );
 
   return (
     <div>
