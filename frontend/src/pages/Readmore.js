@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Readmore.css';
-import vehicle1 from "../assets/1.jpg"; // Import the image file
+import vehicle1 from "../assets/1.jpg"; 
 import vehicle2 from "../assets/2.jpg";
 import vehicle3 from "../assets/3.jpg";
 import vehicle4 from "../assets/4.jpg";
@@ -34,7 +34,7 @@ const Readmore = () => {
  // const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const { card } = location.state || {}; // Access the card data from state
+  const { card } = location.state || {}; 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [requestedSeats, setRequestedSeats] = useState(1);
 
