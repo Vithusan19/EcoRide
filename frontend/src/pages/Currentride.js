@@ -70,7 +70,7 @@ const Editride = ({ currentrightdata, onSave, onClose, userRole }) => {
               <br /><br />
             </>
           )}
-          {userRole === 'passenger' && (
+          {userRole === 'passanger' && (
             <>
               <label>
                 Number of seats:

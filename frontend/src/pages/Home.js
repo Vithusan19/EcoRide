@@ -109,7 +109,7 @@ const Home = () => {
                 if (userrole === "admin") {
                     sessionStorage.setItem("admin", true);
                     navigate('/admin');
-                } else if (userrole === "user") {
+                } else if (userrole === "passenger") {
                     navigate('/newsfeed');
                 }
              else if (userrole === "driver") {
