@@ -30,19 +30,19 @@ const SideAdmin = ({ setSelectedSection }) => {
         <ul>
           <li onClick={() => setSelectedSection('dashboard')}>
             <img src={dashboard} alt='side-menu-img' className='side-menu-img'/>
-            <span className='side-menu-name'>Dashboard</span>
+            {/* <span className='side-menu-name'>Dashboard</span> */}
           </li>
           <li onClick={() => setSelectedSection('user-details')}>
             <img src={users} alt='side-menu-img' className='side-menu-img'/>
-            <span className='side-menu-name'>User Details</span>
+            {/* <span className='side-menu-name'>User Details</span> */}
           </li>
           <li onClick={() => setSelectedSection('ride-details')}>
             <img src={rides} alt='side-menu-img' className='side-menu-img'/>
-            <span className='side-menu-name'>Ride Details</span>
+            {/* <span className='side-menu-name'>Ride Details</span> */}
           </li>
           <li onClick={() => setSelectedSection('notification')}>
             <img src={notification} alt='side-menu-img' className='side-menu-img'/>
-            <span className='side-menu-name'>Messages</span>
+            {/* <span className='side-menu-name'>Messages</span> */}
           </li>
         </ul>
         <button className='side-button' onClick={toggleLogoutConfirmation}>

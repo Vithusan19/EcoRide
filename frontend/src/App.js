@@ -1,7 +1,7 @@
 
 
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "./components/Sidebar";
 import Newsfeed from "./pages/Newsfeed";
 import Home from './pages/Home';
@@ -24,7 +24,13 @@ const MainLayout = ({ children }) => (
 );
 
 function App() {
-  const userRole = 'driver';
+// const userRole = 'passenger';
+  const [userRole, setUserRole] = useState("");
+
+  useEffect(() => {
+    const role = sessionStorage.getItem("UserRole");
+    setUserRole(role);
+  }, []);
   return (
     <BrowserRouter>
       <Routes>
