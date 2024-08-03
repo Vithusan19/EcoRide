@@ -234,36 +234,39 @@ const Home = () => {
                 </div>
                 <img src={aboutImg} alt="aboutImage" className="about-img" />
             </section>
-            {/* services */}
-            <section id='services'>
-                <h2 className='services-tittle'>Our Services</h2>
-                <span className='services-para'>At EcoRide, we strive to make commuting more efficient, affordable, and environmentally friendly. Our platform offers a range of services designed to enhance your travel experience by connecting you with fellow commuters, providing real-time updates, and ensuring your safety. Explore how EcoRide can simplify your daily journeys and contribute to a greener planet.</span>
-                <div className='services-bars'>
-                    <div className='services-bar'>
-                        <img className='services-img' src={serve1} alt='' />
-                        <div className='services-bar-text'>
-                            <h2>Convenience and Cost-Efficiency</h2>
-                            <p>EcoRide connects you with commuters sharing similar routes, ensuring convenient and eco-friendly travel. Effortlessly share travel costs with secure payment options. Flexible scheduling accommodates both daily and occasional trips.</p>
-                        </div>
-                    </div>
-                    <div className='services-bar'>
-                        <img className='services-img' src={serve2} alt='' />
-                        <div className='services-bar-text'>
-                            <h2>Real-Time Updates and Communication</h2>
-                            <p>Stay updated with real-time ride status and driver locations. Communicate via in-app messaging for coordination. Our 24/7 customer support ensures a smooth experience.</p>
-                        </div>
-                    </div>
-                    <div className='services-bar'>
-                        <img className='services-img' src={serve3} alt='' />
-                        <div className='services-bar-text'>
-                            <h2>Safety and Environmental Impact</h2>
-                            <p>Track your reduced carbon footprint. User profiles and ratings ensure safe carpooling. Verified profiles, guarantee secure travel. EcoRide is committed to eco-friendly commuting.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+
+
+{/* services*/}
+<section id='services'>
+    <h2 className='services-title'>Our Services</h2>
+   
+    <div className='services-bars'>
+        <div className='services-bar'>
+            <img className='services-img' src={serve1} alt='' />
+            <div className='services-bar-text'>
+                <h2>Convenience and Cost-Efficiency</h2>
+                <p>EcoRide connects you with commuters sharing similar routes, ensuring convenient and eco-friendly travel. Effortlessly share travel costs with secure payment options. Flexible scheduling accommodates both daily and occasional trips.</p>
+            </div>
+        </div>
+        <div className='services-bar'>
+            <img className='services-img' src={serve2} alt='' />
+            <div className='services-bar-text'>
+                <h2>Real-Time Updates and Communication</h2>
+                <p>Stay updated with real-time ride status and driver locations. Communicate via in-app messaging for coordination. Our 24/7 customer support ensures a smooth experience.</p>
+            </div>
+        </div>
+        <div className='services-bar'>
+            <img className='services-img' src={serve3} alt='' />
+            <div className='services-bar-text'>
+                <h2>Safety and Environmental Impact</h2>
+                <p>Track your reduced carbon footprint. User profiles and ratings ensure safe carpooling. Verified profiles guarantee secure travel. EcoRide is committed to eco-friendly commuting.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
             {/* Contact */}
-            <section id="contactpage">
+            {/* <section id="contactpage">
                 <div id="contact">
                     <h2 className="contact-tittle">ContactUs</h2>
                   
@@ -299,7 +302,49 @@ const Home = () => {
 
                     </form>
                 </div>
-            </section>
+            </section> */}
+
+            {/* Contact */}
+<section id="contactpage">
+    <div id="contact">
+        <h2 className="contact-tittle">Contact Us</h2>
+        <div className="contact-container">
+            <div className="contact-form">
+                <form onSubmit={handleMessageSubmit}>
+                    <input type="text" id="name" name="MsgName" value={MsgName} placeholder="Your Name" onChange={(e) => setMsgName(e.target.value)} className="name" required />
+                    <input type="email" id="email" name="MsgEmail" value={MsgEmail} placeholder="Your Email" onChange={(e) => setMsgEmail(e.target.value)} className="email" required />
+                    <textarea rows="5" id="message" name="Message" value={Message} placeholder="Message" onChange={(e) => setMessage(e.target.value)} className="message" required></textarea>
+                    {successMessage && <p className="success-message">{successMessage}</p>}
+                    {errors.message && <p className="error-message">{errors.message}</p>}
+                    <button type="submit" className="sub-but">Send</button>
+                    {isLoading && (
+                        <RotatingLines
+                            visible={true}
+                            height="30"
+                            width="30"
+                            color="grey"
+                            strokeWidth="5"
+                            animationDuration="0.75"
+                            ariaLabel="rotating-lines-loading"
+                            wrapperStyle={{}}
+                            wrapperClass=""
+                        />
+                    )}
+                    <div className="links">
+                        <img className="link" src={fb} alt="Facebook" />
+                        <img className="link" src={insta} alt="Instagram" />
+                        <img className="link" src={twi} alt="Twitter" />
+                    </div>
+                </form>
+            </div>
+            <div className="contact-image">
+                {/* Replace with your image */}
+                <img src={signupBg} alt='scontact-image' className='contact-image' />
+            </div>
+        </div>
+    </div>
+</section>
+
               {/* Footer */}
               <footer className="footer">
                 Copyright &#169; {year.getFullYear()} <span>ecoRide</span>. All rights reserved.

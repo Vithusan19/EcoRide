@@ -115,10 +115,6 @@
   }
 }
 
-
-
-
-
 /* about */
 
 #about {
@@ -143,16 +139,18 @@
 
 .about-tit {
   margin: 1rem 0;
-  font-size: 1.8rem;
+  font-size: 2.0rem; /* Increase the font size for more prominence */
   font-weight: 800;
   text-align: center;
   background-color: #00F78D;
   padding: 10px;
   border-radius: 10px;
-
-
-
+  max-width: 30%; /* Increase the width to make it more prominent */
+  width: 100%; /* Ensure it uses the full width up to max-width */
+  margin-left: auto; /* Centering the heading */
+  margin-right: auto; /* Centering the heading */
 }
+
 
 .about-text {
   width: 60%;
@@ -229,7 +227,7 @@
 
 
 /* contact */
-#contactpage {
+/* #contactpage {
   min-height: calc(100vh-6rem);
   width: 100vw;
   max-width: 60rem;
@@ -321,7 +319,7 @@
 
 /* Responsive Styles */
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .contact-form {
     max-width: 80%;
   }
@@ -331,9 +329,152 @@
   .contact-form {
     max-width: 90%;
   }
+} */ 
+
+/* contact */
+/* contact */
+#contactpage {
+  min-height: calc(100vh - 6rem);
+  width: 100vw;
+  max-width: 60rem;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: white; /* Set background to white */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Add box shadow effect */
 }
 
+.contact-tittle {
+  margin: 1rem 0;
+  font-size: 2.0rem; /* Increase the font size for more prominence */
+  font-weight: 800;
+  text-align: center;
+  background-color: #00F78D;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 30%; /* Increase the width to make it more prominent */
+  width: 100%; /* Ensure it uses the full width up to max-width */
+  margin-left: auto; /* Centering the heading */
+  margin-right: auto; /* Centering the heading */
 
+
+}
+
+.contact-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100%;
+  margin: 1rem 0;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 60%;
+  padding: 1rem;
+}
+
+.name,
+.email,
+.message {
+  font-size: medium;
+  width: 100%;
+  max-width: 40rem;
+  margin: 0.5rem 0;
+  padding: 0.5rem 1rem;
+  color: rgb(7, 7, 7);
+  border: none;
+  border-radius: 0.5rem;
+  background: #fbfbfb;
+}
+
+.sub-but {
+  background: #00F78D;
+  padding: 0.8rem 4rem;
+  border: none;
+  border-radius: 0.8rem;
+  margin: 2rem 0;
+}
+
+.success-message {
+  color: green;
+  font-size: medium;
+  font-weight: 500;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.link {
+  object-fit: cover;
+  margin: 0 0.5rem;
+  cursor: pointer;
+}
+
+.sub-but:hover {
+  background-color: #07dc80;
+  cursor: pointer;
+}
+
+.contact-image {
+  width: 30%;
+  padding: 1rem;
+}
+
+.contact-image img {
+  height: 350px;
+  width: 23vw;
+  border-radius: 10px;
+  margin-left: -150px;
+  margin-top: -100px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+  }
+
+  .contact-form {
+    width: 100%;
+  }
+
+  .links {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .contact-image {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-form {
+    align-items: center;
+  }
+
+  .name,
+  .email,
+  .message {
+    width: 100%;
+    max-width: none;
+  }
+}
 
 .footer {
   width: 100vw;
@@ -796,94 +937,91 @@
 
 /* services */
 #services {
-  min-height: calc(100vh-6rem);
-  overflow: hidden;
-  width: 100vw;
-  max-width: 75rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   text-align: center;
-  margin: 20px auto;
-  position: relative;
-
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.services-img {
-  width: 200px;
-  margin-right: 2rem;
-  object-fit: cover;
-}
-
-.services-tittle {
-  margin: 1rem 0;
-  font-size: 1.8rem;
+.services-title {
+  font-size: 2rem;
+  margin: 10px auto 20px auto;
   font-weight: 800;
-  text-align: center;
   background-color: #00F78D;
   padding: 10px;
   border-radius: 10px;
-
+  max-width: 30%; /* Adjust the width to be smaller on large screens */
 }
 
 .services-para {
-  font-size: 15px;
-  font-weight: 450;
+  display: block;
+  margin-bottom: 20px;
+  font-size: 1.2em;
   color: rgb(54, 50, 50);
 }
 
 .services-bars {
-  margin: 1.5rem;
-  width: 100vw;
-  max-width: 80%;
-  text-align: left;
-
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center the cards horizontally */
 }
 
 .services-bar {
+  flex: 1 1 calc(33.333% - 20px); /* Adjust the width to fit three cards per row, accounting for margins */
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+  transition: transform 0.3s ease;
   display: flex;
-  margin: 1rem;
-  padding: 1.2rem 1.5rem;
-  border-radius: 0.5rem;
-  background: rgb(216, 216, 216);
-
-
+  flex-direction: column;
+  align-items: center;
 }
 
-.services-bar-text p {
-  font-size: 15px;
+.services-bar:hover {
+  transform: translateY(-10px);
+}
 
+.services-img {
+  width: 100%;
+  height: auto;
+}
+
+.services-bar-text {
+  padding: 15px;
+  text-align: center;
 }
 
 .services-bar-text h2 {
-  font-size: 1.4rem;
-  font-weight: 580;
-  color: rgb(27, 46, 70);
+  font-size: 1.5em;
+  margin-bottom: 10px;
 }
 
-@media (max-width: 610px) {
-  .services-bar-text>p {
-    font-size: 0.8rem;
+.services-bar-text p {
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .services-bar {
+    flex: 1 1 calc(50% - 20px); /* Two cards per row on medium screens */
   }
 }
 
-@media (max-width: 462px) {
- .services-img
- {
-  display: none;
- }
-}
-
-@media (max-width: 402px) {
-  .services-bar-text h2 {
-    font-size: 17px;
+@media (max-width: 480px) {
+  .services-bar {
+    flex: 1 1 100%; /* One card per row on small screens */
+    margin: 10px 0; /* Adjust margins for better spacing */
   }
-
-  .services-bar-text p {
-    font-size: 12px;
+  
+  .services-title {
+    max-width: 90%; /* Ensure the title is smaller on small screens */
   }
 }
+
 
 
 /* .services-con-img
