@@ -1,261 +1,194 @@
-
-.currentride {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px 50px;
-  margin-left: 25vh;
-  min-height: calc(100vh - 100px);
-  width: calc(100% - 25vh); /* Adjust width to account for the sidebar */
+/* General container styling */
+.current-ride-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f9f9f9; /* Light background for contrast */
+  color: #333;
+  margin-left: 250px; /* Adjust margin to make space for the sidebar */
 }
 
-.currentride-header-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  width: 100%; /* Ensure the header title spans full width */
+
+/* Current Ride Heading styling */
+.current-ride-container h1 {
+  color: #000000; /* Primary color for headings */
+  margin-bottom: 20px;
+  font-size: 32px; /* Larger font size for the heading */
+  font-weight: bold; /* Bold font for emphasis */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Slight shadow for a 3D effect */
 }
 
-.currentride-header-title h1 {
-  font-size: 2rem;
-  color: #313834;
-}
-
-.currentride-card-box {
-  background: #fff;
-  padding: 2rem;
+/* Ride details styling */
+.ride-details {
+  background: #ffffff; /* White background for clarity */
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 5vh;
-  margin-left: 40vh;
-  
-  width: 100%; /* Ensure the card box spans full width */
-  justify-content: center;
-  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 20px; /* Increased padding for better spacing */
 }
 
-.currentride-box-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  width: 100%; /* Ensure the container spans full width */
+.ride-details p {
+  margin: 12px 0; /* Increased margin for better readability */
+  font-size: 18px; /* Larger font size for ride details */
 }
 
-.currentride-box {
-  flex: 1 1 300px;
-  background: #e8e8e8;
-  padding: 1rem;
-  border-radius: 8px;
+.ride-details strong {
+  color: #2980b9; /* Blue color for emphasis */
+  font-size: 20px; /* Larger font size for bold text */
 }
 
-.currentride-box p {
-  margin: 0.5rem 0;
-}
-
-.currentride-button-container {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
-  justify-content: center;
-}
-
-.currentride-action-button {
-  background-color: #313834;
+/* Button styling */
+button {
+  background-color: #27ae60; /* Primary color for buttons */
+  border: none;
   color: #fff;
-  padding: 0.5rem 1rem;
-  border: none;
+  padding: 12px 20px; /* Larger padding for buttons */
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 16px; /* Larger font size for buttons */
+  margin-right: 10px;
 }
 
-.currentride-action-button:hover {
-  background-color: #00C96D;
+button:hover {
+  background-color: #0ae385; /* Secondary color for hover effect */
 }
 
-.currentride-popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+/* Cancel booking button styling */
+.cancel-booking-button {
+  background-color: #e74c3c; /* Red color for cancel buttons */
 }
 
-.currentride-popup-Inner {
-  background: #fff;
-  padding: 2rem;
+.cancel-booking-button:hover {
+  background-color: #c0392b; /* Darker red for hover effect */
+}
+
+/* Request details styling */
+.request-details {
+  background-color: #f2f9f2; /* Light green background for request details */
   border-radius: 8px;
-  width: auto;
-  max-width: 500px;
-  text-align: center;
-  position: relative;
+  padding: 15px; /* Increased padding for request details */
+  margin-top: 15px;
 }
 
-.currentride-close-btn {
-  background: #888888;
-  color: white;
-  border: none;
-  cursor: pointer;
-  padding: 0.2rem 0.5rem;
+/* Flex container for requests */
+.request {
+  background-color: #ffffff; /* White background for individual requests */
   border-radius: 5px;
-  font-size: 16px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-.currentride-close-btn:hover{
-  background: #ff4c4c;
-}
-.currentride-rating {
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
-  justify-content: center;
-  margin: 1rem 0;
+  justify-content: space-between; /* Distributes space evenly between items */
 }
 
-.currentride-delete-button {
-  background-color: #ff4c4c;
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+/* Flex items for request details */
+.request .request-info {
+  flex: 1;
+  margin-right: 20px; /* Adds space between items */
 }
 
-.currentride-popup-delete-inner {
-  background: #fff;
-  padding: 2rem;
+/* Remove margin from the last flex item */
+.request .request-info:last-child {
+  margin-right: 0;
+}
+
+/* Styling for individual info items */
+.request-info p {
+  margin: 5px 0; /* Reduced margin for better spacing */
+  font-size: 16px; /* Adjust font size for better readability */
+}
+
+/* Specific styling for names, phone numbers, and seats requested */
+.request-info .name {
+  font-weight: bold;
+  color: #27ae60; /* Primary color for name */
+}
+
+.request-info .phone {
+  font-weight: bold;
+  color: #3498db; /* Blue color for phone numbers */
+}
+
+.request-info .seats {
+  font-weight: bold;
+  color: #e67e22; /* Orange color for seats requested */
+}
+
+.request-info .label {
+  font-weight: normal;
+  color: #333;
+}
+
+/* Driver details styling */
+.driver-details {
+  background-color: #f5f5f5; /* Light grey background for driver details */
   border-radius: 8px;
-  width: auto;
-  max-width: 400px;
-  text-align: center;
-  position: relative;
+  padding: 15px; /* Increased padding for driver details */
+  margin-top: 15px;
 }
 
-.currentride-yes-button {
-  background-color: #ff4c4c;
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
+/* Flex container for driver details */
+.driver-info {
+  display: flex;
+  justify-content: space-between; /* Distribute space evenly */
+  margin-bottom: 10px;
+}
+
+/* Styling for individual driver details */
+.driver-info .info {
+  flex: 1; /* Allow items to grow and shrink equally */
+  margin-right: 20px; /* Space between items */
+}
+
+/* Remove margin from the last info item */
+.driver-info .info:last-child {
+  margin-right: 0;
+}
+
+/* Label and value styling for driver details */
+.driver-info .info p {
+  margin: 5px 0; /* Reduced margin for better spacing */
+  font-size: 16px; /* Adjust font size for better readability */
+}
+
+.driver-info .info .label {
+  font-weight: normal;
+  color: #333;
+}
+
+.driver-info .info .value {
+  font-weight: bold;
+  color: #27ae60; /* Primary color for driver info values */
+}
+
+/* Accepted passengers styling */
+.accepted-passengers {
+  background-color: #dff0d8; /* Light green background for accepted passengers */
+  border-radius: 8px;
+  padding: 15px; /* Increased padding for accepted passengers */
+  margin-top: 15px;
+}
+
+.accepted-passenger {
+  background-color: #ffffff; /* White background for individual accepted passengers */
   border-radius: 5px;
-  cursor: pointer;
+  padding: 15px; /* Increased padding for individual accepted passengers */
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.currentride-No-button {
-  background-color: #313834;
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.accepted-passenger p {
+  margin: 8px 0; /* Increased margin for better spacing */
+  font-size: 18px; /* Larger font size for accepted passengers */
 }
 
-.currentride-No-button:hover{
-  background-color: #00C96D;
+.accepted-passenger strong {
+  color: #27ae60; /* Primary color for bold text in accepted passengers */
+  font-size: 20px; /* Larger font size for bold text in accepted passengers */
 }
 
-/* Responsive Styles */
-@media (max-width: 1024px) {
-  .currentride {
-    padding: 20px 20px;
-    margin-left: 20vh;
-    width: calc(100% - 20vh);
-  }
-
-  .currentride-header-title h1 {
-    font-size: 1.8rem;
-  }
-
-  .currentride-card-box {
-    padding: 1.5rem;
-    margin-top: 4vh;
-    margin-left: 25vh;
-  }
-  
-}
- /* Responsive Styles */
- @media (max-width: 768px) {
-  .currentride {
-    margin-left: 15vh;
-    min-height: 100vh;
-  }
-
-  .currentride-header-title {
-    margin: 0 50px;
-    padding: 10px;
-  }
-
-  .currentride-card-box {
-    margin: 2rem;
-    padding: 30px;
-  }
-
-  .currentride-box-container {
-    gap: 20px;
-  }
-
-  .currentride-box {
-    min-width: 250px;
-    padding: 20px;
-  }
-
-  .currentride-button-container {
-    gap: 15px;
-  }
-
-  .currentride-popup-Inner,
-  .currentride-popup-delete-inner {
-    margin-left:10vh;
-    width: auto;
-    padding: 20px;
-  }
-
-
-  
-}
-
-@media (max-width: 480px) {
-  .currentride-currentride {
-    margin: 30px;
-    min-height: 100vh;
-  }
-
-  .currentride-header-title {
-    margin: 0 30px;
-    padding: 5px;
-  }
-
-  .currentride-card-box {
-    margin: 1rem;
-    padding: 20px;
-  }
-
-  .currentride-box-container {
-    gap: 10px;
-  }
-
-  .currentride-box {
-    min-width: 200px;
-    padding: 15px;
-  }
-
-  .currentride-button-container {
-    gap: 10px;
-  }
-
-  .currentride-popup-Inner,
-  .currentride-popup-delete-inner {
-    margin-left:10vh;
-    width: auto;
-    padding: 30px;
-  }
-  
-
-
+/* Message styling */
+.no-rides-message {
+  color: #95a5a6; /* Grey color for no rides message */
+  font-style: italic;
+  font-size: 18px; /* Larger font size for no rides message */
 }

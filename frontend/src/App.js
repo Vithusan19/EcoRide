@@ -12,6 +12,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Readmore from './pages/Readmore'; // Import Readmore component
 import Admin from "./pages/Admin";
 import Profile from "./pages/Profile";
+
 //import cards from "./Carddata";
 
 const MainLayout = ({ children }) => (
@@ -24,13 +25,7 @@ const MainLayout = ({ children }) => (
 );
 
 function App() {
-// const userRole = 'passenger';
-  const [userRole, setUserRole] = useState("");
 
-  useEffect(() => {
-    const role = sessionStorage.getItem("UserRole");
-    setUserRole(role);
-  }, []);
   return (
     <BrowserRouter>
       <Routes>
@@ -40,7 +35,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/newsfeed" element={<MainLayout><Newsfeed /></MainLayout>} />
         <Route path="/addride" element={<MainLayout><Addride /></MainLayout>} />
-        <Route path="/currentride" element={<MainLayout><Currentride userRole={userRole} /></MainLayout>} />
+        <Route path="/currentride" element={<MainLayout><Currentride /></MainLayout>} />
         <Route path="/readmore/:id" element={<MainLayout><Readmore /></MainLayout>} /> {/* Pass cards to Readmore */}
 
         <Route path="/admin" element={<Admin />} />

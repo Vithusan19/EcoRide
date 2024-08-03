@@ -1,383 +1,225 @@
 import React, { useState } from 'react';
 import '../styles/Currentride.css';
-import ReactStars from "react-rating-stars-component";
+import axios from 'axios';
 
-const Editride = ({ currentrightdata, onSave, onClose, userRole }) => {
-  const [formData, setFormData] = useState(currentrightdata);
+const CurrentRide = () => {
+  const [rides, setRides] = useState([
+    {
+      id: 1,
+      departurePoint: 'New York',
+      destinationPoint: 'Boston',
+      date: '2024-06-27',
+      departureTime: '08:00',
+      destinationTime: '12:00',
+      vehicleModel: 'Toyota Camry',
+      seatCost: 1500,
+      status: 'waiting', // Possible statuses: 'waiting', 'accepted'
+      availableSeats: 3,
+      driver: {
+        name: 'David Smith',
+        contact: '987-654-3210'
+      },
+      requests: [
+        {
+          id: 1,
+          passengerName: 'John Doe',
+          passengerContact: '123-456-7890',
+          seatsRequested: 2
+        }
+      ],
+      acceptedPassengers: [] // Array to hold accepted passengers
+    },
+    {
+      id: 2,
+      departurePoint: 'Los Angeles',
+      destinationPoint: 'San Francisco',
+      date: '2024-06-28',
+      departureTime: '09:00',
+      destinationTime: '13:30',
+      vehicleModel: 'Honda Accord',
+      seatCost: 2000,
+      status: 'accepted',
+      availableSeats: 2,
+      driver: {
+        name: 'Sarah Johnson',
+        contact: '123-456-7890'
+      },
+      requests: [
+        {
+          id: 2,
+          passengerName: 'Alice Johnson',
+          passengerContact: '456-789-1230',
+          seatsRequested: 1
+        }
+      ],
+      acceptedPassengers: [] // Array to hold accepted passengers
+    }
+  ]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const [userRole] = useState('passenger'); // Can be 'driver' or 'passenger'
+  const [showDriverDetails, setShowDriverDetails] = useState(null);
+  const [showRequests, setShowRequests] = useState({});
 
-  const handleSubmit = () => {
-    onSave(formData);
-    onClose();
-  };
-
-  return (
-    <div className="currentride-popup">
-      <div className="currentride-popup-Inner">
-        <div className="currentride-popup-header">
-          <button className="currentride-close-btn" onClick={onClose}>X</button>
-        </div>
-        <h3>Edit Ride details</h3>
-        <div className='currentride-form'>
-          {userRole === 'driver' && (
-            <>
-              <label>
-                Date:
-                <input
-                  type="date"
-                  name="Date"
-                  value={formData.Date}
-                  onChange={handleChange}
-                />
-              </label>
-              <br /><br />
-              <label>
-                Number of seats:
-                <input
-                  type="text"
-                  name="Numberofseats"
-                  value={formData.Numberofseats}
-                  onChange={handleChange}
-                />
-              </label>
-              <br /><br />
-              <label>
-                Time:
-                <input
-                  type="text"
-                  name="Time"
-                  value={formData.Time}
-                  onChange={handleChange}
-                />
-              </label>
-              <br /><br />
-              <label>
-                Preference:
-                <input
-                  type="text"
-                  name="Preference"
-                  value={formData.Preference}
-                  onChange={handleChange}
-                />
-              </label>
-              <br /><br />
-            </>
-          )}
-          {userRole === 'passanger' && (
-            <>
-              <label>
-                Number of seats:
-                <input
-                  type="text"
-                  name="Numberofseats"
-                  value={formData.Numberofseats}
-                  onChange={handleChange}
-                />
-              </label>
-              <br /><br />
-            </>
-          )}
-        </div>
-        <button className="currentride-action-button" onClick={handleSubmit}>
-          Save Changes
-        </button>
-      </div>
-    </div>
-  );
-};
-
-const Rating = ({ onClose }) => {
-  const [driverRating, setDriverRating] = useState(0);
-
-  const handleRatingChange = (newRating) => {
-    setDriverRating(newRating);
-  };
-
-  const handleSubmitRating = () => {
-    // Handle rating submission logic here
-    alert(`Rating submitted: ${driverRating} stars`);
-    onClose();
-  };
-
-  return (
-    <div className="currentride-popup">
-      <div className="currentride-popup-Inner">
-        <div className="currentride-popup-header">
-          <button className="currentride-close-btn" onClick={onClose}>X</button>
-        </div>
-        <h3>Rate Your Ride</h3>
-        <div className='currentride-rating'>
-          <label >
-            
-            <ReactStars
-              count={5}
-              size={50}
-              activeColor="#ffd700"
-              value={driverRating}
-              onChange={handleRatingChange}
-            />
-          </label>
-          <br />
-        </div>
-        <button className="currentride-action-button" onClick={handleSubmitRating}>
-          Submit Rating
-        </button>
-      </div>
-    </div>
-  );
-};
-
-const Currentride = ({ userRole }) => {
-  const initialcurrentridedata = {
-    VehicleNumber: 'ABC123',
-    DriverName: 'John Doe',
-    Date: '2023-05-01',
-    PickupLocation: 'Kandy',
-    DropoffLocation: 'Galle',
-    Route: ['Kandy', 'Matara', 'Galle'],
-    Time: '5 AM - 11 AM',
-    Numberofseats: '5',
-    Preference: 'No smoking',
-    Passengers: [
-      { name: 'Alice', seat: '1' },
-      { name: 'Bob', seat: '2' }
-    ]
-  };
-
-  const [currentrightdata, setcurrentridedata] = useState(initialcurrentridedata);
-  const [openpopup, setopenpopup] = useState(false);
-  const [cancelride, setcancelride] = useState(null);
-  const [isDeleteDialogVisible, setDeleteDialogVisible] = useState(false);
-  const [isFinishDialogVisible, setFinishDialogVisible] = useState(false);
-  const [isRatingDialogVisible, setRatingDialogVisible] = useState(false);
-
-  const handleSavecurrentride = (formData) => {
-    setcurrentridedata(formData);
-  };
-
-  const toggleopenpopup = () => {
-    setopenpopup(!openpopup);
-  };
-
-  const handlecancel = (formData) => {
-    setcancelride(formData);
-  };
-
-  const closeModel = () => {
-    setcancelride(null);
-  };
-
-  const showDeleteDialoge = () => {
-    setDeleteDialogVisible(true);
-  };
-
-  const hideDeleteDialoge = () => {
-    setDeleteDialogVisible(false);
-  };
-
-  const handleFinishRide = () => {
-    setFinishDialogVisible(true);
-    if (userRole === 'passenger') {
-      setRatingDialogVisible(true);
+  const handleCancelBooking = async (rideId) => {
+    try {
+      await axios.delete(`/api/rides/${rideId}`); // Replace with your actual API endpoint
+      setRides(rides.filter(ride => ride.id !== rideId));
+      console.log(`Booking for ride with ID ${rideId} canceled.`);
+    } catch (error) {
+      console.error("Error canceling booking:", error);
     }
   };
 
-  const hideFinishDialog = () => {
-    setFinishDialogVisible(false);
+  const handleAcceptRequest = async (rideId, requestId) => {
+    try {
+      const ride = rides.find(r => r.id === rideId);
+      const request = ride.requests.find(req => req.id === requestId);
+
+      if (request.seatsRequested > ride.availableSeats) {
+        console.log(`Cannot accept request with ID ${requestId}. Requested seats exceed available seats.`);
+        alert(`Cannot accept request. Requested seats exceed available seats.`);
+        return;
+      }
+
+      await axios.post(`/api/rides/${rideId}/accept-request`, { requestId }); // Replace with your actual API endpoint
+
+      setRides(rides.map(ride =>
+        ride.id === rideId
+          ? {
+              ...ride,
+              availableSeats: ride.availableSeats - request.seatsRequested,
+              status: ride.availableSeats - request.seatsRequested === 0 ? 'accepted' : ride.status,
+              requests: ride.requests.filter(request => request.id !== requestId),
+              acceptedPassengers: [
+                ...ride.acceptedPassengers,
+                {
+                  name: request.passengerName,
+                  contact: request.passengerContact,
+                  seatsRequested: request.seatsRequested
+                }
+              ]
+            }
+          : ride
+      ));
+      console.log(`Request with ID ${requestId} accepted.`);
+    } catch (error) {
+      console.error("Error accepting request:", error);
+    }
   };
 
-  const hideRatingDialog = () => {
-    setRatingDialogVisible(false);
+  const handleRejectRequest = async (rideId, requestId) => {
+    try {
+      await axios.post(`/api/rides/${rideId}/reject-request`, { requestId }); // Replace with your actual API endpoint
+      setRides(rides.map(ride =>
+        ride.id === rideId
+          ? {
+              ...ride,
+              requests: ride.requests.filter(request => request.id !== requestId)
+            }
+          : ride
+      ));
+      console.log(`Request with ID ${requestId} rejected.`);
+    } catch (error) {
+      console.error("Error rejecting request:", error);
+    }
   };
 
-  const DriverView = () => (
-    <>
-      <div className='currentride-card-box'>
-        <h3>Ride details</h3>
-        <div className='currentride-box-container'>
-          <div className='currentride-box'>
-            <p><strong>Date:</strong> {currentrightdata.Date}</p>
-            <p><strong>Pickup Location:</strong> {currentrightdata.PickupLocation}</p>
-            <p><strong>Drop-off Location:</strong>{currentrightdata.DropoffLocation}</p>
-            <p><strong>Route: </strong>{currentrightdata.Route.join(' ➜ ')}</p>
-            <p><strong>Time Period:</strong> {currentrightdata.Time}</p>
-            <p><strong>Number of seats:</strong> {currentrightdata.Numberofseats}</p>
-            <p><strong>Preference:</strong> {currentrightdata.Preference}</p>
-            <p><strong>Passengers:</strong></p>
-          
-            {currentrightdata.Passengers.map((passenger, index) => (
-              <p key={index}>{passenger.name} ➜ Seat: {passenger.seat}</p>
-            ))}
-          
-          </div>
-        </div>
-        <div className="currentride-button-container">
-          <button className='currentride-action-button' onClick={toggleopenpopup}>Edit Ride</button>
-          {openpopup && (
-            <Editride
-              currentrightdata={currentrightdata}
-              onSave={handleSavecurrentride}
-              onClose={toggleopenpopup}
-              userRole={userRole}
-            />
-          )}
+  const toggleDriverDetails = (rideId) => {
+    setShowDriverDetails((prevId) => (prevId === rideId ? null : rideId));
+  };
 
-<button className='currentride-action-button' onClick={handlecancel}>Cancel Ride</button>
-          {cancelride && (
-            <div className="currentride-popup">
-              <div className="currentride-popup-Inner">
-                <button className="currentride-close-btn" onClick={closeModel}>
-                  &times;
-                </button><br />
-                <h2>Ride Details</h2><br />
-                <p><strong>Date:</strong> {currentrightdata.Date}</p><br />
-                <p><strong>Number of seats:</strong> {currentrightdata.Numberofseats}</p><br />
-                <p><strong>Preference:</strong> {currentrightdata.Preference}</p><br />
-                <p><strong>Time:</strong> {currentrightdata.Time}</p><br />
-                <p><strong>Pickup Location:</strong> {currentrightdata.PickupLocation}</p><br />
-                <p><strong>Drop-off Location:</strong> {currentrightdata.DropoffLocation}</p><br />
-                <button className="currentride-delete-button" onClick={showDeleteDialoge}>
-                  Delete Ride
-                </button>
-              </div>
-            </div>
-          )}
-          {isDeleteDialogVisible && (
-            <div className="currentride-popup">
-              <div className="currentride-popup-delete-inner">
-                <h2>Confirm Deletion</h2><br />
-                <p>Are you sure you want to delete this Ride?</p><br />
-                <div className='currentride-button-container'>
-                  <button className='currentride-yes-button'>
-                    Yes
-                  </button>
-                  <button className="currentride-No-button" onClick={hideDeleteDialoge}>
-                    No
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          <button className='currentride-action-button' onClick={handleFinishRide}>Finish Ride</button>
-          {isFinishDialogVisible && (
-            <div className="currentride-popup">
-              <div className="currentride-popup-delete-inner">
-                <h2>Ride Finished!</h2>
-                <br />
-                <p>Your ride is finished!</p>
-                <br />
-                <button className="currentride-action-button" onClick={hideFinishDialog}>Close</button>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </>
-  );
-
-  const PassengerView = () => (
-    <div className='currentride-card-box'>
-      <h3>Ride details</h3>
-      <div className='currentride-box-container'>
-        <div className='currentride-box'>
-          <p><strong>Driver Name:</strong> {currentrightdata.DriverName}</p>
-          <p><strong>Vehicle Number:</strong> {currentrightdata.VehicleNumber}</p>
-          <p><strong>Date:</strong> {currentrightdata.Date}</p>
-          <p><strong>Time:</strong> {currentrightdata.Time}</p>
-          <p><strong>Pickup Location:</strong> {currentrightdata.PickupLocation}</p>
-          <p><strong>Drop-off Location:</strong> {currentrightdata.DropoffLocation}</p>
-          <p><strong>Route: </strong>{currentrightdata.Route.join(' ➜ ')}</p>
-          <p><strong>Number of seats:</strong> {currentrightdata.Numberofseats}</p>
-          <p><strong>Preference:</strong> {currentrightdata.Preference}</p>
-        </div>
-      </div>
-      <div className="currentride-button-container">
-        <button className='currentride-action-button' onClick={toggleopenpopup}>Edit Ride</button>
-        {openpopup && (
-          <Editride
-            currentrightdata={currentrightdata}
-            onSave={handleSavecurrentride}
-            onClose={toggleopenpopup}
-            userRole={userRole}
-          />
-        )}
-
-<button className='currentride-action-button' onClick={handlecancel}>Cancel Ride</button>
-          {cancelride && (
-            <div className="currentride-popup">
-              <div className="currentride-popup-Inner">
-                <button className="currentride-close-btn" onClick={closeModel}>
-                  &times;
-                </button>
-                <h2>Ride Details</h2>
-                <p><strong>Driver Name:</strong> {currentrightdata.DriverName}</p>
-          <p><strong>Vehicle Number:</strong> {currentrightdata.VehicleNumber}</p>
-          <p><strong>Date:</strong> {currentrightdata.Date}</p>
-          <p><strong>Time:</strong> {currentrightdata.Time}</p>
-          <p><strong>Pickup Location:</strong> {currentrightdata.PickupLocation}</p>
-          <p><strong>Drop-off Location:</strong> {currentrightdata.DropoffLocation}</p>
-          <p><strong>Route: </strong>{currentrightdata.Route.join(' ➜ ')}</p>
-          <p><strong>Number of seats:</strong> {currentrightdata.Numberofseats}</p>
-          <p><strong>Preference:</strong> {currentrightdata.Preference}</p>
-                <button className="currentride-delete-button" onClick={showDeleteDialoge}>
-                  Delete Ride
-                </button>
-              </div>
-            </div>
-          )}
-          {isDeleteDialogVisible && (
-            <div className="currentride-popup">
-              <div className="currentride-popup-delete-inner">
-                <h2>Confirm Deletion</h2><br />
-                <p>Are you sure you want to delete this Ride?</p><br />
-                <div className='currentride-button-container'>
-                  <button className='currentride-yes-button'>
-                    Yes
-                  </button>
-                  <button className="currentride-No-button" onClick={hideDeleteDialoge}>
-                    No
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
-
-        <button className='currentride-action-button' onClick={handleFinishRide}>Finish Ride</button>
-        {isFinishDialogVisible && (
-          <div className="currentride-popup">
-            <div className="currentride-popup-delete-inner">
-              <h2>Ride Finished!</h2>
-              <br />
-              <p>Your ride is finished!</p>
-              <br />
-              <button className="currentride-action-button" onClick={hideFinishDialog}>Close</button>
-            </div>
-          </div>
-        )}
-        {isRatingDialogVisible && (
-          <Rating onClose={hideRatingDialog} />
-        )}
-      </div>
-    </div>
-  );
+  const toggleRequests = (rideId) => {
+    setShowRequests((prevState) => ({
+      ...prevState,
+      [rideId]: !prevState[rideId],
+    }));
+  };
 
   return (
-    <div className='currentride'>
-      <div className='currentride-header-title'>
-        <h1>Current Ride</h1>
-      </div>
-      {userRole === 'driver' ? <DriverView /> : <PassengerView />}
+    <div className="current-ride-container">
+      <h1>Current Rides</h1>
+      {rides.length > 0 ? (
+        rides.map((ride) => (
+          <div key={ride.id} className="ride-details">
+            <p><strong>Departure Point:</strong> {ride.departurePoint}</p>
+            <p><strong>Destination Point:</strong> {ride.destinationPoint}</p>
+            <p><strong>Date:</strong> {ride.date}</p>
+            <p><strong>Time:</strong> {ride.departureTime} - {ride.destinationTime}</p>
+            <p><strong>Vehicle:</strong> {ride.vehicleModel}</p>
+            <p><strong>Cost per Seat:</strong> LKR {ride.seatCost}</p>
+
+            {userRole === 'driver' && (
+              <div>
+                <p><strong>Available Seats:</strong> {ride.availableSeats}</p>
+                <button onClick={() => toggleRequests(ride.id)}>
+                  {showRequests[ride.id] ? 'Hide Requests' : 'Passenger Requests'}
+                </button>
+                {showRequests[ride.id] && (
+                  <div className="request-details">
+                    {ride.requests.length > 0 ? (
+                      ride.requests.map((request) => (
+                        <div key={request.id} className="request">
+                          <p><strong>Name:</strong> {request.passengerName}</p>
+                          <p><strong>Contact:</strong> {request.passengerContact}</p>
+                          <p><strong>Seats Requested:</strong> {request.seatsRequested}</p>
+                          <button onClick={() => handleAcceptRequest(ride.id, request.id)}>Accept</button>
+                          <button onClick={() => handleRejectRequest(ride.id, request.id)}>Reject</button>
+                        </div>
+                      ))
+                    ) : (
+                      <p>No requests available.</p>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {userRole === 'passenger' && (
+              <div>
+                <p><strong>Status:</strong> {ride.status.charAt(0).toUpperCase() + ride.status.slice(1)}</p>
+                {ride.status === 'accepted' && (
+                  <>
+                    <button onClick={() => toggleDriverDetails(ride.id)}>
+                      {showDriverDetails === ride.id ? 'Hide Driver Details' : 'Show Driver Details'}
+                    </button>
+                    <button className="cancel-booking-button" onClick={() => handleCancelBooking(ride.id)}>
+                      Cancel Ride
+                    </button>
+                    {showDriverDetails === ride.id && (
+                      <div className="driver-details">
+                        <p><strong>Driver Name:</strong> {ride.driver.name}</p>
+                        <p><strong>Contact:</strong> {ride.driver.contact}</p>
+                      </div>
+                    )}
+                  </>
+                )}
+                {ride.status === 'waiting' && (
+                  <button className="cancel-booking-button" onClick={() => handleCancelBooking(ride.id)}>
+                    Cancel Booking
+                  </button>
+                )}
+              </div>
+            )}
+
+            {userRole === 'driver' && ride.acceptedPassengers.length > 0 && (
+              <div className="accepted-passengers">
+                <h3>Accepted Passengers</h3>
+                {ride.acceptedPassengers.map((passenger, index) => (
+                  <div key={index} className="accepted-passenger">
+                    <p><strong>Name:</strong> {passenger.name}</p>
+                    <p><strong>Contact:</strong> {passenger.contact}</p>
+                    <p><strong>Seats Requested:</strong> {passenger.seatsRequested}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ))
+      ) : (
+        <p className="no-rides-message">You have no current rides.</p>
+      )}
     </div>
   );
 };
 
-export default Currentride;
+export default CurrentRide;
