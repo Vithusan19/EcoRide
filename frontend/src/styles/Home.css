@@ -334,9 +334,10 @@
 /* contact */
 /* contact */
 #contactpage {
-  min-height: calc(100vh - 6rem);
+  /* min-height: calc(100vh - 6rem); */
+  height: 60vh;
   width: 100vw;
-  max-width: 60rem;
+  max-width: 70rem;
   margin: 0 auto;
   text-align: center;
   margin-top: 5rem;
@@ -347,7 +348,7 @@
   padding: 1rem;
   background: white; /* Set background to white */
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Add box shadow effect */
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);  */
 }
 
 .contact-tittle {
@@ -358,7 +359,7 @@
   background-color: #00F78D;
   padding: 10px;
   border-radius: 10px;
-  max-width: 30%; /* Increase the width to make it more prominent */
+  max-width: 20%; /* Increase the width to make it more prominent */
   width: 100%; /* Ensure it uses the full width up to max-width */
   margin-left: auto; /* Centering the heading */
   margin-right: auto; /* Centering the heading */
@@ -400,8 +401,9 @@
 }
 
 .sub-but {
-  background: #00F78D;
+  background: #043054;
   padding: 0.8rem 4rem;
+  color: white;
   border: none;
   border-radius: 0.8rem;
   margin: 2rem 0;
@@ -416,13 +418,14 @@
 .links {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: 0.2rem;
 }
 
 .link {
   object-fit: cover;
   margin: 0 0.5rem;
   cursor: pointer;
+  height: 25px;
 }
 
 .sub-but:hover {
@@ -500,7 +503,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.9);
   z-index: 60;
   display: flex;
   justify-content: center;
