@@ -1,3 +1,4 @@
+/* General Footer Styles */
 .footer {
     background-color: #343a40;
     color: #fff;
@@ -7,66 +8,127 @@
     margin-top: 30px;
     height: 250px;
     margin-left: 20px;
-}
-
-.footer-content {
+  }
+  
+  .footer-content {
     display: flex;
     justify-content: space-around;
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 30px;
     max-width: 1500px;
-    
     margin-left: 10vw;
-   
-}
-
-
-.footer-section {
+  }
+  
+  .footer-section {
     flex: 1;
     min-width: 250px;
     margin: 10px 0;
-}
-
-.footer-section h4 {
+  }
+  
+  .footer-section h4 {
     margin-bottom: 15px;
     font-size: 20px;
     font-weight: bold;
-}
-
-.footer-section p,
-.footer-section a {
+  }
+  
+  .footer-section p,
+  .footer-section a {
     margin: 5px 0;
     font-size: 14px;
     color: #ccc;
     text-decoration: none;
     transition: color 0.3s;
-}
-
-.footer-section a:hover {
+  }
+  
+  .footer-section a:hover {
     color: #00C96D;
-}
-
-.footer-socials {
+  }
+  
+  .footer-socials {
     display: flex;
     justify-content: center;
     gap: 15px;
-}
-
-.footer-socials a {
+  }
+  
+  .footer-socials a {
     color: #fff;
     font-size: 18px;
     transition: color 0.3s;
-}
-
-.footer-socials a:hover {
+  }
+  
+  .footer-socials a:hover {
     color: #00C96D;
-}
-
-.footer-bottom {
+  }
+  
+  .footer-bottom {
     margin-top: 30px;
     font-size: 14px;
     color: #ccc;
     border-top: 1px solid #555;
     padding-top: 20px;
-}
+  }
+  
+  /* Responsive Styles for Tablets and Smaller Screens */
+  @media (max-width: 1245px) {
+    .footer {
+      margin-left: 10px; /* Adjust left margin for large screens */
+    }
+  
+    .footer-content {
+      max-width: 100%; /* Ensure content fits within the container */
+      margin-left: 0; /* Remove left margin for larger screens */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .footer {
+      padding: 20px 10px;
+      height: auto; /* Allow height to adjust based on content */
+      margin-left: 0; /* Remove left margin */
+    }
+  
+    .footer-content {
+      flex-direction: column;
+      align-items: center;
+      margin-left: 0;
+    }
+  
+    .footer-section {
+      margin: 10px 0;
+      text-align: center; /* Center text for readability */
+    }
+  
+    .footer-section h4 {
+      font-size: 18px;
+    }
+  
+    .footer-section p,
+    .footer-section a {
+      font-size: 12px;
+    }
+  
+    .footer-socials {
+      margin: 10px 0;
+    }
+  
+    .footer-socials a {
+      font-size: 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .footer-section h4 {
+      font-size: 16px;
+    }
+  
+    .footer-section p,
+    .footer-section a {
+      font-size: 10px;
+    }
+  
+    .footer-socials a {
+      font-size: 14px;
+    }
+  }
+  

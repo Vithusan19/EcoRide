@@ -52,29 +52,30 @@ const Newsfeed = () => {
             <p>{error}</p>
           ) : (
             <div className="cards">
-              {filteredCards.map((card, index) => (
-                <div key={index} className="card">
-                  <h3 className="head-card"><FaCar /> {card.vehicleModel}</h3>
-                  <img src={CarAvatar} alt="Car Avatar" className="car-avatar" />
+             {filteredCards.map((card, index) => (
+  <div key={index} className="card">
+    <h3 className="head-card"><FaCar /> {card.vehicleModel}</h3>
+    <img src={CarAvatar} alt="Car Avatar" className="car-avatar" />
 
-                  <p><FaMapMarkerAlt /> <strong>From:</strong> {card.departurePoint}</p>
-                  <p><FaMapMarkerAlt /> <strong>To:</strong> {card.destinationPoint}</p>
-                  <p><FaCalendarAlt /> <strong>Date:</strong> {card.date}</p>
-                  <p><FaClock /> <strong>Ride Schedule:</strong> <span className="time-period">{formatTime(card.departureTime)} - {formatTime(card.destinationTime)}</span></p>
-                  <p><FaUsers /> <strong>Available Seats:</strong> <span className="seats">{card.seats}</span></p>
-                  <p><strong>Route:</strong> {card.route}</p>
-                  <div className="rating-stars">
-                    <ReactStars
-                      count={5}
-                      size={24}
-                      activeColor="#ffd700"
-                      value={card.rating}
-                    />
-                    <span className="rating-value">{card.rating.toFixed(1)}/5</span>
-                  </div>
-                  <Link to={`/readmore/${index}`} className="read-more" state={{ card }}>Read More</Link>
-                </div>
-              ))}
+    <p><FaMapMarkerAlt /> <strong>From:</strong> {card.departurePoint}</p>
+    <p><FaMapMarkerAlt /> <strong>To:</strong> {card.destinationPoint}</p>
+    <p><FaCalendarAlt /> <strong>Date:</strong> {card.date}</p>
+    <p><FaClock /> <strong>Ride Schedule:</strong> <span className="time-period">{formatTime(card.departureTime)} - {formatTime(card.destinationTime)}</span></p>
+    <p><FaUsers /> <strong>Available Seats:</strong> <span className="seats">{card.seats - card.BookingSeats}</span></p>
+    <p><strong>Route:</strong> {card.route}</p>
+    <div className="rating-stars">
+      <ReactStars
+        count={5}
+        size={24}
+        activeColor="#ffd700"
+        value={card.rating}
+      />
+      <span className="rating-value">{card.rating.toFixed(1)}/5</span>
+    </div>
+    <Link to={`/readmore/${index}`} className="read-more" state={{ card }}>Read More</Link>
+  </div>
+))}
+
             </div>
           )}
         </div>
