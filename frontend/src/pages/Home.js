@@ -339,14 +339,14 @@ const Home = () => {
             </div>
             <div className="contact-image">
               
-                <img src={signupBg} alt='scontact-image' className='contact-image' />
+                <img src={signupBg} alt='scontact-image1' className='contact-image' />
             </div>
         </div>
     </div>
 </section>
 
               {/* Footer */}
-              <footer className="footer">
+              <footer className="home-footer">
                 Copyright &#169; {year.getFullYear()} <span>ecoRide</span>. All rights reserved.
             </footer>
             {/* Login Popup */}

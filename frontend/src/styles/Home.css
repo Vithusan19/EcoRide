@@ -142,7 +142,8 @@
   font-size: 2.0rem; /* Increase the font size for more prominence */
   font-weight: 800;
   text-align: center;
-  background-color: #00F78D;
+  /* background-color: #00F78D; */
+  color: #043054;
   padding: 10px;
   border-radius: 10px;
   max-width: 30%; /* Increase the width to make it more prominent */
@@ -356,13 +357,14 @@
   font-size: 2.0rem; /* Increase the font size for more prominence */
   font-weight: 800;
   text-align: center;
-  background-color: #00F78D;
+  /* background-color: #00F78D; */
   padding: 10px;
   border-radius: 10px;
   max-width: 20%; /* Increase the width to make it more prominent */
   width: 100%; /* Ensure it uses the full width up to max-width */
   margin-left: auto; /* Centering the heading */
   margin-right: auto; /* Centering the heading */
+  color: #043054;
 
 
 }
@@ -479,7 +481,7 @@
   }
 }
 
-.footer {
+.home-footer {
   width: 100vw;
   height: 4rem;
   display: flex;
@@ -490,7 +492,7 @@
   font-weight: 550;
 }
 
-.footer span {
+.home-footer span {
   margin-left: 0.3rem;
   color: #00F78D;
 }
@@ -951,7 +953,8 @@
   font-size: 2rem;
   margin: 10px auto 20px auto;
   font-weight: 800;
-  background-color: #00F78D;
+  /* background-color: #00F78D; */
+  color: #043054;
   padding: 10px;
   border-radius: 10px;
   max-width: 30%; /* Adjust the width to be smaller on large screens */

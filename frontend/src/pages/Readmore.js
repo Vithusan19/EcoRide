@@ -15,6 +15,7 @@ import vehicle11 from "../assets/11.jpg";
 import vehicle12 from "../assets/12.jpg";
 import axios from 'axios';
 import { Hourglass } from "react-loader-spinner";
+import Footer from '../components/Footer';
 
 
 const images = {
@@ -245,7 +246,7 @@ const Readmore = () => {
   </div>
 </div>
 
-{/* <Footer /> */}
+<Footer />
    
     </div>
     

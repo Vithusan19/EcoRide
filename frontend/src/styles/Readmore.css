@@ -5,7 +5,6 @@ body {
 }
 
 .readmore-container {
-
   width: 80%;
   margin-left:33vh;
  max-width: 1200px;
@@ -14,16 +13,6 @@ body {
   
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
-
-    width: 100%;
-    margin-left: 60vh;/* Center the container */
-    padding: 10px;
-    /* background: #eee;
-    border: 1px solid #ccc; */
-    border-radius: 50px;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); */
-    max-width: 600px;/* Adjust max-width as per your design */
-
 }
 
 .readmore-header {
@@ -60,19 +49,12 @@ body {
 }
 
 .readmore-detail {
-
   display: flex;
   justify-content: space-between;
   padding: 10px;
   background: #f9f9f9;
   border-radius: 10px;
   border: 1px solid #ddd;
-
-    display: flex;
-    justify-content: center;
-    padding: 10px;
-    /* border-bottom: 1px solid #eee; */
-
 }
 
 .readmore-label {
@@ -118,75 +100,13 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
- 
   width: 350px;
   background-color: white;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   border-radius: 15px;
   overflow: hidden;
-
-  width: 300px;
-  background-color: white;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  z-index: 70;
-  border-radius: 10px;
-  overflow: hidden;
 }
-
-.readmore-popup-inner {
-  padding: 20px;
-}
-
-.readmore-popup h3 {
-  margin-top: 0;
-  margin-bottom: 15px;
-  font-size: 20px;
-  text-align: center;
-}
-
-.readmore-popup label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-.readmore-popup input[type="number"] {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-  margin-top: 5px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.readmore-button-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.readmore-action-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #313834;
-  color: white;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
-
-.readmore-action-button:hover {
-  background-color: #00C96D ;
-}
-.loadingRequest
-{
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-}
-
 
 .readmore-popup-inner {
   padding: 25px;
@@ -332,7 +252,8 @@ body {
   justify-content: space-between;
   gap: 20px; /* Space between the two divs */
   margin-top: 20px;
-  margin-left: 30vh;
+  margin-left: 33vh;
+  max-width: 1180px;
   box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
@@ -390,31 +311,18 @@ body {
 
 /* Responsive design */
 
-/* @media (max-width: 1245px) {
-
-  .readmore-container {
-    margin: 1rem;
-    padding: 20px;
-    margin-left: 27vh;
-    
-  }
-
-  .readmore-photos-container {
-    margin-left: 27vh;
-    max-width: 900px;
-  }
-} */
-
 @media (max-width: 960px) {
   .readmore-container {
     margin: 1rem;
     padding: 20px;
     margin-left: 25vh;
     
-    
 }
 
-
+.readmore-photos-container {
+  margin-left: 25vh;
+  max-width: 300px;
+}
 
 
 .readmore-photos-container {
@@ -423,7 +331,6 @@ body {
 }
 
 }
-
 @media (max-width: 768px) {
   .readmore-container {
       margin: 1rem;
@@ -475,8 +382,3 @@ body {
 }
 
 }
-
-
-
-
-
