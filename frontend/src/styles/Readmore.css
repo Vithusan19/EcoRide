@@ -2,10 +2,10 @@
     width: 100%;
     margin-left: 60vh;/* Center the container */
     padding: 10px;
-    background: #eee;
-    border: 1px solid #ccc;
+    /* background: #eee;
+    border: 1px solid #ccc; */
     border-radius: 50px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); */
     max-width: 600px;/* Adjust max-width as per your design */
 }
 
@@ -41,7 +41,7 @@
     display: flex;
     justify-content: center;
     padding: 10px;
-    border-bottom: 1px solid #eee;
+    /* border-bottom: 1px solid #eee; */
 }
 
 .readmore-label {
@@ -83,6 +83,18 @@
 .readmore-request-button:hover {
     background-color: #00C96D;
 }
+.readmore-popup-back {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 60;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 
 .readmore-popup {
@@ -93,7 +105,7 @@
   width: 300px;
   background-color: white;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
+  z-index: 70;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -143,6 +155,12 @@
 
 .readmore-action-button:hover {
   background-color: #00C96D ;
+}
+.loadingRequest
+{
+  align-items: center;
+  text-align: center;
+  justify-content: center;
 }
 
 

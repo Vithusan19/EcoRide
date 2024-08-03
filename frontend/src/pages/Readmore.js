@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Readmore.css';
 import vehicle1 from "../assets/1.jpg"; 
 import vehicle2 from "../assets/2.jpg";
@@ -13,10 +13,12 @@ import vehicle9 from "../assets/9.jpg";
 import vehicle10 from "../assets/10.jpg";
 import vehicle11 from "../assets/11.jpg";
 import vehicle12 from "../assets/12.jpg";
+import axios from 'axios';
+import { Hourglass } from "react-loader-spinner";
 
 
 const images = {
-  'Toyota KDH': vehicle1,
+  'BMW': vehicle1,
   'Mercedes Benz': vehicle2,
   'Toyota Axio': vehicle3,
   'Ford Transit': vehicle4,
@@ -31,16 +33,23 @@ const images = {
 };
 
 const Readmore = () => {
- // const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const { card } = location.state || {}; 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [requestedSeats, setRequestedSeats] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const [userid, setuserid] = useState("");
+  useEffect(() => {
+    const userID = sessionStorage.getItem("UserID");
+    setuserid(userID);
+  }, []);
 
   if (!card) {
     return <div>Card not found</div>;
   }
+
   const formatTime = (timeString) => {
     const [hours, minutes] = timeString.split(':');
     return `${hours}:${minutes}`;
@@ -54,16 +63,45 @@ const Readmore = () => {
     setIsPopupOpen(false);
   };
 
-  const handleSubmitRequest = () => {
-    console.log(`Requested ${requestedSeats} seats`);
+  const handleSubmitRequest = async (e) => {
+    e.preventDefault();
+    setIsLoading(true)
+    const url = "http://localhost/ecoRide-Backend/Connection/Ride/RequestRide.php";
+    const Data = new FormData();
+    Data.append("userID", userid);
+    Data.append("seatsNo", requestedSeats);
+    Data.append("rideID", card.rideID); // Append rideID here
+    
+    // Log values for debugging
+    console.log("UserID:", userid);
+    console.log("Requested Seats:", requestedSeats);
+    console.log("RideID:", card.rideID);
+
+    try {
+        const response = await axios.post(url, Data);
+        // Log the response data for debugging
+        console.log("Response Data:", response.data);
+
+        if (response.data.status === 1) {
+            console.log('Request sent successfully');
+            setIsLoading(false)
+            console.log('Driver Email:', response.data.email);
+        } else {
+            console.log('Failed to Request Ride:', response.data.message);
+        }
+    } catch (error) {
+        console.error("Connection error:", error);
+    }
+
     setIsPopupOpen(false);
-  };
+};
+
 
   return (
     <div className="readmore-container">
       <h2>{card.vehicleModel}</h2>
       <div className="image">
-        <img alt="Vehicle" src={images["Toyota KDH"]} />
+        <img alt="Vehicle" src={images[card.vehicleModel]} />
       </div>
       <div className="readmore-card-details">
         <div className="readmore-detail">
@@ -97,6 +135,7 @@ const Readmore = () => {
       </div>
 
       {isPopupOpen && (
+        <div className='readmore-popup-back'>
         <div className="readmore-popup">
           <div className="readmore-popup-inner">
             <h3>Request Seats</h3>
@@ -113,8 +152,23 @@ const Readmore = () => {
             <div className="readmore-button-container">
               <button className="readmore-action-button" onClick={handleClosePopup}>Cancel</button>
               <button className="readmore-action-button" onClick={handleSubmitRequest}>Submit</button>
+              
             </div>
+           <div className='loadingRequest'> 
+            {isLoading &&(
+                          <Hourglass
+                          visible={true}
+                          height="30"
+                          width="30"
+                          ariaLabel="hourglass-loading"
+                          wrapperStyle={{}}
+                          wrapperClass=""
+                          colors={['#306cce', '#72a1ed']}
+                          />
+                        )}
+                        </div>
           </div>
+        </div>
         </div>
       )}
     </div>

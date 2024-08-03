@@ -8,6 +8,7 @@ import { FaClock, FaMapMarkerAlt, FaUsers, FaCar, FaCalendarAlt } from 'react-ic
 
 const Newsfeed = () => {
   const [cards, setCards] = useState([]);
+  const [rideid, setrideid] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);

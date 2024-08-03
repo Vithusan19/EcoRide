@@ -27,9 +27,7 @@ const Addride = () => {
   useEffect(() => {
     const userID = sessionStorage.getItem("UserID");
     setuserid(userID)
-    //const userRole = sessionStorage.getItem("UserRole");
-    console.log("UserID:", userID);
-   // console.log("UserRole:", userRole);
+    
 }, []);
   
  
@@ -62,47 +60,46 @@ const Addride = () => {
       setCardData({ ...cardData, [name]: value });
     }
   };
+  
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
     setShowModal(true);
+
     const url = "http://localhost/ecoRide-Backend/Connection/Ride/Addride.php";
     const Data = new FormData();
-   
-        Data.append("vehicleNo", formData.vehicleNo);
-        Data.append("vehicleModel", formData.vehicleModel);
-        Data.append("seats", formData.seats);
-        Data.append("airCondition", formData.airCondition);
-        Data.append("departurePoint", formData.departurePoint);
-        Data.append("destinationPoint", formData.destinationPoint);
-        Data.append("date", formData.date);
-        Data.append("seatCost", formData.seatCost);
-        Data.append("departureTime", formData.departureTime);
-        Data.append("destinationTime", formData.destinationTime);
-        Data.append("gender", formData.gender);
-        Data.append("route", formData.route);
-        Data.append("preferences", formData.preferences);
-        Data.append("DriverID",userid)
-        
-        
-        axios
-        .post(url, Data)
-        .then((response) => {
-            if (response.data.status ===1) {
-                
-                console.log(response.data.message)
-              
-            } else {
-              
-               console.log(response.data.message)
-            }
 
-        })
-        .catch((error) => {
-            //setErrors({ message: " Not connected." });
-        });
-  };
+    
+    console.log(formData);
+
+    Data.append("vehicleNo", formData.vehicleNo);
+    Data.append("vehicleModel", formData.vehicleModel);
+    Data.append("seats", formData.seats);
+    Data.append("airCondition", formData.airCondition);
+    Data.append("departurePoint", formData.departurePoint);
+    Data.append("destinationPoint", formData.destinationPoint);
+    Data.append("date", formData.date);
+    Data.append("seatCost", formData.seatCost);
+    Data.append("departureTime", formData.departureTime);
+    Data.append("destinationTime", formData.destinationTime);
+    Data.append("gender", formData.gender);
+    Data.append("route", formData.route);
+    Data.append("preferences", formData.preferences);
+    Data.append("DriverID", userid);
+
+    try {
+        const response = await axios.post(url, Data);
+        console.log(response.data); 
+        if (response.data.status === 1) {
+            console.log('Ride added successfully');
+        } else {
+            console.log(response.data.message);
+        }
+    } catch (error) {
+        console.error("Connection error:", error);
+    }
+};
+
 
   const handleCardSubmit = (e) => {
     e.preventDefault();
