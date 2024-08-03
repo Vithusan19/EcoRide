@@ -13,9 +13,14 @@ import vehicle9 from "../assets/9.jpg";
 import vehicle10 from "../assets/10.jpg";
 import vehicle11 from "../assets/11.jpg";
 import vehicle12 from "../assets/12.jpg";
+import vehicle01 from "../assets/01.jpg";
+import vehicle02 from "../assets/02.jpg";
+import vehicle03 from "../assets/03.jpg";
+import vehicle04 from "../assets/04.jpg";
 import axios from 'axios';
 import { Hourglass } from "react-loader-spinner";
 import Footer from '../components/Footer';
+import '../styles/Footer.css';
 
 
 const images = {
@@ -30,13 +35,20 @@ const images = {
   'Hyundai Starex': vehicle9,
   'Volkswagen Crafter': vehicle10,
   'Byd M6': vehicle11,
-  'Mercedes Sprinter': vehicle12
+  'Mercedes Sprinter': vehicle12,
+
+  '01':vehicle01,
+  '02':vehicle02,
+  '03':vehicle03,
+  '04':vehicle04,
+
 };
 
 const photos = [
-  vehicle1, vehicle2, vehicle3, vehicle4, vehicle5,
-  vehicle6, vehicle7, vehicle8, vehicle9, vehicle10,
-  vehicle11, vehicle12
+  // vehicle1, vehicle2, vehicle3, vehicle4, vehicle5,
+  // vehicle6, vehicle7, vehicle8, vehicle9, vehicle10,
+  // vehicle11, vehicle12
+  vehicle01,vehicle02,vehicle03,vehicle04
 ];
 const Readmore = () => {
   const navigate = useNavigate();
@@ -104,7 +116,7 @@ const Readmore = () => {
 
 
   return (
-    <div>
+    <div class="read-container">
     <div className="readmore-container">
       <h2>{card.vehicleModel}</h2>
      
@@ -186,7 +198,44 @@ const Readmore = () => {
 
        
     </div>
-
+    <div className="readmore-row-2">
+          <div className="readmore-container-row2">
+            <div className="headline">
+              <h1>We’re here every step of the way</h1>
+            </div>
+            <div className="readmore-features">
+              <div className="readmore-feature">
+                <h2>At your service 24/7</h2>
+                <p>Our team is at your disposal to answer any questions by email or social media. You can also have a live chat directly with experienced members.</p>
+              </div>
+              <div className="readmore-feature">
+                <h2>EcoRide at your side</h2>
+                <p>Ride Save , Here you can send ride request to the driver.</p>
+              </div>
+              <div className="readmore-feature">
+                <h2>100% secure information</h2>
+                <p>Our team is dedicated to the protection of your data, which is always 100% confidential thanks to monitoring tools, secure navigation and encrypted data.</p>
+              </div>
+            </div>
+            <div className="readmore-statistics">
+              <div className="readmore-stat">
+              <i class="fa-sharp-duotone fa-solid fa-money-bill"></i>
+                <h3>Travel at low prices</h3>
+                {/* <p>Wherever you’re going, there’s a carpool that will get you there for less.</p> */}
+              </div>
+              <div className="readmore-stat">
+              <i class="fa-sharp fa-solid fa-shield"></i>
+                <h3>Trustworthy and simple</h3>
+                {/* <p>Trust</p> */}
+              </div>
+              <div className="readmore-stat">
+              <i className="fas fa-car"></i> 
+                <h3>Proximity makes it easier</h3>
+                {/* <p>carpoolers</p> */}
+              </div>
+            </div>
+          </div>
+        </div>
     <div className="readmore-photos-container">
         <h3>Additional Photos</h3>
         <div className="readmore-photos">
