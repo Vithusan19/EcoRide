@@ -37,13 +37,10 @@ section {
   text-align: center;
 }
 
-.head-card{
-
-  background-color: #fcc6c6;
+.head-card {
+  background-color: #172525;
   color: #000000;
-
 }
-
 
 .card {
   width: calc(33.33% - 20px); 
@@ -55,46 +52,45 @@ section {
   transition: transform 0.3s ease-in-out;
 }
 
-
 .card:hover {
   transform: scale(1.05);
 }
 
-
 .card h3 {
   margin: 0 0 10px;
   font-size: 1.5em;
+  color: #ffffff;
 }
 
+.car-avatar {
+  width: 100px;
+  height: auto;
+  margin: 10px auto;
+}
 
 .card p {
   margin: 10px 0;
 }
-
 
 .location-symbol {
   font-weight: bold;
   color: #2c3e50;
 }
 
-
 .arrow-symbol {
   margin: 0 5px;
   color: #2980b9;
 }
-
 
 .time-period {
   font-style: italic;
   color: #8e44ad;
 }
 
-
 .seats {
   font-weight: bold;
   color: #27ae60;
 }
-
 
 .read-more {
   display: block;
@@ -108,13 +104,12 @@ section {
   width: fit-content;
 }
 
-
 .read-more:hover {
   text-decoration: none;
   background: #0ae385;
 }
 
-/* Media queries for responsive  */
+/* Media queries for responsive */
 @media screen and (max-width: 1200px) {
   section {
     margin-left: 100px;
@@ -169,7 +164,6 @@ section {
     padding: 5px;
   }
 }
-
 
 .rating-stars {
   display: flex;

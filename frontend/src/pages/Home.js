@@ -338,7 +338,7 @@ const Home = () => {
                 </form>
             </div>
             <div className="contact-image">
-                {/* Replace with your image */}
+              
                 <img src={signupBg} alt='scontact-image' className='contact-image' />
             </div>
         </div>

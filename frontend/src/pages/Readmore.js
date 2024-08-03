@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState,useEffect } from 'react';
+import {useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Readmore.css';
-import vehicle1 from "../assets/1.jpg"; 
+import vehicle1 from "../assets/1.jpg"; // Import the image file
 import vehicle2 from "../assets/2.jpg";
 import vehicle3 from "../assets/3.jpg";
 import vehicle4 from "../assets/4.jpg";
@@ -32,6 +32,11 @@ const images = {
   'Mercedes Sprinter': vehicle12
 };
 
+const photos = [
+  vehicle1, vehicle2, vehicle3, vehicle4, vehicle5,
+  vehicle6, vehicle7, vehicle8, vehicle9, vehicle10,
+  vehicle11, vehicle12
+];
 const Readmore = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -98,27 +103,34 @@ const Readmore = () => {
 
 
   return (
+    <div>
     <div className="readmore-container">
       <h2>{card.vehicleModel}</h2>
-      <div className="image">
-        <img alt="Vehicle" src={images[card.vehicleModel]} />
-      </div>
-      <div className="readmore-card-details">
-        <div className="readmore-detail">
-          <span className="readmore-label"><strong>Vehicle Number:</strong></span> {card.vehicleNo}
+     
+      <div className="readmore-content">
+        <div className="readmore-image">
+          <img alt="Vehicle" src={images['BMW']} />
         </div>
-        <div className="readmore-detail">
-          <span className="readmore-label"><strong>Driver Name:</strong></span> {card.driverName}
-        </div>
-        <div className="readmore-detail">
-          <span className="readmore-label"><strong>From:</strong></span> {card.departurePoint}
-        </div>
-        <div className="readmore-detail">
-          <span className="readmore-label"><strong>To:</strong></span> {card.destinationPoint}
-        </div>
-        <div className="readmore-detail">
+        <div className="readmore-main-details">
+          <div className="readmore-detail">
+            <span className="readmore-label"><strong>Vehicle Number:</strong></span> {card.vehicleNo}
+          </div>
+          <div className="readmore-detail">
+            <span className="readmore-label"><strong>Driver Name:</strong></span> {card.driverName}
+          </div>
+          <div className="readmore-detail">
+            <span className="readmore-label"><strong>From:</strong></span> {card.departurePoint}
+          </div>
+          <div className="readmore-detail">
+            <span className="readmore-label"><strong>To:</strong></span> {card.destinationPoint}
+          </div>
+          <div className="readmore-detail">
           <span className="readmore-label"><strong>Route:</strong></span> {card.route}
         </div>
+        </div>
+      </div>
+      <div className="readmore-secondary-details">
+        
         <div className="readmore-detail">
           <span className="readmore-label"><strong>Time Period:</strong></span> {formatTime(card.departureTime)} - {formatTime(card.destinationTime)}
         </div>
@@ -129,13 +141,13 @@ const Readmore = () => {
           <span className="readmore-label"><strong>Preferences:</strong></span> {card.preferences}
         </div>
       </div>
+     
       <div className="readmore-btn-container">
         <button className="readmore-back-button" onClick={() => navigate(-1)}>Back</button>
         <button className="readmore-request-button" onClick={handleRequestRide}>Request Ride</button>
       </div>
 
       {isPopupOpen && (
-        <div className='readmore-popup-back'>
         <div className="readmore-popup">
           <div className="readmore-popup-inner">
             <h3>Request Seats</h3>
@@ -152,9 +164,8 @@ const Readmore = () => {
             <div className="readmore-button-container">
               <button className="readmore-action-button" onClick={handleClosePopup}>Cancel</button>
               <button className="readmore-action-button" onClick={handleSubmitRequest}>Submit</button>
-              
             </div>
-           <div className='loadingRequest'> 
+            <div className='loadingRequest'> 
             {isLoading &&(
                           <Hourglass
                           visible={true}
@@ -169,9 +180,75 @@ const Readmore = () => {
                         </div>
           </div>
         </div>
-        </div>
       )}
+  
+
+       
     </div>
+
+    <div className="readmore-photos-container">
+        <h3>Additional Photos</h3>
+        <div className="readmore-photos">
+          {photos.map((photo, index) => (
+            <img key={index} src={photo} alt={`Additional ${index + 1}`} />
+          ))}
+        </div>
+      </div>
+     {/* Video Section */}
+     {/* <div class="contain">
+     <div className="readmore-video-container">
+        <h3>System Explanation</h3>
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/VIDEO_ID"  // Replace VIDEO_ID with your YouTube video ID
+          title="System Explanation"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+</div>
+<div className="readmore-instructions">
+        <h3>How to Use This Page</h3>
+        <p>Welcome to the vehicle details page. Here’s how to navigate and utilize this information:</p>
+        <ul>
+          <li><strong>View Vehicle Details:</strong> Check out the details on the right side of the image, including vehicle number, driver name, and travel route.</li>
+          <li><strong>Request a Ride:</strong> Click the "Request Ride" button to open a popup where you can specify the number of seats you want to request.</li>
+          <li><strong>Back Button:</strong> Use the "Back" button to return to the previous page.</li>
+          <li><strong>Additional Photos and Videos:</strong> View more photos and a video explanation of the system below for additional context and details.</li>
+        </ul>
+      </div>
+      </div> */}
+
+<div className="video-instructions-container">
+  <div className="readmore-video-container">
+    <h3>System Explanation</h3>
+    <iframe
+      width="560"
+      height="315"
+      src="https://www.youtube.com/embed/VIDEO_ID"   //Replace VIDEO_ID with your YouTube video ID 
+      title="System Explanation"
+      frameBorder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+    ></iframe>
+  </div>
+  <div className="readmore-instructions">
+    <h3>How to Use This Page</h3>
+    <p>Welcome to the vehicle details page. Here’s how to navigate and utilize this information:</p>
+    <ul>
+            <i className="fas fa-car"></i> <strong>View Vehicle Details:</strong> Check out the details on the right side of the image, including vehicle number, driver name, and travel route.<br></br><br></br>
+            <i className="fas fa-calendar-check"></i> <strong>Request a Ride:</strong> Click the "Request Ride" button to open a popup where you can specify the number of seats you want to request.<br></br><br></br>
+            <i className="fas fa-arrow-left"></i> <strong>Back Button:</strong> Use the "Back" button to return to the previous page.<br></br><br></br>
+            <i className="fas fa-image"></i> <strong>Additional Photos and Videos:</strong> View more photos and a video explanation of the system below for additional context and details.<br></br><br></br>
+          </ul>
+  </div>
+</div>
+
+{/* <Footer /> */}
+   
+    </div>
+    
   );
 };
 

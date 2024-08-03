@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import ReactStars from 'react-rating-stars-component'; 
 import axios from 'axios';
 import { FaClock, FaMapMarkerAlt, FaUsers, FaCar, FaCalendarAlt } from 'react-icons/fa'; 
+import CarAvatar from '../assets/card-1.png';
 
 const Newsfeed = () => {
   const [cards, setCards] = useState([]);
-  const [rideid, setrideid] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -55,6 +55,8 @@ const Newsfeed = () => {
               {filteredCards.map((card, index) => (
                 <div key={index} className="card">
                   <h3 className="head-card"><FaCar /> {card.vehicleModel}</h3>
+                  <img src={CarAvatar} alt="Car Avatar" className="car-avatar" />
+
                   <p><FaMapMarkerAlt /> <strong>From:</strong> {card.departurePoint}</p>
                   <p><FaMapMarkerAlt /> <strong>To:</strong> {card.destinationPoint}</p>
                   <p><FaCalendarAlt /> <strong>Date:</strong> {card.date}</p>
