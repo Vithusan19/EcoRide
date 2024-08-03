@@ -9,7 +9,7 @@ import insta from '../assets/insta.png';
 import twi from '../assets/twitter.png';
 import fb from '../assets/facebook.png';
 import header from '../assets/header.png';
-import arrow from '../assets/arrow.png';
+import Homeimg from '../assets/home.png';
 import loginbg from '../assets/loginbg.png';
 import signupBg from '../assets/signupBg.png';
 import serve1 from '../assets/serve1.png';
@@ -311,26 +311,29 @@ const Home = () => {
                         <div className='pop-imgs'>
                             <img className='web-logo' src={logo} alt='logo' />
                             <button className="close-btn" onClick={() => setShowLogin(false)}>
-                                <img src={arrow} alt='arrow' className='arrow' />Home
+                                <img src={Homeimg} alt='arrow' className='arrow' />
                             </button>
                         </div>
                         {isLogin ? (
                             <div className='login-con'>
                                 <div className='leftside'>
                                     <img src={loginbg} alt='logBg' className='loginBg' />
+                                   
+                                    
                                 </div>
                                 <div className='Rightside'>
                                     <h1 className="log-title">Login here</h1>
-                                    <form className="log-form" method='post' onSubmit={handleLogin}>
+                                    <form  method='post' onSubmit={handleLogin}>
+                                        <div className="log-form">
                                         <input type="text" className="log-form-control" placeholder="Enter username" name="username" value={loginForm.username} onChange={handleInputChange} required/><br />
                                         <input type="password" className="log-form-control" placeholder="Enter password" name="password" value={loginForm.password} onChange={handleInputChange} required/><br />
                                         {errors.login && <div className="signup-error">{errors.login}</div>}
                                         <span className='forgot' onClick={() => setShowForgot(true)}>Forget Your Password?</span><br /><br />
                                         <button className='log-login-but'>SIGN IN</button><br />
-                                        <div className='register-details-1'>
-                                             
-                                        <span className='register-text'>Don't you have an account?</span><br />
-                                        <button className='log-but'  onClick={toggleForm}>SIGN UP</button>
+                                         <div className='register-details-1'>     
+                                                <span className='register-text'>Don't you have an account?</span><br />
+                                                <button className='log-but'  onClick={toggleForm}>SIGN UP</button>
+                                        </div>
                                         </div>
                                        
                                     </form>
@@ -341,6 +344,7 @@ const Home = () => {
                                 <div className='left-signup'>
                                     <h1 className="log-title">Signup here</h1>
                                     <form className="log-form" onSubmit={handleSignupSubmit} method='post'>
+                                        <div className='signup-con-input'>
                                         <div className='col'>
                                             <input type="text" className="form-control" placeholder="Enter Name" name="name" value={signupForm.name} onChange={handleInputChange} />
                                             <input type="text" className="form-control" placeholder="Enter username" name="username" value={signupForm.username} onChange={handleInputChange} />
@@ -354,11 +358,11 @@ const Home = () => {
                                             <input type="file" className="form-control" name="file" onChange={handleInputChange} />
                                         </div>
                                         <div className='col'>
-                                            <label>Gender</label>
-                                            <label>
+                                            <label className='genderLabel'>Gender</label>
+                                            <label className='genderLabel'>
                                                 <input type="radio" className="form-check-input" name="gender" value="Male" onChange={handleInputChange} /> Male
                                             </label>
-                                            <label>
+                                            <label  className='genderLabel'>
                                                 <input type="radio" className="form-check-input" name="gender" value="Female" onChange={handleInputChange} /> Female
                                             </label>
                                         </div>
@@ -371,6 +375,7 @@ const Home = () => {
                                         {errors.signup && <div className="signup-error">{errors.signup}</div>}
                                         <div className='col'>
                                             <button className='login-but' type="submit">SIGN UP</button><br />
+                                        </div>
                                         </div>
                                     </form>
                                 </div>
