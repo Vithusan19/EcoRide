@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Addride.css';
-
+import { FaUser, FaMapMarkerAlt, FaCalendarAlt, FaCheckCircle, FaEnvelope, FaCar, FaLock } from 'react-icons/fa';
 import axios from 'axios';
 import visa from '../assets/visacard.png';
 import master from '../assets/mastercard.png';
 import Footer from '../components/Footer';
+import bg from '../assets/step-1.jpeg';
+
 
 const Addride = () => {
   const [formData, setFormData] = useState({
@@ -112,13 +114,12 @@ const Addride = () => {
     setShowModal(false);
   };
 
-  return (
+ return (
     <>
       <div className="add-ride-container">
-        <div className="start-bg">
-        </div>
-
-        {step === 1 && (
+        <div className="header-image-container">
+          <img src={bg} alt="Header" className="header-image-1" />
+          {step === 1 && (
           <div className="form-container-add">
             <h1 className="add-ride-title">Car Information</h1>
             <form onSubmit={handleNextStep} className="add-ride-form">
@@ -146,8 +147,11 @@ const Addride = () => {
             </form>
           </div>
         )}
+        </div>
 
+       
         {step === 2 && (
+          
           <div className="form-container-add">
             <h1 className="add-ride-title">Ride Details</h1>
             <form onSubmit={handleSubmit} className="add-ride-form">
@@ -209,6 +213,12 @@ const Addride = () => {
           </div>
         )}
 
+          
+        
+
+        
+
+       
         <div className="addride-row-2">
           <div className="addride-container-row2">
             <div className="headline">
@@ -245,9 +255,10 @@ const Addride = () => {
           </div>
         </div>
         <div className="instructions">
-          <h2>Driver Instructions</h2>
+        
           <div className='instruction'>
             <div className="video-instruction">
+            <h2>Driver Instructions</h2>
               <video controls width="100%">
                 <source src="path_to_video.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
@@ -255,11 +266,31 @@ const Addride = () => {
             </div>
             <div className='points-instruction'>
               <h3>Steps to Follow:</h3>
-              <p>Ensure your vehicle is clean and well-maintained.</p>
-              <p>Plan your route in advance to avoid delays.</p>
-              <p>Communicate with passengers regarding pickup times and locations.</p>
-              <p>Drive safely and follow all traffic laws.</p>
-              <p>Provide a comfortable and courteous service to all passengers.</p>
+              <p><FaUser className="icons" /> Add your profile picture, a few words about you, and your phone number to increase trust between members.</p>
+          <p><FaMapMarkerAlt className="icons" /> Indicate departure and arrival points, the date of the ride, and check our recommended price to increase your chances of getting your first passengers and ratings.</p>
+          <p><FaCheckCircle className="icons" /> Review passenger profiles and accept their requests to ride with you. That’s how easy it is to start saving on travel costs!</p>
+             
+            </div>
+          </div>
+        </div>
+
+
+        <div className="addride-row-3">
+          <div className="addride-container-row3">
+            <div className="column">
+              <FaEnvelope className="icons" />
+              <h3>At your service 24/7</h3>
+              <p>Our team is at your disposal to answer any questions by email or social media. You can also have a live chat directly with experienced members.</p>
+            </div>
+            <div className="column">
+              <FaCar className="icons" />
+              <h3>Eco-Ride at your side</h3>
+              <p>For just 2 €, benefit from the reimbursement of up to 1,500€ of your excess when you publish a ride as a driver on BlaBlaCar.</p>
+            </div>
+            <div className="column">
+              <FaLock className="icons" />
+              <h3>100% secure information</h3>
+              <p>Our team is dedicated to the protection of your data, which is always 100% confidential thanks to monitoring tools, secure navigation and encrypted data.</p>
             </div>
           </div>
         </div>
