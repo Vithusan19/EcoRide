@@ -125,17 +125,17 @@ const Addride = () => {
               <div className="form-row-add">
                 <div className="form-group-add">
                   <label>Vehicle No:</label>
-                  <input className="add-input" type="text" name="vehicleNo" value={formData.vehicleNo} onChange={handleChange} />
+                  <input className="add-input" type="text" name="vehicleNo" value={formData.vehicleNo} onChange={handleChange} required />
                 </div>
                 <div className="form-group-add">
                   <label>Vehicle Model:</label>
-                  <input className="add-input" type="text" name="vehicleModel" value={formData.vehicleModel} onChange={handleChange} />
+                  <input className="add-input" type="text" name="vehicleModel" value={formData.vehicleModel} onChange={handleChange} required />
                 </div>
               </div>
               <div className="form-row-add">
                 <div className="form-group-add">
                   <label>Number of Seats:</label>
-                  <input className="add-input" type="number" name="seats" value={formData.seats} onChange={handleChange} />
+                  <input className="add-input" type="number" name="seats" value={formData.seats} onChange={handleChange} required />
                 </div>
                 <div className="form-group-add">
                   <label>Air Condition:</label>
@@ -154,37 +154,37 @@ const Addride = () => {
               <div className="form-row-add">
                 <div className="form-group-add">
                   <label>Departure Point:</label>
-                  <input className="add-input" type="text" name="departurePoint" value={formData.departurePoint} onChange={handleChange} />
+                  <input className="add-input" type="text" name="departurePoint" value={formData.departurePoint} onChange={handleChange}  required/>
                 </div>
                 <div className="form-group-add">
                   <label>Destination Point:</label>
-                  <input className="add-input" type="text" name="destinationPoint" value={formData.destinationPoint} onChange={handleChange} />
+                  <input className="add-input" type="text" name="destinationPoint" value={formData.destinationPoint} onChange={handleChange}  required/>
                 </div>
               </div>
               <div className="form-row-add">
                 <div className="form-group-add">
                   <label>Date:</label>
-                  <input className="add-input" type="date" name="date" value={formData.date} onChange={handleChange} />
+                  <input className="add-input" type="date" name="date" value={formData.date} onChange={handleChange} required />
                 </div>
                 <div className="form-group-add">
                   <label>Seat Cost:</label>
-                  <input className="add-input" type="number" name="seatCost" value={formData.seatCost} onChange={handleChange} />
+                  <input className="add-input" type="number" name="seatCost" value={formData.seatCost} onChange={handleChange} required />
                 </div>
               </div>
               <div className="form-row-add">
                 <div className="form-group-add">
                   <label>Departure Time:</label>
-                  <input className="add-input" type="time" name="departureTime" value={formData.departureTime} onChange={handleChange} />
+                  <input className="add-input" type="time" name="departureTime" value={formData.departureTime} onChange={handleChange}required />
                 </div>
                 <div className="form-group-add">
                   <label>Destination Time:</label>
-                  <input className="add-input" type="time" name="destinationTime" value={formData.destinationTime} onChange={handleChange} />
+                  <input className="add-input" type="time" name="destinationTime" value={formData.destinationTime} onChange={handleChange}required />
                 </div>
               </div>
               <div className="form-row-add">
                 <div className="form-group-add">
                   <label>Gender Preference:</label>
-                  <select className="add-input" name="gender" value={formData.gender} onChange={handleChange}>
+                  <select className="add-input" name="gender" value={formData.gender} onChange={handleChange} required>
                     <option value="">Select</option>
                     <option value="any">Any</option>
                     <option value="male">Male</option>
@@ -194,15 +194,16 @@ const Addride = () => {
               </div>
               <div className="form-group-add">
                 <label>Route:</label>
-                <textarea className="add-input" name="route" value={formData.route} onChange={handleChange}></textarea>
+                <textarea className="add-input" name="route" value={formData.route} onChange={handleChange} required></textarea>
               </div>
               <div className="form-group-add">
                 <label>Preferences:</label>
                 <textarea className="add-input" name="preferences" value={formData.preferences} onChange={handleChange}></textarea>
               </div>
               <div className="button-group">
-                <button className="add-ride-button" type="submit">Add Ride</button>
+                
                 <button type="button" className="add-ride-button" onClick={handlePrevStep}>Back</button>
+                <button className="add-ride-button" type="submit">Payment</button>
               </div>
             </form>
           </div>
@@ -269,6 +270,7 @@ const Addride = () => {
       {showModal && (
         <div className="modal">
           <div className="modal-content">
+          <span className="close"  onClick={handleCancelPayment}>&times;</span>
             <h2 className="modal-title-pay">Enter Payment Information</h2>
             <p className='add-ride-payment'>
               All drivers are required to pay 10% of their earnings from each ride to the system.
