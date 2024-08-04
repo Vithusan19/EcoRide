@@ -139,6 +139,9 @@ const Readmore = () => {
             <div className="readmore-detail">
               <span className="readmore-label"><strong>Route:</strong></span> {card.route}
             </div>
+            <div className="readmore-detail">
+              <span className="readmore-label"><strong>Seat Cost:</strong></span> Rs.{card.seatCost}
+            </div>
           </div>
         </div>
         <div className="readmore-secondary-details">
