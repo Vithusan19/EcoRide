@@ -4,29 +4,25 @@ body {
   color: #333;
 }
 
-.read-container{
+.read-container {
   width: 80vw;
   margin: 0 auto;
   padding: 20px;
   margin-left: 25vh;
-
 }
+
 .readmore-container {
-  /* width: 80%;
-  margin-left:33vh; */
- max-width: 1200px;
+  max-width: 1200px;
   padding: 20px;
   background: #ffffff;
-  
-  /* border-radius: 15px; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
 }
+
 .readmore-container-row2 {
   text-align: center;
   padding: 2rem;
   background-color: #fbfbfb;
 }
-
 
 .readmore-features {
   display: flex;
@@ -136,10 +132,10 @@ body {
 }
 
 .readmore-back-button:hover, .readmore-request-button:hover {
-  background-color:  #6e747a;
+  background-color: #6e747a;
 }
 
-.readmore-bg-popup{
+.readmore-bg-popup {
   position: fixed;
   top: 0;
   left: 0;
@@ -151,6 +147,7 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 .readmore-popup {
   position: fixed;
   top: 50%;
@@ -213,7 +210,6 @@ body {
 
 .readmore-photos-container {
   margin-top: 20px;
-  /* margin-left: 33vh; */
   padding: 20px;
   background: #fff;
   border: 1px solid #ddd;
@@ -237,21 +233,21 @@ body {
 }
 
 .readmore-photos img {
-  max-width: calc(25% - 10px); /* Adjust width as needed */
+  max-width: calc(25% - 10px);
   height: auto;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .readmore-photos img:hover {
   transform: scale(1.1);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.error-message
-{
+.error-message {
   text-align: center;
-  color:red;
+  color: red;
   font-weight: 600;
   margin-top: 10px;
 }
@@ -259,19 +255,15 @@ body {
 .video-instructions-container {
   display: flex;
   justify-content: space-between;
-  gap: 20px; /* Space between the two divs */
+  gap: 20px;
   margin-top: 20px;
-  /* margin-left: 33vh; */
   max-width: 1180px;
-  /* box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px; */
 }
 
 .readmore-video-container {
   flex: 1;
   background: #ffffff;
   border: 1px solid #ddd;
-  /* border-radius: 15px; */
-  /* box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px; */
   padding: 20px;
   text-align: center;
 }
@@ -293,8 +285,6 @@ body {
   flex: 1;
   background: #ffffff;
   border: 1px solid #ddd;
-  /* border-radius: 15px; */
-  /* box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px; */
   padding: 20px;
 }
 
@@ -319,75 +309,148 @@ body {
 }
 
 /* Responsive design */
+/* 
+@media (max-width: 1200px) {
+  .read-container {
+    width: 90vw;
+    margin-left: 15vh;
+  }
 
-@media (max-width: 960px) {
   .readmore-container {
     margin: 1rem;
     padding: 20px;
-    margin-left: 25vh;
-    
-}
+    width: 90vw;
+  }
 
-.readmore-photos-container {
-  margin-left: 25vh;
-  max-width: 300px;
-}
+  .readmore-photos-container {
+    max-width: 1000px;
+  }
+} */
 
+@media (max-width: 960px) {
+  .read-container {
+    width: 90vw;
+    margin-left: 20vh;
+  }
 
-.readmore-photos-container {
-  margin-left: 25vh;
-  max-width: 750px;
-}
-
-}
-@media (max-width: 768px) {
   .readmore-container {
-      margin: 1rem;
-      padding: 20px;
-      margin-left: 15vh;
+    margin: 1rem;
+    padding: 20px;
+    max-width: 75vw;
+  }
+
+  .readmore-photos-container {
+    max-width: 700px;
+  }
+
+  .readmore-video-container iframe {
+    height: 200px;
+  }
+  .readmore-container-row2{
+    max-width: 700px;
+  }
+  .video-instructions-container{
+    max-width: 700px;
+  }
+}
+
+@media (max-width: 768px) {
+  .read-container {
+    width: 95vw;
+    margin-left: 5vh;
+
+  }
+
+  .readmore-container {
+    margin: 1rem;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
   }
 
   .readmore-content {
-      flex-direction: column;
+    flex-direction: column;
   }
 
   .readmore-btn-container {
-      flex-direction: column;
-      gap: 10px;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .readmore-back-button,
   .readmore-request-button {
-      width: 100%;
+    width: 100%;
   }
+
   .readmore-photos-container {
-    margin-left: 15vh;
-    max-width: 550px;
+    /* max-width: 550px; */
+    width: 100%;
   }
-  
-  
 
   .readmore-photos img {
-    max-width: calc(50% - 10px); /* Adjust for smaller screens */
+    max-width: calc(50% - 10px);
   }
 
   .video-instructions-container {
     flex-direction: column;
-    margin-left: 15vh;
-    max-width: 550px;
+    /* max-width: 550px; */
+    width: 100%;
   }
 
   .readmore-video-container,
   .readmore-instructions {
     width: 100%;
   }
+
+  .readmore-statistics {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .readmore-stat {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 @media (max-width: 485px) {
-  .readmore-container {
-    margin: 1rem;
-    padding: 20px;
-    margin-left: 12vh;
-}
+  .read-container {
+    width: 100vw;
+    margin-left: 0;
+    padding: 10px;
+  }
 
+  .readmore-container {
+    margin: 0.5rem;
+    padding: 10px;
+    width: 100vw;
+  }
+
+  .readmore-photos-container {
+    max-width: 300px;
+  }
+
+  .readmore-photos img {
+    max-width: 100%;
+  }
+
+  .video-instructions-container {
+    max-width: 300px;
+  }
+
+  .readmore-container-row2 {
+    padding: 1rem;
+  }
+
+  .readmore-statistics {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .readmore-stat {
+    width: 100%;
+    text-align: center;
+  }
 }
