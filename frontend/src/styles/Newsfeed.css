@@ -147,21 +147,14 @@ section {
 }
 
 @media screen and (max-width: 425px) {
-  section {
-    margin-left: 10px;
-    overflow-x: auto; 
-  }
-
-  .card {
-    width: calc(100% - 20px); 
-  }
-
-  .card p {
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    margin: 0; 
-    padding: 5px;
+  @media screen and (max-width: 576px) {
+    section {
+      margin-left: 10px;
+    }
+  
+    .card {
+      width: calc(100% - 100px); 
+    }
   }
 }
 

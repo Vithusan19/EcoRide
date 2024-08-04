@@ -416,15 +416,16 @@ body {
 
 @media (max-width: 485px) {
   .read-container {
-    width: 100vw;
-    margin-left: 0;
+    width: 80vw;
+    margin-left: 20vw;
     padding: 10px;
   }
 
   .readmore-container {
     margin: 0.5rem;
     padding: 10px;
-    width: 100vw;
+    width: 65vw;
+    margin-left: 0vw;
   }
 
   .readmore-photos-container {
@@ -441,6 +442,7 @@ body {
 
   .readmore-container-row2 {
     padding: 1rem;
+    width: 60vw;
   }
 
   .readmore-statistics {

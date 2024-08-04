@@ -6,6 +6,7 @@ import visa from '../assets/visacard.png';
 import master from '../assets/mastercard.png';
 import Footer from '../components/Footer';
 import bg from '../assets/step-1.jpeg';
+import bg2 from '../assets/step-7.jpg';
 
 
 const Addride = () => {
@@ -51,6 +52,8 @@ const Addride = () => {
       setFormData({ ...formData, [name]: value });
     }
   };
+
+  
 
   const handleCardChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -118,7 +121,11 @@ const Addride = () => {
     <>
       <div className="add-ride-container">
         <div className="header-image-container">
-          <img src={bg} alt="Header" className="header-image-1" />
+        <img 
+          src={step === 1 ? bg : bg2} 
+          alt="Header" 
+          className="header-image-1" 
+        />
           {step === 1 && (
           <div className="form-container-add">
             <h1 className="add-ride-title">Car Information</h1>
@@ -134,10 +141,10 @@ const Addride = () => {
                 </div>
               </div>
               <div className="form-row-add">
-                <div className="form-group-add">
-                  <label>Number of Seats:</label>
-                  <input className="add-input" type="number" name="seats" value={formData.seats} onChange={handleChange} required />
-                </div>
+                  <div className="form-group-add">
+                    <label>Number of Seats:</label>
+                    <input className="add-input" type="number" name="seats" value={formData.seats} onChange={handleChange} required min="1" />
+                  </div>
                 <div className="form-group-add">
                   <label>Air Condition:</label>
                   <input className="add-input-cheack" type="checkbox" name="airCondition" checked={formData.airCondition} onChange={handleChange} />
@@ -166,10 +173,10 @@ const Addride = () => {
                 </div>
               </div>
               <div className="form-row-add">
-                <div className="form-group-add">
-                  <label>Date:</label>
-                  <input className="add-input" type="date" name="date" value={formData.date} onChange={handleChange} required />
-                </div>
+              <div className="form-group-add">
+          <label>Date:</label>
+          <input className="add-input" type="date" name="date" value={formData.date} onChange={handleChange} required min="2024-01-01" />
+        </div>
                 <div className="form-group-add">
                   <label>Seat Cost:</label>
                   <input className="add-input" type="number" name="seatCost" value={formData.seatCost} onChange={handleChange} required />
@@ -206,8 +213,10 @@ const Addride = () => {
               </div>
               <div className="button-group">
                 
-                <button type="button" className="add-ride-button" onClick={handlePrevStep}>Back</button>
-                <button className="add-ride-button" type="submit">Payment</button>
+                
+                <button type="button" className="add-ride-button-2" onClick={handlePrevStep}>Back</button>
+                <button className="add-ride-button-2" type="submit">Payment</button>
+                
               </div>
             </form>
           </div>
