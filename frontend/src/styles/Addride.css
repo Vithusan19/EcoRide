@@ -553,6 +553,16 @@ height: auto;
     flex: 1 1 calc(33.333% - 20px);
   }
 }
+.atm-container {
+  display: flex;
+  gap: 5px;
+}
+
+.atm-container img {
+  width: 30px;
+  object-fit: cover;
+}
+
 
 
 

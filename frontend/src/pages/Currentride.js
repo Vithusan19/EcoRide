@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Currentride.css';
-
 import axios from 'axios';
+import { Blocks } from "react-loader-spinner";
 
 const CurrentRide = () => {
   const [rides, setRides] = useState([]);
@@ -9,14 +9,26 @@ const CurrentRide = () => {
   const [userRole, setUserRole] = useState("");
   const [showDriverDetails, setShowDriverDetails] = useState(null);
   const [showRequests, setShowRequests] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const userID = sessionStorage.getItem("UserID");
-    const userRole = sessionStorage.getItem("UserRole");
     setUserId(userID);
-    setUserRole(userRole);
     getCurrentRidesForUser(userID);
+    getuserole(userID);
   }, []);
+
+  const getuserole = async (userId) => {
+    try {
+      const Data = new FormData();
+      Data.append("userID", userId);
+      const response = await axios.post('http://localhost/ecoRide-Backend/Connection/User/SelectUserrole.php', Data);
+      console.log("Response Data-role:", response.data);
+      setUserRole(response.data.userRole);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const getCurrentRidesForUser = async (userId) => {
     try {
@@ -30,39 +42,47 @@ const CurrentRide = () => {
     }
   };
 
-  const handleAcceptRequest = async (rideId, requestId) => {
+  const handleAcceptRequest = async (Bookid, requestId) => {
     try {
+      setIsLoading(true);
       const Data = new FormData();
-      Data.append("rideID", rideId);
-      Data.append("requestID", requestId);
-      await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/AcceptRequest.php', Data);
-      setRides(rides.map(ride =>
-        ride.Bookid === rideId
-          ? {
-              ...ride,
-              availableSeats: ride.availableSeats - ride.requests.find(request => request.id === requestId).seatsRequested,
-              requests: ride.requests.filter(request => request.id !== requestId),
-              acceptedPassengers: [
-                ...ride.acceptedPassengers,
-                ride.requests.find(request => request.id === requestId)
-              ]
-            }
-          : ride
-      ));
-      console.log(`Request with ID ${requestId} accepted.`);
+      Data.append("Bookid", Bookid);
+      const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/AcceptRide.php', Data);
+      console.log(response.data);
+      
+      if (response.data.status === 1) {
+        console.log(response.data.message);
+        setIsLoading(false);
+        window.location.reload();
+        setRides(rides.map(ride =>
+          ride.Bookid === Bookid
+            ? {
+                ...ride,
+                availableSeats: ride.availableSeats - ride.requests.find(request => request.id === requestId).seatsRequested,
+                requests: ride.requests.filter(request => request.id !== requestId),
+                acceptedPassengers: [
+                  ...ride.acceptedPassengers,
+                  ride.requests.find(request => request.id === requestId)
+                ]
+              }
+            : ride
+        ));
+      } else {
+        console.error("Error:", response.data.message);
+      }
     } catch (error) {
       console.error("Error accepting request:", error);
     }
   };
 
-  const handleRejectRequest = async (rideId, requestId) => {
+  const handleRejectRequest = async (Bookid, requestId) => {
     try {
       const Data = new FormData();
-      Data.append("rideID", rideId);
+      Data.append("Bookid", Bookid);
       Data.append("requestID", requestId);
       await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/RejectRequest.php', Data);
       setRides(rides.map(ride =>
-        ride.Bookid === rideId
+        ride.Bookid === Bookid
           ? {
               ...ride,
               requests: ride.requests.filter(request => request.id !== requestId)
@@ -126,7 +146,19 @@ const CurrentRide = () => {
                           <p><strong>Contact:</strong> {request.passengerContact}</p>
                           <p><strong>Seats Requested:</strong> {request.seatsRequested}</p>
                           <button onClick={() => handleAcceptRequest(ride.Bookid, index)}>Accept</button>
+                        
                           <button onClick={() => handleRejectRequest(ride.Bookid, index)}>Reject</button>
+                          {isLoading && (
+                 <Blocks
+                 height="30"
+                 width="30"
+                 color="#4fa94d"
+                 ariaLabel="blocks-loading"
+                 wrapperStyle={{}}
+                 wrapperClass="blocks-wrapper"
+                 visible={true}
+                 />
+                )}
                         </div>
                       ))
                     ) : (
@@ -145,15 +177,15 @@ const CurrentRide = () => {
                     <button onClick={() => toggleDriverDetails(ride.Bookid)}>
                       {showDriverDetails === ride.Bookid ? 'Hide Driver Details' : 'Show Driver Details'}
                     </button>
-                    <button className="cancel-booking-button" onClick={() => handleCancelBooking(ride.Bookid)}>
-                      Cancel Ride
-                    </button>
                     {showDriverDetails === ride.Bookid && (
                       <div className="driver-details">
                         <p><strong>Driver Name:</strong> {ride.driver.name}</p>
                         <p><strong>Contact:</strong> {ride.driver.contact}</p>
                       </div>
                     )}
+                    <button className="cancel-booking-button" onClick={() => handleCancelBooking(ride.Bookid)}>
+                      Cancel Ride
+                    </button>
                   </>
                 )}
                 {ride.status === 'waiting' && (

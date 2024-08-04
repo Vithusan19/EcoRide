@@ -21,10 +21,6 @@ const ViewUser = () => {
       sessionStorage.setItem("UserCount", response.data.user_count);
       sessionStorage.setItem("DriverCount", response.data.driver_count);
       
-      // console.log(response.data.users.length);
-      // console.log(response.data.user_count);
-      // console.log(response.data.driver_count);
-      
     } catch (error) {
       console.error("There was an error fetching the users!", error);
     }
@@ -48,6 +44,32 @@ const ViewUser = () => {
 
   const hideDeleteDialog = () => {
     setDeleteDialogVisible(false);
+  };
+
+  const handleDeleteUser = async () => {
+    const url = "http://localhost/ecoRide-Backend/Connection/User/DeleteUser.php";
+    let fdata = new FormData();
+    fdata.append("userid", selectedUser.User_ID);
+
+    try {
+      const response = await axios.post(url, fdata);
+      console.log(response.data);
+      if (response.data.message === "User Delele Successfully") {
+        //console.log(response.data.message);
+       
+        hideDeleteDialog();
+        closeModal();
+        getUsers();
+
+       
+        
+      } else {
+        console.log(response.data.message);
+        
+      }
+    } catch (error) {
+      console.error("There was an error deleting the user!", error);
+    }
   };
 
   const filteredUsers = users
@@ -114,7 +136,7 @@ const ViewUser = () => {
             <h2>Confirm Deletion</h2>
             <p>Are you sure you want to delete this user?</p>
             <div className="modal-content-delete-button">
-              <button className="confirm-delete-button">
+              <button className="confirm-delete-button" onClick={handleDeleteUser}>
                 Yes
               </button>
               <button className="user-button" onClick={hideDeleteDialog}>

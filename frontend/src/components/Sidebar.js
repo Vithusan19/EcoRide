@@ -1,14 +1,20 @@
-
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
-import profile from "../assets/profile.JPG";
-import { BiHome, BiAddToQueue, BiCurrentLocation, BiNews, BiMenu,BiUser} from "react-icons/bi";
+import profile from "../assets/usersIcon.png";
+import { BiHome, BiAddToQueue, BiCurrentLocation, BiNews, BiMenu, BiUser } from "react-icons/bi";
 import "../styles/Sidebar.css";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const userName = sessionStorage.getItem("username");
+    if (userName) {
+      setUsername(userName);
+    }
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -64,7 +70,7 @@ const Sidebar = () => {
       <div className="profile">
         <Link to="/profile">
           <img src={profile} alt="profile" className="profile-img" />
-          <h3 className="profile-heading">J.Abiraj</h3>
+          <h3 className="profile-heading">{username ? username : "Guest"}</h3>
         </Link>
       </div>
     </div>

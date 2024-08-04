@@ -106,6 +106,7 @@ const Home = () => {
          if (userrole) {
                 sessionStorage.setItem("UserID", UserID);
                 sessionStorage.setItem("UserRole", userrole);
+                sessionStorage.setItem("username", loginForm.username);
                 if (userrole === "admin") {
                     sessionStorage.setItem("admin", true);
                     navigate('/admin');
