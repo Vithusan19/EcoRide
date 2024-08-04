@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Currentride.css';
+
 import axios from 'axios';
 
 const CurrentRide = () => {
@@ -23,7 +24,7 @@ const CurrentRide = () => {
       Data.append("userID", userId);
       const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/CurrentRideUsers.php', Data);
       console.log("Response Data:", response.data);
-      setRides(response.data.rideDetails || []);
+      setRides(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -39,16 +40,16 @@ const CurrentRide = () => {
         ride.Bookid === rideId
           ? {
               ...ride,
-              availableSeats: ride.availableSeats - ride.requests.find(request => request.Bookid === requestId).seatsRequested,
-              requests: ride.requests.filter(request => request.Bookid !== requestId),
+              availableSeats: ride.availableSeats - ride.requests.find(request => request.id === requestId).seatsRequested,
+              requests: ride.requests.filter(request => request.id !== requestId),
               acceptedPassengers: [
                 ...ride.acceptedPassengers,
-                ride.requests.find(request => request.Bookid === requestId)
+                ride.requests.find(request => request.id === requestId)
               ]
             }
           : ride
       ));
-      console.log(`Request with Bookid ${requestId} accepted.`);
+      console.log(`Request with ID ${requestId} accepted.`);
     } catch (error) {
       console.error("Error accepting request:", error);
     }
@@ -64,11 +65,11 @@ const CurrentRide = () => {
         ride.Bookid === rideId
           ? {
               ...ride,
-              requests: ride.requests.filter(request => request.Bookid !== requestId)
+              requests: ride.requests.filter(request => request.id !== requestId)
             }
           : ride
       ));
-      console.log(`Request with Bookid ${requestId} rejected.`);
+      console.log(`Request with ID ${requestId} rejected.`);
     } catch (error) {
       console.error("Error rejecting request:", error);
     }
@@ -80,7 +81,7 @@ const CurrentRide = () => {
       Data.append("rideID", rideId);
       await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/CancelBooking.php', Data);
       setRides(rides.filter(ride => ride.Bookid !== rideId));
-      console.log(`Booking for ride with Bookid ${rideId} canceled.`);
+      console.log(`Booking for ride with ID ${rideId} canceled.`);
     } catch (error) {
       console.error("Error canceling booking:", error);
     }
@@ -119,13 +120,13 @@ const CurrentRide = () => {
                 {showRequests[ride.Bookid] && (
                   <div className="request-details">
                     {ride.requests.length > 0 ? (
-                      ride.requests.map((request) => (
-                        <div key={request.Bookid} className="request">
+                      ride.requests.map((request, index) => (
+                        <div key={index} className="request">
                           <p><strong>Name:</strong> {request.passengerName}</p>
                           <p><strong>Contact:</strong> {request.passengerContact}</p>
                           <p><strong>Seats Requested:</strong> {request.seatsRequested}</p>
-                          <button onClick={() => handleAcceptRequest(ride.Bookid, request.Bookid)}>Accept</button>
-                          <button onClick={() => handleRejectRequest(ride.Bookid, request.Bookid)}>Reject</button>
+                          <button onClick={() => handleAcceptRequest(ride.Bookid, index)}>Accept</button>
+                          <button onClick={() => handleRejectRequest(ride.Bookid, index)}>Reject</button>
                         </div>
                       ))
                     ) : (
@@ -149,8 +150,8 @@ const CurrentRide = () => {
                     </button>
                     {showDriverDetails === ride.Bookid && (
                       <div className="driver-details">
-                        <p><strong>Driver Name:</strong> {ride.driverName}</p>
-                        <p><strong>Contact:</strong> {ride.driverContact}</p>
+                        <p><strong>Driver Name:</strong> {ride.driver.name}</p>
+                        <p><strong>Contact:</strong> {ride.driver.contact}</p>
                       </div>
                     )}
                   </>
