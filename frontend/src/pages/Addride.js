@@ -7,6 +7,8 @@ import master from '../assets/mastercard.png';
 import Footer from '../components/Footer';
 import bg from '../assets/step-1.jpeg';
 import bg2 from '../assets/step-7.jpg';
+import demo from '../assets/Addride.mp4';  // Import the video
+
 
 
 const Addride = () => {
@@ -269,7 +271,7 @@ const Addride = () => {
             <div className="video-instruction">
             <h2>Driver Instructions</h2>
               <video controls width="100%">
-                <source src="path_to_video.mp4" type="video/mp4" />
+                <source src={demo} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </div>
