@@ -21,6 +21,7 @@ import axios from 'axios';
 import { Hourglass } from "react-loader-spinner";
 import Footer from '../components/Footer';
 import '../styles/Footer.css';
+import demos from '../assets/Readmore.mp4';
 
 const images = {
   'BMW': vehicle1,
@@ -248,15 +249,10 @@ const Readmore = () => {
       <div className="video-instructions-container">
         <div className="readmore-video-container">
           <h3>System Explanation</h3>
-          <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/VIDEO_ID"
-            title="System Explanation"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+          <video controls width="100%">
+                <source src={demos} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
         </div>
         <div className="readmore-instructions">
           <h3>How to Use This Page</h3>
