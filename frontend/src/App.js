@@ -1,7 +1,7 @@
 
 
 
-import React, { useEffect, useState } from "react";
+
 import Sidebar from "./components/Sidebar";
 import Newsfeed from "./pages/Newsfeed";
 import Home from './pages/Home';
