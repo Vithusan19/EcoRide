@@ -34,11 +34,13 @@ const Newsfeed = () => {
     return `${hours}:${minutes}`;
   };
 
-  const filteredCards = cards.filter((card) =>
-    card.vehicleModel.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    card.departurePoint.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    card.destinationPoint.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    card.route.some(routePoint => routePoint.toLowerCase().includes(searchQuery.toLowerCase()))
+  const filteredCards = cards.filter((card) => 
+    (card.seats - card.BookingSeats > 0) && (
+      card.vehicleModel.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      card.departurePoint.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      card.destinationPoint.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      card.route.some(routePoint => routePoint.toLowerCase().includes(searchQuery.toLowerCase()))
+    )
   );
 
   return (

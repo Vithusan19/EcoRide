@@ -220,14 +220,16 @@ const ViewRides = () => {
               
               {selectedRide.passengers ? (
                 selectedRide.passengers.split(';').map((passenger, index) => {
-                  const [PassengerID, PassengerName, PassengerEmail, PassengerPhoneNo, PassengerNicNo] = passenger.split(',');
+                  const [PassengerID, PassengerName, PassengerEmail, PassengerPhoneNo, status,PassengerNicNo] = passenger.split(',');
                   return (
                     <div key={index}>
                       <p><strong>Passenger ID:</strong> {PassengerID.split(':')[1]}</p>
                       <p><strong>Passenger Name:</strong> {PassengerName.split(':')[1]}</p>
                       <p><strong>Email:</strong> {PassengerEmail.split(':')[1]}</p>
                       <p><strong>Phone:</strong> {PassengerPhoneNo.split(':')[1]}</p>
+                      <p><strong>Status:</strong> {status.split(':')[1]}</p>
                       <p><strong>Nic-Number:</strong> {PassengerNicNo.split(':')[1]}</p><br/>
+                     
                       
                     </div>
                   );

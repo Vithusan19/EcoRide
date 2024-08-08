@@ -219,11 +219,13 @@ const Profile = () => {
   const handleLogoutConfirm = () => {
     // Perform any logout logic here, like clearing tokens, etc.
     navigate('/home');
+    sessionStorage.clear();
   };
 
   const handleDeleteAccountConfirm = () => {
     // Redirect to home page after confirmation
     navigate('/home');
+    sessionStorage.clear();
   };
 
   return (

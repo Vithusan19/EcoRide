@@ -77,10 +77,14 @@ const CurrentRide = () => {
 
   const handleRejectRequest = async (Bookid, requestId) => {
     try {
+      setIsLoading(true);
       const Data = new FormData();
       Data.append("Bookid", Bookid);
       Data.append("requestID", requestId);
-      await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/RejectRequest.php', Data);
+      const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/RejectRide.php', Data);
+      console.log(response.data.message);
+      setIsLoading(true);
+      window.location.reload();
       setRides(rides.map(ride =>
         ride.Bookid === Bookid
           ? {
@@ -89,7 +93,7 @@ const CurrentRide = () => {
             }
           : ride
       ));
-      console.log(`Request with ID ${requestId} rejected.`);
+      //console.log(Request with ID ${requestId} rejected.);
     } catch (error) {
       console.error("Error rejecting request:", error);
     }
@@ -101,7 +105,7 @@ const CurrentRide = () => {
       Data.append("rideID", rideId);
       await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/CancelBooking.php', Data);
       setRides(rides.filter(ride => ride.Bookid !== rideId));
-      console.log(`Booking for ride with ID ${rideId} canceled.`);
+     // console.log(Booking for ride with ID ${rideId} canceled.);
     } catch (error) {
       console.error("Error canceling booking:", error);
     }

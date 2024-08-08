@@ -19,7 +19,9 @@ const SideAdmin = ({ setSelectedSection }) => {
 
   const handleLogoutConfirm = () => {
     // Perform any logout logic here, like clearing tokens, etc.
+    sessionStorage.clear();
     navigate('/home');
+
   };
 
   return (

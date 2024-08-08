@@ -32,6 +32,16 @@
   width: 200px;
   object-fit: cover;
 }
+.nav-menu-itemss{
+  background: #0a73e3;
+  border: none;
+  
+}
+.nav-menu-itemss:hover{
+  background: #04376d;
+  border: none;
+  
+}
 
 .nav-button {
   background: #00f78d;
@@ -44,6 +54,19 @@
   padding: 0.7rem 2rem;
   font-size: 1rem;
   font-weight: 700;
+}
+.nav-button-news{
+  background: #00f78d;
+  border: none;
+  border-radius: 1.5rem;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+
 }
 
 .nav-menu-img {

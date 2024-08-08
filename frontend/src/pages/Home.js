@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
 import logo from '../assets/weblogo.png';
@@ -20,7 +20,6 @@ import Forgot from './Forgot';
 import { RotatingLines } from "react-loader-spinner";
 
 const Home = () => {
-    //const [UserID, setUserID] = useState("");
     const [MsgName, setMsgName] = useState("");
     const [MsgEmail, setMsgEmail] = useState("");
     const [Message, setMessage] = useState("");
@@ -33,58 +32,66 @@ const Home = () => {
     const [errors, setErrors] = useState({});
     const [successMessage, setSuccessMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const navigate = useNavigate();
    
+    useEffect(() => {
+        // Check if user is logged in
+        const userID = sessionStorage.getItem('UserID');
+        if (userID) {
+            setIsLoggedIn(true);
+        }
+    }, []);
+
     const toggleForm = () => {
         setIsLogin(!isLogin);
         setErrors({});
     };
+    
     const resetForm = () => {
         setMessage("");
         setMsgEmail("");
         setMsgName("");
     };
-    const resetSignupForm = () => {
-        
-        
-       // const value="";
-       
-            setSignupForm( "");
-      
+
+    const showNewsfeed = () => {
+        if (sessionStorage.getItem("UserRole") === "admin") {
+            sessionStorage.setItem("admin", true);
+            navigate('/admin');
+        } else {
+            navigate('/newsfeed');
+        }
     };
+
+    const resetSignupForm = () => {
+        setSignupForm("");
+    };
+
     const resetLoginForm = () => {
-        
-        
-        // const value="";
-        
-             setLoginForm( "");
-       
-     };
+        setLoginForm("");
+    };
 
     const handleMessageSubmit = (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
-        setIsLoading(true)
+        e.preventDefault();
+        setIsLoading(true);
         const url = "http://localhost/ecoRide-Backend/Connection/User/Addmessage.php";
         let fdata = new FormData();
         fdata.append("Msgname", MsgName);
         fdata.append("Msgemail", MsgEmail);
         fdata.append("Message", Message);
         axios
-        .post(url, fdata)
-        .then((response) => {
-            console.log(response.data);
-            if (response.data.message === "Message Added Successfully") {
-                setIsLoading(false)
-                setSuccessMessage("Message sent successfully!");
-                resetForm();
-                setTimeout(() => setSuccessMessage(""), 3000); 
-                
-                
-            } else {
-                setErrors({ message: "Message submission failed." });
-            }
-        })
+            .post(url, fdata)
+            .then((response) => {
+                if (response.data.message === "Message Added Successfully") {
+                    setIsLoading(false);
+                    setSuccessMessage("Message sent successfully!");
+                    resetForm();
+                    setTimeout(() => setSuccessMessage(""), 3000); 
+                } else {
+                    setErrors({ message: "Message submission failed." });
+                }
+            })
             .catch((error) => {
                 setErrors({ message: "Message not connected." });
             });
@@ -92,40 +99,34 @@ const Home = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-       
-    axios
-    .post("http://localhost/ecoRide-Backend/Connection/User/Login.php", {
-      username:  loginForm.username,
-      password: loginForm.password,
-    })
+        axios
+            .post("http://localhost/ecoRide-Backend/Connection/User/Login.php", {
+                username: loginForm.username,
+                password: loginForm.password,
+            })
+            .then((response) => {
+                const UserID = response.data.userID;
+                const userrole = response.data.userrole;
 
-    .then((response) => {
-        const UserID=response.data.userID;
-        const userrole=response.data.userrole ;
-
-         if (userrole) {
-                sessionStorage.setItem("UserID", UserID);
-                sessionStorage.setItem("UserRole", userrole);
-                sessionStorage.setItem("username", loginForm.username);
-                if (userrole === "admin") {
-                    sessionStorage.setItem("admin", true);
-                    navigate('/admin');
-                } else if (userrole === "passenger") {
-                    navigate('/newsfeed');
+                if (userrole) {
+                    sessionStorage.setItem("UserID", UserID);
+                    sessionStorage.setItem("UserRole", userrole);
+                    sessionStorage.setItem("username", loginForm.username);
+                    setIsLoggedIn(true);
+                    if (userrole === "admin") {
+                        sessionStorage.setItem("admin", true);
+                        navigate('/admin');
+                    } else {
+                        navigate('/newsfeed');
+                    }
+                    resetLoginForm();
+                } else {
+                    setErrors({ login: 'Username or password incorrect' });
                 }
-             else if (userrole === "driver") {
-                navigate('/newsfeed');
-            }
-                resetLoginForm();
-            } else {
-                setErrors({ login: 'Username or password incorrect' });
-            }
-        })
-    .catch((error) => {
-        setErrors({ message: " Not connected." });
-      });
-
-       
+            })
+            .catch((error) => {
+                setErrors({ message: " Not connected." });
+            });
     };
 
     const validateSignupForm = () => {
@@ -146,42 +147,27 @@ const Home = () => {
         if (validateSignupForm()) {
             const url = "http://localhost/ecoRide-Backend/Connection/User/Register.php";
             const formData = new FormData();
-           
-                formData.append("name", signupForm.name);
-                formData.append("username", signupForm.username);
-                formData.append("email", signupForm.email);
-                formData.append("phone", signupForm.phone);
-                formData.append("nic", signupForm.nic);
-                formData.append("gender", signupForm.gender);
-                formData.append("password", signupForm.password);
-                console.log(signupForm.username)
-                console.log(signupForm.password)
-                console.log(signupForm.email)
-                console.log(signupForm.phone)
-                console.log(signupForm.name)
-                console.log(signupForm.nic)
-                console.log(signupForm.gender)
-                
-                axios
+            formData.append("name", signupForm.name);
+            formData.append("username", signupForm.username);
+            formData.append("email", signupForm.email);
+            formData.append("phone", signupForm.phone);
+            formData.append("nic", signupForm.nic);
+            formData.append("gender", signupForm.gender);
+            formData.append("password", signupForm.password);
+
+            axios
                 .post(url, formData)
                 .then((response) => {
-                    if (response.data.message ==="User Added Successfully") {
+                    if (response.data.message === "User Added Successfully") {
                         resetSignupForm();
                         toggleForm();
                     } else {
-                        setErrors({ signup: 'User already added' });
+                        setErrors({ signup: 'User or Email already added' });
                     }
-
                 })
                 .catch((error) => {
                     setErrors({ message: " Not connected." });
                 });
-                
-           
-           
-
-               
-          
         }
     };
 
@@ -206,6 +192,7 @@ const Home = () => {
                     <Link activeClass="active" to="about" spy={true} smooth={true} offset={0} duration={100} className="nav-menu-item">About Us</Link>
                     <Link activeClass="active" to="services" spy={true} smooth={true} offset={0} duration={100} className="nav-menu-item">Our Services</Link>
                     <Link activeClass="active" to="contact" spy={true} smooth={true} offset={0} duration={100} className="nav-menu-item">Contact Us</Link>
+                    {isLoggedIn && <button className="nav-menu-itemss" onClick={showNewsfeed}>Newsfeed</button>}
                 </div>
                 <button className="nav-button" onClick={() => setShowLogin(true)}>
                     Login | Register
@@ -216,6 +203,9 @@ const Home = () => {
                     <Link activeClass="active" to="about" spy={true} smooth={true} offset={-100} duration={100} className="list-item" onClick={() => setshowmenu(false)}>About Us</Link>
                     <Link activeClass="active" to="services" spy={true} smooth={true} offset={-100} duration={100} className="list-item" onClick={() => setshowmenu(false)}>Our Services</Link>
                     <Link activeClass="active" to="contact" spy={true} smooth={true} offset={-100} duration={100} className="list-item" onClick={() => setshowmenu(false)}>Contact Us</Link>
+                    {isLoggedIn && <Link to="/newsfeed" className="list-item" onClick={() => setshowmenu(false)}>Newsfeed</Link>}
+                   
+
                     <Link className="list-item" onClick={() => { setShowLogin(true); setshowmenu(false); }}>Login</Link>
                 </div>
             </div>

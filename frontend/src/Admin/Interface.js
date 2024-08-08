@@ -234,14 +234,7 @@ const Interface = () => {
                 value={userinfo.PhoneNo}
                 onChange={handleChange}
               />
-              <label className="admin-info-label">Password:</label>
-              <input
-                className="admin-info-input"
-                type="password"
-                name="password"
-                value={userinfo.Password}
-                onChange={handleChange}
-              />
+             
               <button
                 className="admin-info-button"
                 type="button"

@@ -24,7 +24,7 @@ src/styles/LogoutConfirmation.css
   }
   
   .modal-confirm {
-    background: #00f78d;
+    background: #04ad64;
     color: white;
     padding: 10px 20px;
     margin-right: 10px;
@@ -38,7 +38,7 @@ src/styles/LogoutConfirmation.css
   }
   
   .modal-cancel {
-    background: rgb(255, 111, 111);
+    background: rgb(197, 38, 38);
     color: white;
     padding: 10px 20px;
     border: none;
