@@ -69,8 +69,10 @@ const Sidebar = () => {
 
       <div className="profile">
         <Link to="/profile">
+        <div className="image-con">
           <img src={profile} alt="profile" className="profile-img" />
-          <h3 className="profile-heading">{username ? username : "Guest"}</h3>
+          <h3 className="profile-heading">{username ? username.toUpperCase() : "Guest"}</h3>
+          </div>
         </Link>
       </div>
     </div>

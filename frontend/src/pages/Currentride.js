@@ -7,6 +7,7 @@ const CurrentRide = () => {
   const [rides, setRides] = useState([]);
   const [userId, setUserId] = useState("");
   const [userRole, setUserRole] = useState("");
+  
   const [showDriverDetails, setShowDriverDetails] = useState(null);
   const [showRequests, setShowRequests] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +24,7 @@ const CurrentRide = () => {
       const Data = new FormData();
       Data.append("userID", userId);
       const response = await axios.post('http://localhost/ecoRide-Backend/Connection/User/SelectUserrole.php', Data);
-      console.log("Response Data-role:", response.data);
+      console.log("Response Data-role:", response.data.gender);
       setUserRole(response.data.userRole);
     } catch (error) {
       console.error(error);

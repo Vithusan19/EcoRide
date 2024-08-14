@@ -110,9 +110,16 @@
 
 .profile-img {
   width: 60px;
-  height: 70px;
+  height: 60px;
   border-radius: 50%;
   margin-bottom: 10px;
+}
+.image-con
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .profile-heading {
@@ -156,7 +163,7 @@
 
   .profile-img {
     width: 60px;
-    height: 70px;
+    height: 60px;
   }
 
   .menu.open .logo,
@@ -232,7 +239,7 @@
 
   .profile-img {
     width: 60px;
-    height: 70px;
+    height: 60px;
   }
 
   .menu.open .logo,
