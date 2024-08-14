@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
-import profile from "../assets/usersIcon.png";
+import profile from "../assets/60111.jpg";
 import { BiHome, BiAddToQueue, BiCurrentLocation, BiNews, BiMenu, BiUser } from "react-icons/bi";
 import "../styles/Sidebar.css";
 

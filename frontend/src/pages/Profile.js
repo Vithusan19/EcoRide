@@ -1,293 +1,216 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../styles/Profile.css';
-import userPhoto from '../assets/user.png';
-import webLogo from '../assets/weblogo.png';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "../styles/Profile.css";
+import userPhoto from '../assets/60111.jpg';
 import LogoutConfirmation from '../components/LogoutConfirmation';
+import DeleteConfirmation from '../components/DeleteConfirmation';
+import EditProfileModal from '../components/EditProfileModal';
+import ChangePasswordModal from '../components/ChangePasswordModal';
+import { useNavigate } from 'react-router-dom';
 
-const EditProfilePopup = ({ profileData, onSave, onClose }) => {
-  const [formData, setFormData] = useState(profileData);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = () => {
-    onSave(formData);
-    onClose();
-  };
-
-  return (
-    <div className="popup">
-      <div className="popup-inner">
-        <div className="popup-header">
-          <img src={webLogo} alt="Website Logo" className="web-logo" />
-          <button className="close-btn" onClick={onClose}>X</button>
-        </div>
-        <h2>Edit Profile</h2>
-        <div className="form-group">
-          <label>Username</label>
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Full Name</label>
-          <input
-            type="text"
-            name="fullName"
-            value={formData.fullName}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>NIC No.</label>
-          <input
-            type="text"
-            name="nicNo"
-            value={formData.nicNo}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Gender</label>
-          <input
-            type="text"
-            name="gender"
-            value={formData.gender}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Phone Number</label>
-          <input
-            type="tel"
-            name="phoneNumber"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-          />
-        </div>
-        <button className="submit-btn" onClick={handleSubmit}>Save Changes</button>
-      </div>
-    </div>
-  );
-};
-
-const ChangePasswordPopup = ({ onSave, onClose }) => {
-  const [passwordData, setPasswordData] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: '',
+const UserProfile = ({ userID }) => {
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [editMode, setEditMode] = useState(false);
+  const [formData, setFormData] = useState({
+    username: "",
+    name: "",
+    email: "",
+    phoneno: "",
+    nicno: "",
+    gender: ""
   });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setPasswordData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = () => {
-    if (passwordData.newPassword === passwordData.confirmPassword) {
-      onSave(passwordData);
-      onClose();
-    } else {
-      alert('New passwords do not match');
-    }
-  };
-
-  return (
-    <div className="popup">
-      <div className="popup-inner">
-        <div className="popup-header">
-          <img src={webLogo} alt="Website Logo" className="web-logo" />
-          <button className="close-btn" onClick={onClose}>X</button>
-        </div>
-        <h2>Change Password</h2>
-        <div className="form-group">
-          <label>Current Password</label>
-          <input
-            type="password"
-            name="currentPassword"
-            value={passwordData.currentPassword}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>New Password</label>
-          <input
-            type="password"
-            name="newPassword"
-            value={passwordData.newPassword}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Confirm New Password</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            value={passwordData.confirmPassword}
-            onChange={handleChange}
-          />
-        </div>
-        <button className="submit-btn" onClick={handleSubmit}>Change Password</button>
-      </div>
-    </div>
-  );
-};
-
-const DeleteConfirmationPopup = ({ onConfirm, onCancel }) => (
-  <div className="popup">
-    <div className="popup-inner">
-      <div className="popup-header">
-        <img src={webLogo} alt="Website Logo" className="web-logo" />
-        <button className="close-btn" onClick={onCancel}>X</button>
-      </div>
-      <h2>Delete Account</h2>
-      <p>Are you sure you want to delete your account? This action cannot be undone.</p>
-      <div className="form-group">
-        <button className="submit-btn" onClick={onConfirm}>Confirm</button>
-        <button className="submit-btn-cancel" onClick={onCancel}>Cancel</button>
-      </div>
-    </div>
-  </div>
-);
-
-const Profile = () => {
-  const initialProfileData = {
-    username: 'nithushan21',
-    fullName: 'Mahendran Nithushan',
-    email: 'nithuofficial2000@gmail.com',
-    nicNo: '200011200463',
-    gender: 'Male',
-    phoneNumber: '+94775596313',
-  };
-
-  const initialRideHistory = [
-    { id: 1, date: '2023-05-01', route: 'Jaffna to Mannar', status: 'Completed' },
-    { id: 2, date: '2023-05-15', route: 'Jaffna to Colombo', status: 'Completed' },
-    { id: 3, date: '2023-06-10', route: 'Colombo to Jaffna', status: 'Cancelled' },
-  ];
-
-  const [profileData, setProfileData] = useState(initialProfileData);
-  const [rideHistory] = useState(initialRideHistory);
-  const [showEditPopup, setShowEditPopup] = useState(false);
-  const [showChangePasswordPopup, setShowChangePasswordPopup] = useState(false);
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSaveProfile = (formData) => {
-    setProfileData(formData);
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const url = "http://localhost/ecoRide-Backend/Connection/User/Getprofile.php";
+        let fdata = new FormData();
+        fdata.append("userID", sessionStorage.getItem("UserID"));
+
+        const response = await axios.post(url, fdata);
+        console.log(response.data);
+
+        if (response.data) {
+          setProfile(response.data);
+          setFormData({
+            username: response.data.UserName,
+            name: response.data.Name,
+            email: response.data.Email,
+            phoneno: response.data.PhoneNo,
+            nicno: response.data.NicNo,
+            gender: response.data.Gender
+          });
+        } else {
+          setError("No profile details found.");
+        }
+      } catch (error) {
+        console.error("Error fetching profile details:", error);
+        setError("Error fetching profile details.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [userID]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  const toggleEditPopup = () => {
-    setShowEditPopup(!showEditPopup);
+  const handleSave = async () => {
+    try {
+      const url = "http://localhost/ecoRide-Backend/Connection/User/Editprofile.php";
+      const response = await axios.post(url, {
+        userId: sessionStorage.getItem("UserID"),
+        ...formData
+      });
+
+      if (response.data.success) {
+        // Directly update the profile state with the new data
+        setProfile({
+          ...profile,
+          UserName: formData.username,
+          Name: formData.name,
+          Email: formData.email,
+          PhoneNo: formData.phoneno,
+          NicNo: formData.nicno,
+          Gender: formData.gender
+        });
+        setError("");
+        setEditMode(false);
+      } else {
+        setError(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      setError("Error updating profile.");
+    }
   };
 
-  const toggleChangePasswordPopup = () => {
-    setShowChangePasswordPopup(!showChangePasswordPopup);
+  const handleLogout = () => {
+    navigate('/home');
+    sessionStorage.clear();
+  };
+
+  const handleLogoutConfirm = () => {
+    navigate('/home');
+    sessionStorage.clear();
   };
 
   const toggleLogoutConfirmation = () => {
     setShowLogoutConfirmation(!showLogoutConfirmation);
   };
 
+  const handleDeleteAccount = () => {
+    setShowDeleteConfirmation(true);
+  };
+
+  const handleDeleteAccountConfirm = async () => {
+    try {
+      const url = "http://localhost/ecoRide-Backend/Connection/User/Deleteprofile.php";
+      let fdata = new FormData();
+      fdata.append("userID", sessionStorage.getItem("UserID"));
+  
+      const response = await axios.post(url, fdata);
+      console.log("Server response:", response.data);
+  
+      if (response.data.success) {
+        navigate('/home');
+        sessionStorage.clear();
+      } else {
+        setError(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      setError("Error deleting account.");
+    }
+  };
+
   const toggleDeleteConfirmation = () => {
     setShowDeleteConfirmation(!showDeleteConfirmation);
   };
 
-  const handleLogoutConfirm = () => {
-    // Perform any logout logic here, like clearing tokens, etc.
-    navigate('/home');
-    sessionStorage.clear();
+  const toggleChangePasswordModal = () => {
+    setShowChangePasswordModal(!showChangePasswordModal);
   };
 
-  const handleDeleteAccountConfirm = () => {
-    // Redirect to home page after confirmation
-    navigate('/home');
-    sessionStorage.clear();
-  };
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  if (!profile) {
+    return <p>No profile details found.</p>;
+  }
 
   return (
-    <div>
-      <div className="profile-container">
-        {showEditPopup && (
-          <EditProfilePopup
-            profileData={profileData}
-            onSave={handleSaveProfile}
-            onClose={toggleEditPopup}
-          />
-        )}
-        {showChangePasswordPopup && (
-          <ChangePasswordPopup
-            onSave={(data) => console.log(data)}
-            onClose={toggleChangePasswordPopup}
-          />
-        )}
-        {showLogoutConfirmation && (
-          <LogoutConfirmation
-            message="Are you sure you want to logout?"
-            onConfirm={handleLogoutConfirm}
-            onCancel={toggleLogoutConfirmation}
-          />
-        )}
-        {showDeleteConfirmation && (
-          <DeleteConfirmationPopup
-            onConfirm={handleDeleteAccountConfirm}
-            onCancel={toggleDeleteConfirmation}
-          />
-        )}
-        <div className="profile-left">
+    <div className="profile-container">
+       <div className="profile-left">
           <img src={userPhoto} alt="User Profile" className="profile-photo" />
         </div>
-        <div className="profile-right">
-          <h1>Profile</h1>
-          <p><strong>Username:</strong> {profileData.username}</p>
-          <p><strong>Full Name:</strong> {profileData.fullName}</p>
-          <p><strong>Email:</strong> {profileData.email}</p>
-          <p><strong>NIC No.:</strong> {profileData.nicNo}</p>
-          <p><strong>Gender:</strong> {profileData.gender}</p>
-          <p><strong>Phone Number:</strong> {profileData.phoneNumber}</p>
-          <div className="profile-actions">
-            <button onClick={toggleEditPopup}>Edit Profile</button>
-            <button onClick={toggleChangePasswordPopup}>Change Password</button>
-            <button onClick={toggleDeleteConfirmation}>Delete Account</button>
-            <button onClick={toggleLogoutConfirmation}>Logout</button>
-          </div>
-          <div className="ride-history">
-            <h2>Ride History</h2>
-            {rideHistory.map((ride) => (
-              <div key={ride.id} className="ride-history-item">
-                <p><strong>Date:</strong> {ride.date}</p>
-                <p><strong>Route:</strong> {ride.route}</p>
-                <p><strong>Status:</strong> {ride.status}</p>
-              </div>
-            ))}
-          </div>
+      <h1>User Profile</h1>
+      {editMode ? (
+        <EditProfileModal
+          formData={formData}
+          onChange={handleInputChange}
+          onSave={handleSave}
+          onCancel={() => setEditMode(false)}
+        />
+      ) : (
+        <div className="profile-details">
+          <p><strong>Username:</strong> {profile.UserName}</p>
+          <p><strong>Name:</strong> {profile.Name}</p>
+          <p><strong>Email:</strong> {profile.Email}</p>
+          <p><strong>Phone number:</strong> {profile.PhoneNo}</p>
+          <p><strong>NIC Number:</strong> {profile.NicNo}</p>
+          <p><strong>Gender:</strong> {profile.Gender}</p>
+          
         </div>
+      )}
+      <div className="button-container">
+        <button onClick={() => setEditMode(true)}>Edit Profile</button>
+        <button onClick={toggleChangePasswordModal}>Change Password</button>
+        <button onClick={handleDeleteAccount}>Delete Account</button>
+        <button onClick={toggleLogoutConfirmation}>Logout</button>
       </div>
+      
+
+      {showDeleteConfirmation && (
+        <DeleteConfirmation
+          message="Are you sure you want to delete your account? This action cannot be undone."
+          onConfirm={handleDeleteAccountConfirm}
+          onCancel={toggleDeleteConfirmation}
+        />
+      )}
+
+      {showLogoutConfirmation && (
+        <LogoutConfirmation
+          message="Are you sure you want to logout?"
+          onConfirm={handleLogoutConfirm}
+          onCancel={toggleLogoutConfirmation}
+        />
+      )}
+
+      {showChangePasswordModal && (
+        <ChangePasswordModal
+          onSave={toggleChangePasswordModal}
+          onClose={toggleChangePasswordModal}
+        />
+      )}
     </div>
   );
 };
 
-export default Profile;
+export default UserProfile;
