@@ -7,6 +7,10 @@ import DeleteConfirmation from '../components/DeleteConfirmation';
 import EditProfileModal from '../components/EditProfileModal';
 import ChangePasswordModal from '../components/ChangePasswordModal';
 import { useNavigate } from 'react-router-dom';
+import bg from '../assets/step-7.jpg';
+import bg2 from '../assets/step-8.avif';
+import bg3 from '../assets/step-9.jpeg';
+import Footer from '../components/Footer';
 
 const UserProfile = ({ userID }) => {
   const [profile, setProfile] = useState(null);
@@ -156,10 +160,18 @@ const UserProfile = ({ userID }) => {
   }
 
   return (
+    <>
+    <div class="image-slider">
+          <img src={bg} alt="Image 1" class="slider-image"/>
+          <img src={bg2} alt="Image 2" class="slider-image"/>
+          <img src={bg3} alt="Image 3" class="slider-image"/>
+   </div>
     <div className="profile-container">
-       <div className="profile-left">
-          <img src={userPhoto} alt="User Profile" className="profile-photo" />
-        </div>
+    <div className="profile-card">
+    <div className="profile-left">
+      <img src={userPhoto} alt="User Profile" className="profile-photo" />
+    </div>
+    <div className="profile-content">
       <h1>User Profile</h1>
       {editMode ? (
         <EditProfileModal
@@ -176,7 +188,6 @@ const UserProfile = ({ userID }) => {
           <p><strong>Phone number:</strong> {profile.PhoneNo}</p>
           <p><strong>NIC Number:</strong> {profile.NicNo}</p>
           <p><strong>Gender:</strong> {profile.Gender}</p>
-          
         </div>
       )}
       <div className="button-container">
@@ -185,6 +196,9 @@ const UserProfile = ({ userID }) => {
         <button onClick={handleDeleteAccount}>Delete Account</button>
         <button onClick={toggleLogoutConfirmation}>Logout</button>
       </div>
+    </div>
+  </div>
+  
       
 
       {showDeleteConfirmation && (
@@ -210,6 +224,9 @@ const UserProfile = ({ userID }) => {
         />
       )}
     </div>
+    <Footer/>
+    </>
+    
   );
 };
 
