@@ -46,6 +46,7 @@ const CurrentRide = () => {
   const handleAcceptRequest = async (Bookid, requestId) => {
     try {
       setIsLoading(true);
+      console.log("Bookid"+Bookid);
       const Data = new FormData();
       Data.append("Bookid", Bookid);
       const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/AcceptRide.php', Data);
