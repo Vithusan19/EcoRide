@@ -1,91 +1,288 @@
-/* Profile.css */
-.profile-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  height: 90vh;
-  max-width: 800px;
-  margin: 0 auto;
-  margin-left: 30vW;
-  background: #f5f5f5;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.profile-left {
+/* Image Slider Container */
+.image-slider {
+  position: absolute;
+  top: 0;
+  left: 55%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px;
+  height: 50vh;
+  overflow: hidden;
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  align-items: center;
+  margin-top: 0px;
+}
+
+/* Slider Images */
+.slider-image {
+  width: 100%;        /* Ensure full width */
+  height: 100%;       /* Full height for the container */
+  object-fit: cover;  /* Cover the entire width while maintaining aspect ratio */
+  min-height: 100%;   /* Ensure full height without cutting */
+  position: absolute;
+  animation: slide 12s infinite ease-in-out;
+  margin-top: 10px;
+}
+
+
+/* Keyframes for sliding images */
+@keyframes slide {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  10% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  40% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+/* Stagger the animations for each image */
+.slider-image:nth-child(2) {
+  animation-delay: 4s;
+}
+
+.slider-image:nth-child(3) {
+  animation-delay: 8s;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes backgroundAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+/* Mobile Responsiveness */
+@media (max-width: 1246px) {
+  .image-slider {
+    height: 180px; 
+    max-width: 700px;
+  }
+
+  .slider-image {
+    width: 100%; 
+    height: 150px; 
+  }
+}
+@media (max-width: 992px) {
+  .image-slider {
+    height: 160px; 
+    max-width: 500px;
+  }
+
+  .slider-image {
+    width: 100%; 
+    height: 150px; 
+  }
+}
+@media (max-width: 768px) {
+  .image-slider {
+    height: 150px; 
+    max-width: 400px;
+  }
+
+  .slider-image {
+    width: 100%; 
+    height: 150px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .image-slider {
+    height: 120px; 
+    max-width: 200px;
+  }
+
+  .slider-image {
+    height: 120px; 
+  }
+}
+
+/* Profile Container */
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background-color: #ffffff;
+  padding: 20px;
+  margin-left: 12vw;
+  margin-top: 40vh;
+}
+
+
+/* Profile Card */
+.profile-card {
+  background-color: white;
+  width: 100%;
+  max-width: 1000px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Profile Left (Image) */
+.profile-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f0f0;
+  padding: 20px;
 }
 
 .profile-photo {
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid darkgreen;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  border: 5px solid #105806;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+
+.profile-photo:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Profile Content */
+.profile-content {
+  flex: 2;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 28px;
+  margin-bottom: 20px;
   color: #333;
+  text-align: center;
+}
+
+/* Profile Details */
+.profile-details {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
 }
 
-.profile-details {
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 600px;
-}
-
 .profile-details p {
-  font-size: 16px;
+  font-size: 18px;
   margin-bottom: 10px;
+  text-align:justify;
 }
 
 .profile-details strong {
   color: #105806;
+  font-weight: bold;
 }
 
+/* Button Container */
 .button-container {
   display: flex;
-  gap: 15px;
+  justify-content: space-between;
+  gap: 10px;
   margin-top: 20px;
 }
 
 .button-container button {
-  background-color: #105806;
+  flex: 1;
+  background-color: #302e49;
   color: #fff;
   border: none;
-  margin-top: 50px;
   border-radius: 5px;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease;
 }
 
 .button-container button:hover {
-  background-color: #105806;
+  background-color: #0a4405;
+  transform: scale(1.05);
 }
 
 .button-container button:active {
-  transform: scale(0.98);
+  transform: scale(0.95);
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
-  .button-container {
+  .profile-card {
     flex-direction: column;
-    gap: 10px;
   }
 
-  .profile-photo {
-    width: 100px;
-    height: 100px;
+  .profile-left {
+    padding: 10px;
+  }
+
+  .profile-content {
+    padding: 20px;
+  }
+
+  .button-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
