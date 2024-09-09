@@ -3,6 +3,7 @@ import '../styles/Currentride.css';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import EditRideModal from '../components/EditRideModal'; 
 
 const CurrentRide = () => {
   const [rides, setRides] = useState([]);
@@ -11,6 +12,8 @@ const CurrentRide = () => {
 
   const [showDriverDetails, setShowDriverDetails] = useState(null);
   const [showRequests, setShowRequests] = useState({});
+  const [editingRide, setEditingRide] = useState(null); 
+  const [formData, setFormData] = useState({}); 
 
   useEffect(() => {
     const userID = sessionStorage.getItem("UserID");
@@ -101,6 +104,60 @@ const CurrentRide = () => {
       [rideId]: !prevState[rideId],
     }));
   };
+  const handleEditClick = (ride) => {
+    setFormData({
+      date: ride.date,
+      departureTime: ride.departureTime,
+      destinationTime: ride.destinationTime,
+      availableSeats: ride.availableSeats,
+    });
+    setEditingRide(ride);
+  };
+
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+    setFormData(prevState => ({ ...prevState, [name]: value }));
+  };
+
+  const handleSave = async (UserID) => {
+    try {
+      const Data = new FormData();
+      Data.append("rideID", editingRide.Bookid); // Ensure this is the correct ID
+      Data.append("driverID", userId); // Ensure userId is the correct driver ID
+      Data.append("date", formData.date);
+      Data.append("departureTime", formData.departureTime);
+      Data.append("destinationTime", formData.destinationTime);
+      Data.append("availableSeats", formData.availableSeats);
+  
+      console.log("Sending data:", {
+        rideID: editingRide.Bookid,
+        driverID: userId,
+        departureTime: formData.departureTime,
+        destinationTime: formData.destinationTime,
+        availableSeats: formData.availableSeats
+      });
+  
+      const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/UpdateRideDetails.php', Data);
+  
+      if (response.data.status === 1) {
+        setRides(rides.map(ride =>
+          ride.Bookid === editingRide.Bookid
+            ? { ...ride, ...formData }
+            : ride
+        ));
+        setEditingRide(null);
+      } else {
+        console.error("Error updating ride:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error saving ride:", error);
+    }
+  };
+    
+
+  const handleCancel = () => {
+    setEditingRide(null);
+  };
 
   return (
     <div className="current-ride-container">
@@ -139,6 +196,7 @@ const CurrentRide = () => {
                     )}
                   </div>
                 )}
+                <button onClick={() => handleEditClick(ride)}>Edit Ride</button>
               </div>
             )}
 
@@ -185,6 +243,14 @@ const CurrentRide = () => {
         ))
       ) : (
         <p className="no-rides-message">You have no current rides.</p>
+      )}
+      {editingRide && (
+        <EditRideModal
+          formData={formData}
+          onChange={handleFormChange}
+          onSave={handleSave}
+          onCancel={handleCancel}
+        />
       )}
     </div>
   );
