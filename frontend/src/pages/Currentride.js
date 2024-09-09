@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Currentride.css';
 import axios from 'axios';
-import { Blocks } from "react-loader-spinner";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CurrentRide = () => {
   const [rides, setRides] = useState([]);
   const [userId, setUserId] = useState("");
   const [userRole, setUserRole] = useState("");
-  
+
   const [showDriverDetails, setShowDriverDetails] = useState(null);
   const [showRequests, setShowRequests] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const userID = sessionStorage.getItem("UserID");
@@ -24,10 +24,10 @@ const CurrentRide = () => {
       const Data = new FormData();
       Data.append("userID", userId);
       const response = await axios.post('http://localhost/ecoRide-Backend/Connection/User/SelectUserrole.php', Data);
-      console.log("Response Data-role:", response.data.gender);
       setUserRole(response.data.userRole);
     } catch (error) {
       console.error(error);
+      toast.error("Failed to fetch user role");
     }
   };
 
@@ -36,68 +36,45 @@ const CurrentRide = () => {
       const Data = new FormData();
       Data.append("userID", userId);
       const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/CurrentRideUsers.php', Data);
-      console.log("Response Data:", response.data);
       setRides(response.data);
     } catch (error) {
       console.error(error);
+      toast.error("Failed to fetch current rides");
     }
   };
 
   const handleAcceptRequest = async (Bookid, requestId) => {
+    const loadingToast = toast.loading("Accepting request...");
     try {
-      setIsLoading(true);
-      console.log("Bookid"+Bookid);
       const Data = new FormData();
       Data.append("Bookid", Bookid);
       const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/AcceptRide.php', Data);
-      console.log(response.data);
       
       if (response.data.status === 1) {
-        console.log(response.data.message);
-        setIsLoading(false);
+        toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
         window.location.reload();
-        setRides(rides.map(ride =>
-          ride.Bookid === Bookid
-            ? {
-                ...ride,
-                availableSeats: ride.availableSeats - ride.requests.find(request => request.id === requestId).seatsRequested,
-                requests: ride.requests.filter(request => request.id !== requestId),
-                acceptedPassengers: [
-                  ...ride.acceptedPassengers,
-                  ride.requests.find(request => request.id === requestId)
-                ]
-              }
-            : ride
-        ));
       } else {
-        console.error("Error:", response.data.message);
+        toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
       }
     } catch (error) {
       console.error("Error accepting request:", error);
+      toast.update(loadingToast, { render: "Failed to accept the request", type: "error", isLoading: false, autoClose: 3000 });
     }
   };
 
   const handleRejectRequest = async (Bookid, requestId) => {
+    const loadingToast = toast.loading("Rejecting request...");
     try {
-      setIsLoading(true);
       const Data = new FormData();
       Data.append("Bookid", Bookid);
       Data.append("requestID", requestId);
       const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/RejectRide.php', Data);
-      console.log(response.data.message);
-      setIsLoading(true);
+
+      toast.update(loadingToast, { render: "Request rejected successfully", type: "success", isLoading: false, autoClose: 3000 });
       window.location.reload();
-      setRides(rides.map(ride =>
-        ride.Bookid === Bookid
-          ? {
-              ...ride,
-              requests: ride.requests.filter(request => request.id !== requestId)
-            }
-          : ride
-      ));
-      //console.log(Request with ID ${requestId} rejected.);
     } catch (error) {
       console.error("Error rejecting request:", error);
+      toast.update(loadingToast, { render: "Failed to reject the request", type: "error", isLoading: false, autoClose: 3000 });
     }
   };
 
@@ -107,9 +84,10 @@ const CurrentRide = () => {
       Data.append("rideID", rideId);
       await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/CancelBooking.php', Data);
       setRides(rides.filter(ride => ride.Bookid !== rideId));
-     // console.log(Booking for ride with ID ${rideId} canceled.);
+      toast.success("Booking canceled successfully");
     } catch (error) {
       console.error("Error canceling booking:", error);
+      toast.error("Failed to cancel booking");
     }
   };
 
@@ -126,6 +104,7 @@ const CurrentRide = () => {
 
   return (
     <div className="current-ride-container">
+      <ToastContainer />
       <h1>Current Rides</h1>
       {rides.length > 0 ? (
         rides.map((ride) => (
@@ -152,19 +131,7 @@ const CurrentRide = () => {
                           <p><strong>Contact:</strong> {request.passengerContact}</p>
                           <p><strong>Seats Requested:</strong> {request.seatsRequested}</p>
                           <button onClick={() => handleAcceptRequest(ride.Bookid, index)}>Accept</button>
-                        
                           <button onClick={() => handleRejectRequest(ride.Bookid, index)}>Reject</button>
-                          {isLoading && (
-                 <Blocks
-                 height="30"
-                 width="30"
-                 color="#4fa94d"
-                 ariaLabel="blocks-loading"
-                 wrapperStyle={{}}
-                 wrapperClass="blocks-wrapper"
-                 visible={true}
-                 />
-                )}
                         </div>
                       ))
                     ) : (

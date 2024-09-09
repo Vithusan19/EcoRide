@@ -192,3 +192,19 @@ button:hover {
   font-style: italic;
   font-size: 18px; /* Larger font size for no rides message */
 }
+.Toastify__toast--success {
+  background-color: #28a745; 
+}
+
+.Toastify__toast--error {
+  background-color: #dc3545; 
+}
+
+.Toastify__toast--info {
+  background-color: #007bff;
+}
+
+.Toastify__toast--warning {
+  background-color: #ffc107; 
+}
+
