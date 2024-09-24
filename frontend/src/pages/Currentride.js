@@ -3,7 +3,9 @@ import '../styles/Currentride.css';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import EditRideModal from '../components/EditRideModal'; 
+import EditRideModal from '../components/EditRideModal';
+import StarRatingModal from '../components/StarRatingModal'; // Import star rating modal
+import Footer from '../components/Footer';
 
 const CurrentRide = () => {
   const [rides, setRides] = useState([]);
@@ -12,8 +14,10 @@ const CurrentRide = () => {
 
   const [showDriverDetails, setShowDriverDetails] = useState(null);
   const [showRequests, setShowRequests] = useState({});
-  const [editingRide, setEditingRide] = useState(null); 
-  const [formData, setFormData] = useState({}); 
+  const [editingRide, setEditingRide] = useState(null);
+  const [formData, setFormData] = useState({});
+  const [showRatingModal, setShowRatingModal] = useState(false); // For rating modal
+  const [rideToRate, setRideToRate] = useState(null); // The ride to be rated
 
   useEffect(() => {
     const userID = sessionStorage.getItem("UserID");
@@ -71,7 +75,7 @@ const CurrentRide = () => {
       const Data = new FormData();
       Data.append("Bookid", Bookid);
       Data.append("requestID", requestId);
-      const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/RejectRide.php', Data);
+      //const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/RejectRide.php', Data);
 
       toast.update(loadingToast, { render: "Request rejected successfully", type: "success", isLoading: false, autoClose: 3000 });
       window.location.reload();
@@ -104,6 +108,7 @@ const CurrentRide = () => {
       [rideId]: !prevState[rideId],
     }));
   };
+
   const handleEditClick = (ride) => {
     setFormData({
       date: ride.date,
@@ -153,10 +158,25 @@ const CurrentRide = () => {
       console.error("Error saving ride:", error);
     }
   };
-    
 
   const handleCancel = () => {
     setEditingRide(null);
+  };
+
+  // Handle Finish Ride for passengers
+  const handleFinishRide = (ride) => {
+    if (userRole === 'passenger') {
+      setShowRatingModal(true);
+      setRideToRate(ride); // Set the ride to rate
+    } else {
+      toast.info("Ride finished successfully!"); // For driver, just show a toast
+    }
+  };
+
+  // Handle closing the rating modal
+  const closeRatingModal = () => {
+    setShowRatingModal(false);
+    setRideToRate(null); // Clear ride to rate
   };
 
   return (
@@ -197,6 +217,7 @@ const CurrentRide = () => {
                   </div>
                 )}
                 <button onClick={() => handleEditClick(ride)}>Edit Ride</button>
+                <button onClick={() => handleFinishRide(ride)}>Finish Ride</button>
               </div>
             )}
 
@@ -224,6 +245,7 @@ const CurrentRide = () => {
                     Cancel Booking
                   </button>
                 )}
+                <button onClick={() => handleFinishRide(ride)}>Finish Ride</button> {/* Finish ride for passengers */}
               </div>
             )}
 
@@ -252,8 +274,17 @@ const CurrentRide = () => {
           onCancel={handleCancel}
         />
       )}
+      {showRatingModal && (
+        <StarRatingModal
+          ride={rideToRate}
+          onClose={closeRatingModal}
+        />
+      )}
+       <Footer/>
     </div>
+    
   );
+ 
 };
 
 export default CurrentRide;
