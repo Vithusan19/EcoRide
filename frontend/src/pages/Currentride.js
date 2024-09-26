@@ -127,7 +127,7 @@ const CurrentRide = () => {
   const handleSave = async (UserID) => {
     try {
       const Data = new FormData();
-      Data.append("rideID", editingRide.Bookid); // Ensure this is the correct ID
+      Data.append("rideID", 57); // Ensure this is the correct ID
       Data.append("driverID", userId); // Ensure userId is the correct driver ID
       Data.append("date", formData.date);
       Data.append("departureTime", formData.departureTime);
@@ -143,6 +143,7 @@ const CurrentRide = () => {
       });
   
       const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/UpdateRideDetails.php', Data);
+      console.log(response.data.status)
   
       if (response.data.status === 1) {
         setRides(rides.map(ride =>
@@ -192,6 +193,7 @@ const CurrentRide = () => {
             <p><strong>Time:</strong> {ride.departureTime} - {ride.destinationTime}</p>
             <p><strong>Vehicle:</strong> {ride.vehicleModel}</p>
             <p><strong>Cost per Seat:</strong> LKR {ride.seatCost}</p>
+            
 
             {userRole === 'driver' && (
               <div>
