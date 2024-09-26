@@ -77,7 +77,7 @@ const CurrentRide = () => {
       const Data = new FormData();
       Data.append("Bookid", Bookid);
       const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/CancelBooking.php', Data);
-  
+
       if (response.data.status === 1) {
         toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
         window.location.reload(); // Reload to show updated ride details
@@ -89,7 +89,7 @@ const CurrentRide = () => {
       toast.update(loadingToast, { render: "Failed to cancel the booking", type: "error", isLoading: false, autoClose: 3000 });
     }
   };
-  
+
 
   const handleRejectRequest = async (Bookid, requestId) => {
     const loadingToast = toast.loading("Rejecting request...");
@@ -204,6 +204,7 @@ const CurrentRide = () => {
             <p><strong>Time:</strong> {ride.departureTime} - {ride.destinationTime}</p>
             <p><strong>Vehicle:</strong> {ride.vehicleModel}</p>
             <p><strong>Cost per Seat:</strong> LKR {ride.seatCost}</p>
+
 
             {userRole === 'driver' && (
               <div>
