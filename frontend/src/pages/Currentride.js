@@ -4,20 +4,22 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import EditRideModal from '../components/EditRideModal';
-import StarRatingModal from '../components/StarRatingModal'; // Import star rating modal
+import StarRatingModal from '../components/StarRatingModal';
 import Footer from '../components/Footer';
+import ConfirmModal from '../components/ConfirmModal'; // Import Confirm Modal
 
 const CurrentRide = () => {
   const [rides, setRides] = useState([]);
   const [userId, setUserId] = useState("");
   const [userRole, setUserRole] = useState("");
-
   const [showDriverDetails, setShowDriverDetails] = useState(null);
   const [showRequests, setShowRequests] = useState({});
   const [editingRide, setEditingRide] = useState(null);
   const [formData, setFormData] = useState({});
-  const [showRatingModal, setShowRatingModal] = useState(false); // For rating modal
-  const [rideToRate, setRideToRate] = useState(null); // The ride to be rated
+  const [showRatingModal, setShowRatingModal] = useState(false);
+  const [rideToRate, setRideToRate] = useState(null);
+  const [showConfirmModal, setShowConfirmModal] = useState(false); // For confirmation modal
+  const [confirmAction, setConfirmAction] = useState(null); // Store the action to confirm
 
   useEffect(() => {
     const userID = sessionStorage.getItem("UserID");
@@ -56,10 +58,10 @@ const CurrentRide = () => {
       const Data = new FormData();
       Data.append("Bookid", Bookid);
       const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/AcceptRide.php', Data);
-      
+
       if (response.data.status === 1) {
         toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
-        window.location.reload();
+        window.location.reload(); // Reload the page to show updated ride details
       } else {
         toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
       }
@@ -69,13 +71,32 @@ const CurrentRide = () => {
     }
   };
 
+  const handleCancelBooking = async (Bookid) => {
+    const loadingToast = toast.loading("Cancelling booking...");
+    try {
+      const Data = new FormData();
+      Data.append("Bookid", Bookid);
+      const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/CancelBooking.php', Data);
+  
+      if (response.data.status === 1) {
+        toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
+        window.location.reload(); // Reload to show updated ride details
+      } else {
+        toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
+      }
+    } catch (error) {
+      console.error("Error cancelling booking:", error);
+      toast.update(loadingToast, { render: "Failed to cancel the booking", type: "error", isLoading: false, autoClose: 3000 });
+    }
+  };
+  
+
   const handleRejectRequest = async (Bookid, requestId) => {
     const loadingToast = toast.loading("Rejecting request...");
     try {
       const Data = new FormData();
       Data.append("Bookid", Bookid);
       Data.append("requestID", requestId);
-      //const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/RejectRide.php', Data);
 
       toast.update(loadingToast, { render: "Request rejected successfully", type: "success", isLoading: false, autoClose: 3000 });
       window.location.reload();
@@ -85,17 +106,18 @@ const CurrentRide = () => {
     }
   };
 
-  const handleCancelBooking = async (rideId) => {
-    try {
-      const Data = new FormData();
-      Data.append("rideID", rideId);
-      await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/CancelBooking.php', Data);
-      setRides(rides.filter(ride => ride.Bookid !== rideId));
-      toast.success("Booking canceled successfully");
-    } catch (error) {
-      console.error("Error canceling booking:", error);
-      toast.error("Failed to cancel booking");
+  const handleConfirm = (action, Bookid, requestId) => {
+    setConfirmAction({ action, Bookid, requestId });
+    setShowConfirmModal(true); // Show confirmation modal
+  };
+
+  const executeConfirmAction = () => {
+    if (confirmAction?.action === "accept") {
+      handleAcceptRequest(confirmAction.Bookid, confirmAction.requestId);
+    } else if (confirmAction?.action === "reject") {
+      handleRejectRequest(confirmAction.Bookid, confirmAction.requestId);
     }
+    setShowConfirmModal(false); // Hide confirmation modal
   };
 
   const toggleDriverDetails = (rideId) => {
@@ -124,26 +146,18 @@ const CurrentRide = () => {
     setFormData(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const handleSave = async (UserID) => {
+  const handleSave = async () => {
     try {
       const Data = new FormData();
-      Data.append("rideID", editingRide.Bookid); // Ensure this is the correct ID
-      Data.append("driverID", userId); // Ensure userId is the correct driver ID
+      Data.append("rideID", editingRide.Bookid);
+      Data.append("driverID", userId);
       Data.append("date", formData.date);
       Data.append("departureTime", formData.departureTime);
       Data.append("destinationTime", formData.destinationTime);
       Data.append("availableSeats", formData.availableSeats);
-  
-      console.log("Sending data:", {
-        rideID: editingRide.Bookid,
-        driverID: userId,
-        departureTime: formData.departureTime,
-        destinationTime: formData.destinationTime,
-        availableSeats: formData.availableSeats
-      });
-  
+
       const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/UpdateRideDetails.php', Data);
-  
+
       if (response.data.status === 1) {
         setRides(rides.map(ride =>
           ride.Bookid === editingRide.Bookid
@@ -163,20 +177,18 @@ const CurrentRide = () => {
     setEditingRide(null);
   };
 
-  // Handle Finish Ride for passengers
   const handleFinishRide = (ride) => {
     if (userRole === 'passenger') {
       setShowRatingModal(true);
-      setRideToRate(ride); // Set the ride to rate
+      setRideToRate(ride);
     } else {
-      toast.info("Ride finished successfully!"); // For driver, just show a toast
+      toast.info("Ride finished successfully!");
     }
   };
 
-  // Handle closing the rating modal
   const closeRatingModal = () => {
     setShowRatingModal(false);
-    setRideToRate(null); // Clear ride to rate
+    setRideToRate(null);
   };
 
   return (
@@ -207,8 +219,8 @@ const CurrentRide = () => {
                           <p><strong>Name:</strong> {request.passengerName}</p>
                           <p><strong>Contact:</strong> {request.passengerContact}</p>
                           <p><strong>Seats Requested:</strong> {request.seatsRequested}</p>
-                          <button onClick={() => handleAcceptRequest(ride.Bookid, index)}>Accept</button>
-                          <button onClick={() => handleRejectRequest(ride.Bookid, index)}>Reject</button>
+                          <button onClick={() => handleConfirm('accept', ride.Bookid, index)}>Accept</button>
+                          <button onClick={() => handleConfirm('reject', ride.Bookid, index)}>Reject</button>
                         </div>
                       ))
                     ) : (
@@ -245,7 +257,7 @@ const CurrentRide = () => {
                     Cancel Booking
                   </button>
                 )}
-                <button onClick={() => handleFinishRide(ride)}>Finish Ride</button> {/* Finish ride for passengers */}
+                <button onClick={() => handleFinishRide(ride)}>Finish Ride</button>
               </div>
             )}
 
@@ -280,11 +292,15 @@ const CurrentRide = () => {
           onClose={closeRatingModal}
         />
       )}
-       <Footer/>
+      {showConfirmModal && (
+        <ConfirmModal
+          onConfirm={executeConfirmAction}
+          onCancel={() => setShowConfirmModal(false)}
+        />
+      )}
+      <Footer />
     </div>
-    
   );
- 
 };
 
 export default CurrentRide;
