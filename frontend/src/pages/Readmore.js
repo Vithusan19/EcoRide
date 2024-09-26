@@ -51,7 +51,10 @@ const Readmore = () => {
   const location = useLocation();
   const { card } = location.state || {};
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false); // State for confirm popup
   const [requestedSeats, setRequestedSeats] = useState(1);
+  const [fromWhere, setFromWhere] = useState("");
+  const [approximateDistance, setApproximateDistance] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -78,23 +81,37 @@ const Readmore = () => {
     setIsPopupOpen(false);
   };
 
-  const handleSubmitRequest = async (e) => {
+  const handleSubmitRequest = (e) => {
     e.preventDefault();
     const availableSeats = card.seats - card.BookingSeats;
     if (requestedSeats > availableSeats) {
       setErrorMessage(`You can't request more than ${availableSeats} seats.`);
       return;
     }
+    if (!fromWhere || !approximateDistance) {
+      setErrorMessage("Please provide all the required details.");
+      return;
+    }
+
+    // Open confirmation popup instead of sending the request directly
+    setIsConfirmPopupOpen(true);
+  };
+
+  const handleConfirmRequest = async () => {
     setIsLoading(true);
     const url = "http://localhost/ecoRide-Backend/Connection/Ride/RequestRide.php";
     const Data = new FormData();
     Data.append("userID", userid);
     Data.append("seatsNo", requestedSeats);
     Data.append("rideID", card.rideID);
+    Data.append("fromWhere", fromWhere);
+    Data.append("approximateDistance", approximateDistance);
 
     console.log("UserID:", userid);
     console.log("Requested Seats:", requestedSeats);
     console.log("RideID:", card.rideID);
+    console.log("From Where:", fromWhere);
+    console.log("Approximate Distance:", approximateDistance);
 
     try {
       const response = await axios.post(url, Data);
@@ -112,7 +129,8 @@ const Readmore = () => {
       console.error("Connection error:", error);
     }
 
-    setIsPopupOpen(false);
+    setIsConfirmPopupOpen(false); // Close the confirmation popup
+    setIsPopupOpen(false); // Close the seat request popup
   };
 
   return (
@@ -166,42 +184,84 @@ const Readmore = () => {
           <div className="readmore-popup">
             <div className="readmore-popup-inner">
               <h3>Request Seats</h3>
-              <label>
-                Number of Seats:
-                <input
-                  type="number"
-                  value={requestedSeats}
-                  min="1"
-                  max={card.seats - card.BookingSeats}
-                  onChange={(e) => {
-                    setRequestedSeats(e.target.value);
-                    setErrorMessage("");
-                  }}
-                />
-              </label>
-              <div className="readmore-button-container">
-                <button className="readmore-action-button" onClick={handleClosePopup}>Cancel</button>
-                <div className="loadingRequest">
-                {isLoading && (
-                  <Hourglass
-                    visible={true}
-                    height="30"
-                    width="30"
-                    ariaLabel="hourglass-loading"
-                    wrapperStyle={{}}
-                    wrapperClass=""
-                    colors={['#306cce', '#72a1ed']}
+              <form onSubmit={handleSubmitRequest}>
+                <label>
+                  Number of Seats:
+                  <input
+                    type="number"
+                    value={requestedSeats}
+                    min="1"
+                    max={card.seats - card.BookingSeats}
+                    onChange={(e) => {
+                      setRequestedSeats(e.target.value);
+                      setErrorMessage("");
+                    }}
                   />
-                )}
-              </div>
-                <button className="readmore-action-button" onClick={handleSubmitRequest}>Submit</button>
-              </div>
-              {errorMessage && <div className="error-message">{errorMessage}</div>}
-              
+                </label>
+                <label>
+                  From to Where:
+                  <input
+                    type="text"
+                    value={fromWhere}
+                    onChange={(e) => {
+                      setFromWhere(e.target.value);
+                      setErrorMessage("");
+                    }}
+                    placeholder="Enter the route"
+                  />
+                </label>
+                <label>
+                  Approximate Distance (in km):
+                  <input
+                    type="text"
+                    value={approximateDistance}
+                    onChange={(e) => {
+                      setApproximateDistance(e.target.value);
+                      setErrorMessage("");
+                    }}
+                    placeholder="Enter distance"
+                  />
+                </label>
+                <div className="readmore-button-container">
+                  <button className="readmore-action-button" onClick={handleClosePopup}>Cancel</button>
+                  <div className="loadingRequest">
+                    {isLoading && (
+                      <Hourglass
+                        visible={true}
+                        height="30"
+                        width="30"
+                        ariaLabel="hourglass-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                        colors={['#306cce', '#72a1ed']}
+                      />
+                    )}
+                  </div>
+                  <button className="readmore-action-button" type="submit">Submit</button>
+                </div>
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
+              </form>
             </div>
           </div>
         )}
+
+        {/* Confirmation Popup */}
+        {isConfirmPopupOpen && (
+          <div className="readmore-popup">
+            <div className="readmore-popup-inner">
+              <h3>Confirm Request</h3>
+              <p className="popup-cost">Your total seat cost is: Rs </p>
+              <p className="popup-message">Are you sure you want to request {requestedSeats} seats?</p>
+              <div className="readmore-button-container">
+                <button className="readmore-action-button" onClick={() => setIsConfirmPopupOpen(false)}>Cancel</button>
+                <button className="readmore-action-button" onClick={handleConfirmRequest}>OK</button>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
+
       <div className="readmore-row-2">
         <div className="readmore-container-row2">
           <div className="headline">
@@ -237,6 +297,7 @@ const Readmore = () => {
           </div>
         </div>
       </div>
+
       <div className="readmore-photos-container">
         <h3>Additional Photos</h3>
         <div className="readmore-photos">
@@ -250,18 +311,18 @@ const Readmore = () => {
         <div className="readmore-video-container">
           <h3>System Explanation</h3>
           <video controls width="100%">
-                <source src={demos} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+            <source src={demos} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </div>
         <div className="readmore-instructions">
           <h3>How to Use This Page</h3>
           <p>Welcome to the vehicle details page. Here’s how to navigate and utilize this information:</p>
           <ul>
-            <i className="fas fa-car"></i> <strong>View Vehicle Details:</strong> Check out the details on the right side of the image, including vehicle number, driver name, and travel route.<br></br><br></br>
-            <i className="fas fa-calendar-check"></i> <strong>Request a Ride:</strong> Click the "Request Ride" button to open a popup where you can specify the number of seats you want to request.<br></br><br></br>
-            <i className="fas fa-arrow-left"></i> <strong>Back Button:</strong> Use the "Back" button to return to the previous page.<br></br><br></br>
-            <i className="fas fa-image"></i> <strong>Additional Photos and Videos:</strong> View more photos and a video explanation of the system below for additional context and details.<br></br><br></br>
+            <i className="fas fa-car"></i> <strong>View Vehicle Details:</strong> Check out the details on the right side of the image, including vehicle number, driver name, and travel route.<br /><br />
+            <i className="fas fa-calendar-check"></i> <strong>Request a Ride:</strong> Click the "Request Ride" button to open a popup where you can specify the number of seats you want to request.<br /><br />
+            <i className="fas fa-arrow-left"></i> <strong>Back Button:</strong> Use the "Back" button to return to the previous page.<br /><br />
+            <i className="fas fa-image"></i> <strong>Additional Photos and Videos:</strong> View more photos and a video explanation of the system below for additional context and details.<br /><br />
           </ul>
         </div>
       </div>

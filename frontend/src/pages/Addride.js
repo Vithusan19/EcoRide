@@ -39,6 +39,8 @@ const Addride = () => {
     cardCVV: ''
   });
 
+  const todayDate = new Date().toISOString().split('T')[0];
+
   useEffect(() => {
     const userID = sessionStorage.getItem("UserID");
     setuserid(userID);
@@ -55,7 +57,7 @@ const Addride = () => {
     }
   };
 
-  
+
 
   const handleCardChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -119,66 +121,122 @@ const Addride = () => {
     setShowModal(false);
   };
 
- return (
+  return (
     <>
       <div className="add-ride-container">
         <div className="header-image-container">
-        <img 
-          src={step === 1 ? bg : bg2} 
-          alt="Header" 
-          className="header-image-1" 
-        />
+          <img
+            src={step === 1 ? bg : bg2}
+            alt="Header"
+            className="header-image-1"
+          />
           {step === 1 && (
-          <div className="form-container-add">
-            <h1 className="add-ride-title">Car Information</h1>
-            <form onSubmit={handleNextStep} className="add-ride-form">
-              <div className="form-row-add">
-                <div className="form-group-add">
-                  <label>Vehicle No:</label>
-                  <input className="add-input" type="text" name="vehicleNo" value={formData.vehicleNo} onChange={handleChange} required />
+            <div className="form-container-add">
+              <h1 className="add-ride-title">Car Information</h1>
+              <form onSubmit={handleNextStep} className="add-ride-form">
+                <div className="form-row-add">
+                  <div className="form-group-add">
+                    <label>Vehicle No:</label>
+                    <input className="add-input" type="text" name="vehicleNo" value={formData.vehicleNo} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group-add">
+                    <label>Vehicle Model:</label>
+                    <input className="add-input" type="text" name="vehicleModel" value={formData.vehicleModel} onChange={handleChange} required />
+                  </div>
                 </div>
-                <div className="form-group-add">
-                  <label>Vehicle Model:</label>
-                  <input className="add-input" type="text" name="vehicleModel" value={formData.vehicleModel} onChange={handleChange} required />
-                </div>
-              </div>
-              <div className="form-row-add">
+                <div className="form-row-add">
                   <div className="form-group-add">
                     <label>Number of Seats:</label>
                     <input className="add-input" type="number" name="seats" value={formData.seats} onChange={handleChange} required min="1" />
                   </div>
-                <div className="form-group-add">
-                  <label>Air Condition:</label>
-                  <input className="add-input-cheack" type="checkbox" name="airCondition" checked={formData.airCondition} onChange={handleChange} />
+                  <div className="form-group-add">
+                    <label>Air Condition:</label>
+                    <input className="add-input-check" type="checkbox" name="airCondition" checked={formData.airCondition} onChange={handleChange} />
+                  </div>
                 </div>
-              </div>
-              <button className="add-ride-button" type="submit">Next Step</button>
-            </form>
-          </div>
-        )}
+                <div className="form-row-add">
+                  <div className="form-group-add">
+                    <label>Car Type:</label>
+                    <div className="radio-group">
+                      <div className="radio-row">
+                        <label>
+                          <input
+                            type="radio"
+                            name="carType"
+                            value="low-consumption"
+                            checked={formData.carType === "low-consumption"}
+                            onChange={handleChange}
+                            required
+                          />
+                          Low Consumption Vehicles
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            name="carType"
+                            value="medium-consumption"
+                            checked={formData.carType === "medium-consumption"}
+                            onChange={handleChange}
+                            required
+                          />
+                          Medium Consumption Vehicles
+                        </label>
+                      </div>
+                      <div className="radio-row">
+                        <label>
+                          <input
+                            type="radio"
+                            name="carType"
+                            value="high-consumption"
+                            checked={formData.carType === "high-consumption"}
+                            onChange={handleChange}
+                            required
+                          />
+                          High Consumption Vehicles
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            name="carType"
+                            value="electric"
+                            checked={formData.carType === "electric"}
+                            onChange={handleChange}
+                            required
+                          />
+                          Electric or Hybrid Vehicles
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button className="add-ride-button" type="submit">Next Step</button>
+              </form>
+            </div>
+          )}
+
         </div>
 
-       
+
         {step === 2 && (
-          
+
           <div className="form-container-add">
             <h1 className="add-ride-title">Ride Details</h1>
             <form onSubmit={handleSubmit} className="add-ride-form">
               <div className="form-row-add">
                 <div className="form-group-add">
                   <label>Departure Point:</label>
-                  <input className="add-input" type="text" name="departurePoint" value={formData.departurePoint} onChange={handleChange}  required/>
+                  <input className="add-input" type="text" name="departurePoint" value={formData.departurePoint} onChange={handleChange} required />
                 </div>
                 <div className="form-group-add">
                   <label>Destination Point:</label>
-                  <input className="add-input" type="text" name="destinationPoint" value={formData.destinationPoint} onChange={handleChange}  required/>
+                  <input className="add-input" type="text" name="destinationPoint" value={formData.destinationPoint} onChange={handleChange} required />
                 </div>
               </div>
               <div className="form-row-add">
-              <div className="form-group-add">
-          <label>Date:</label>
-          <input className="add-input" type="date" name="date" value={formData.date} onChange={handleChange} required min="2024-01-01" />
-        </div>
+                <div className="form-group-add">
+                  <label>Date:</label>
+                  <input className="add-input" type="date" name="date" value={formData.date} onChange={handleChange}  required min={todayDate} />
+                </div>
                 <div className="form-group-add">
                   <label>Seat Cost:</label>
                   <input className="add-input" type="number" name="seatCost" value={formData.seatCost} onChange={handleChange} required />
@@ -187,11 +245,11 @@ const Addride = () => {
               <div className="form-row-add">
                 <div className="form-group-add">
                   <label>Departure Time:</label>
-                  <input className="add-input" type="time" name="departureTime" value={formData.departureTime} onChange={handleChange}required />
+                  <input className="add-input" type="time" name="departureTime" value={formData.departureTime} onChange={handleChange} required />
                 </div>
                 <div className="form-group-add">
                   <label>Destination Time:</label>
-                  <input className="add-input" type="time" name="destinationTime" value={formData.destinationTime} onChange={handleChange}required />
+                  <input className="add-input" type="time" name="destinationTime" value={formData.destinationTime} onChange={handleChange} required />
                 </div>
               </div>
               <div className="form-row-add">
@@ -214,22 +272,22 @@ const Addride = () => {
                 <textarea className="add-input" name="preferences" value={formData.preferences} onChange={handleChange}></textarea>
               </div>
               <div className="button-group">
-                
-                
+
+
                 <button type="button" className="add-ride-button-2" onClick={handlePrevStep}>Back</button>
                 <button className="add-ride-button-2" type="submit">Payment</button>
-                
+
               </div>
             </form>
           </div>
         )}
 
-          
-        
 
-        
 
-       
+
+
+
+
         <div className="addride-row-2">
           <div className="addride-container-row2">
             <div className="headline">
@@ -266,10 +324,10 @@ const Addride = () => {
           </div>
         </div>
         <div className="instructions">
-        
+
           <div className='instruction'>
             <div className="video-instruction">
-            <h2>Driver Instructions</h2>
+              <h2>Driver Instructions</h2>
               <video controls width="100%">
                 <source src={demo} type="video/mp4" />
                 Your browser does not support the video tag.
@@ -278,9 +336,9 @@ const Addride = () => {
             <div className='points-instruction'>
               <h3>Steps to Follow:</h3>
               <p><FaUser className="icons" /> Add your profile picture, a few words about you, and your phone number to increase trust between members.</p>
-          <p><FaMapMarkerAlt className="icons" /> Indicate departure and arrival points, the date of the ride, and check our recommended price to increase your chances of getting your first passengers and ratings.</p>
-          <p><FaCheckCircle className="icons" /> Review passenger profiles and accept their requests to ride with you. That’s how easy it is to start saving on travel costs!</p>
-             
+              <p><FaMapMarkerAlt className="icons" /> Indicate departure and arrival points, the date of the ride, and check our recommended price to increase your chances of getting your first passengers and ratings.</p>
+              <p><FaCheckCircle className="icons" /> Review passenger profiles and accept their requests to ride with you. That’s how easy it is to start saving on travel costs!</p>
+
             </div>
           </div>
         </div>
@@ -312,10 +370,10 @@ const Addride = () => {
       {showModal && (
         <div className="modal">
           <div className="modal-content">
-          <span className="close"  onClick={handleCancelPayment}>&times;</span>
-            <h2 className="modal-title-pay">Enter Payment Information</h2>
+            <span className="close" onClick={handleCancelPayment}>&times;</span>
+            <h2 className="modal-title-pay">Payment Information</h2>
             <p className='add-ride-payment'>
-              All drivers are required to pay 10% of their earnings from each ride to the system.
+            All drivers are required to pay a specified fee upon accepting each ride request from passengers to the system.
             </p>
             <div className='atm-container'>
               <img src={visa} alt='visa' />
@@ -345,7 +403,7 @@ const Addride = () => {
                 </div>
               </div>
               <div className="button-group">
-                <button type="submit" className='add-ride-button'>Pay <span className='button-price'>LKR {formData.seatCost * formData.seats / 10}</span></button>
+                <button type="submit" className='add-ride-button'>Ok <span className='button-price'></span></button>
                 <button type="button" className="add-ride-button" onClick={handleCancelPayment}>Cancel</button>
               </div>
             </form>

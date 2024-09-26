@@ -456,3 +456,13 @@ body {
     text-align: center;
   }
 }
+
+
+.readmore-button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.popup-message {
+  margin-bottom: 20px; 
+}

@@ -569,3 +569,31 @@ height: auto;
 
 
 
+/* Styling for the checkboxes */
+.add-input-check {
+  margin-left: 8px;
+  width: 18px;
+  height: 18px;
+}
+
+/* Styling for the radio buttons */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.radio-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.radio-row label {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.radio-row input[type="radio"] {
+  margin-right: 8px;
+}
