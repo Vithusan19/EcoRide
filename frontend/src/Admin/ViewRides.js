@@ -5,6 +5,7 @@ import car from '../assets/car.png';
 import axios from 'axios';
 
 const ViewRides = () => {
+  
   const [searchTermUser, setSearchTermUser] = useState("");
   const [searchTermStartPlace, setSearchTermStartPlace] = useState("");
   const [searchTermEndPlace, setSearchTermEndPlace] = useState("");
@@ -31,6 +32,10 @@ const ViewRides = () => {
     }
   };
 
+  const handleSelectRide = (ride) => {
+    setSelectedRide(ride);
+};
+
   const handleUserSearchChange = (event) => {
     setSearchTermUser(event.target.value);
   };
@@ -50,6 +55,7 @@ const ViewRides = () => {
   const closeModal = () => {
     setSelectedRide(null);
   };
+  
 
   const showDeleteDialog = () => {
     setIsDeleteDialogVisible(true);
@@ -58,6 +64,34 @@ const ViewRides = () => {
   const hideDeleteDialog = () => {
     setIsDeleteDialogVisible(false);
   };
+
+  const handleDeleteRide = async () => {
+    console.log('Selected ride:', selectedRide);
+    if (!selectedRide || !selectedRide.rideID) {
+      console.error("No ride selected or invalid ride ID");
+      return; // Exit the function if no ride is selected
+    }
+  
+    const url = "http://localhost/ecoRide-Backend/Connection/Ride/DeleteRide.php";
+    let fdata = new FormData();
+    fdata.append("rideid", selectedRide.rideID);  // This will work only if selectedRide is properly set
+  
+    try {
+      const response = await axios.post(url, fdata);
+      console.log(response.data);
+      if (response.data.message === "Ride deleted successfully") {
+        hideDeleteDialog();
+        closeModal();
+        getRides();  // Fetch updated rides
+      } else {
+        console.log(response.data.message);
+      }
+    } catch (error) {
+      console.error("There was an error deleting the ride!", error);
+    }
+  };
+  
+
 
   const calculateElapsedTime = (publishedTime, publishedDate) => {
     const currentTime = new Date();
@@ -185,7 +219,7 @@ const ViewRides = () => {
               </div>
               
               <span className="vr-time">{calculateElapsedTime(ride.publishedTime, ride.publishedDate)}</span>
-              <div className="delete-details-vr" onClick={showDeleteDialog}>
+              <div className="delete-details-vr" onClick={() => { handleSelectRide(ride); showDeleteDialog(); }}>
                 <img src={deleteIcon} alt="delete" className="vr-deleteimg" />
               </div>
             </div>
@@ -248,7 +282,7 @@ const ViewRides = () => {
             <h2>Confirm Deletion</h2>
             <p>Are you sure you want to delete this ride?</p>
             <div className="modal-content-delete-button">
-              <button className="confirm-delete-button">
+              <button className="confirm-delete-button" onClick={handleDeleteRide}>
                 Yes
               </button>
               <button className="user-button" onClick={hideDeleteDialog}>
