@@ -9,19 +9,25 @@ const StarRatingModal = ({ ride, onClose }) => {
   const handleSubmitRating = async () => {
     try {
       const Data = new FormData();
-      Data.append('rideID', ride.Bookid);
+      Data.append('Bookid', ride.Bookid); 
       Data.append('rating', rating);
-      
+  
       // Send rating data to backend
-      await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/SubmitRating.php', Data);
-
-      toast.success("Rating submitted successfully");
-      onClose();
+      const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/SubmitRating.php', Data);
+  
+      // Check if the response status is 1
+      if (response.data.status === 1) {
+        toast.success("Rating submitted successfully");
+        onClose();
+      } else {
+        toast.error("Failed to submit rating");
+      }
     } catch (error) {
       console.error("Error submitting rating:", error);
       toast.error("Failed to submit rating");
     }
   };
+  
 
   return (
     <div className="star-rating-modal">
