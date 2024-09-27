@@ -11,13 +11,16 @@ const StarRatingModal = ({ ride, onClose }) => {
       const Data = new FormData();
       Data.append('Bookid', ride.Bookid); 
       Data.append('rating', rating);
+      console.log(ride.Bookid)
+      console.log(rating)
   
       // Send rating data to backend
       const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/SubmitRating.php', Data);
+      console.log(response.data.message)
   
       // Check if the response status is 1
       if (response.data.status === 1) {
-        toast.success(`Rating submitted successfully.`);
+        toast.success(`Rating submitted successfully. Average rating: ${response.data.averageRating}`);
         onClose();
       } else {
         toast.error(response.data.message || "Failed to submit rating");
@@ -27,6 +30,7 @@ const StarRatingModal = ({ ride, onClose }) => {
       toast.error("Failed to submit rating");
     }
   };
+  
   
   
 
