@@ -81,15 +81,17 @@ const CurrentRide = () => {
 
       if (response.data.status === 1) {
         toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
-        window.location.reload(); // Reload to show updated ride details
+        window.location.reload(); 
       } else {
         toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
+        window.location.reload();
       }
     } catch (error) {
       console.error("Error cancelling booking:", error);
       toast.update(loadingToast, { render: "Failed to cancel the booking", type: "error", isLoading: false, autoClose: 3000 });
     }
   };
+
 
 
   const handleRejectRequest = async (Bookid, requestId) => {
@@ -180,7 +182,37 @@ const CurrentRide = () => {
   const handleCancel = () => {
     setEditingRide(null);
   };
+  //for driver
+  const handleFinishRides = async (ride) => {
+    const loadingToast = toast.loading("Finishing ride...");
 
+    console.log("Finishing ride with rideID:", ride.rideID, " and userID:", userId);
+
+    try {
+        const Data = new FormData();
+        // Data.append("rideID", ride.rideID); // Ensure ride.rideID is defined
+        Data.append("userID", userId); // Ensure userId is defined in your component
+
+        const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/Finishridedriver.php', Data);
+
+        if (response.data.status === 1) {
+            if (userRole === 'driver') {
+                setShowRatingModal(true);
+                setRideToRate(ride); // Set the ride to rate
+            } else {
+                // toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
+                toast.info("Ride finished successfully!");
+                window.location.reload(); // Refresh the page or update the state to reflect the finished ride
+            }
+        } else {
+            toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
+            window.location.reload(); 
+          }
+    } catch (error) {
+        console.error("Error finishing ride:", error);
+        toast.update(loadingToast, { render: "Failed to finish the ride", type: "error", isLoading: false, autoClose: 3000 });
+    }
+};
   const handleFinishRide = (ride) => {
     if (userRole === 'passenger') {
       setShowRatingModal(true);
@@ -237,7 +269,7 @@ const CurrentRide = () => {
                   </div>
                 )}
                 <button onClick={() => handleEditClick(ride)}>Edit Ride</button>
-                <button onClick={() => handleFinishRide(ride)}>Finish Ride</button>
+                <button onClick={() => handleFinishRides(ride)}>Finish Ride</button>
               </div>
             )}
 
