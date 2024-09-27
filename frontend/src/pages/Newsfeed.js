@@ -75,10 +75,10 @@ const Newsfeed = () => {
                         count={5}
                         size={24}
                         activeColor="#ffd700"
-                        value={Math.floor(Math.random() * 5) + 1} // Random rating between 1 and 5
+                        value={card.rating} // Random rating between 1 and 5
                         edit={false} // Make the rating non-changeable
                       />
-                      <span className="rating-value">{(Math.random() * (5 - 1) + 1).toFixed(1)}/5</span> {/* Fixed rating */}
+                      <span className="rating-value">{card.rating}/5</span> {/* Fixed rating */}
                     </div>
                     <Link to={`/readmore/${index}`} className="read-more" state={{ card }}>Read More</Link>
                   </div>

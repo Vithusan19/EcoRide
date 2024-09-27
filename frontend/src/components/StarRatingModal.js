@@ -17,16 +17,17 @@ const StarRatingModal = ({ ride, onClose }) => {
   
       // Check if the response status is 1
       if (response.data.status === 1) {
-        toast.success("Rating submitted successfully");
+        toast.success(`Rating submitted successfully.`);
         onClose();
       } else {
-        toast.error("Failed to submit rating");
+        toast.error(response.data.message || "Failed to submit rating");
       }
     } catch (error) {
       console.error("Error submitting rating:", error);
       toast.error("Failed to submit rating");
     }
   };
+  
   
 
   return (
