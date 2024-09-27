@@ -11,6 +11,7 @@ import ConfirmModal from '../components/ConfirmModal'; // Import Confirm Modal
 const CurrentRide = () => {
   const [rides, setRides] = useState([]);
   const [userId, setUserId] = useState("");
+  ///const [RideId, setRideId] = useState("");
   const [userRole, setUserRole] = useState("");
   const [showDriverDetails, setShowDriverDetails] = useState(null);
   const [showRequests, setShowRequests] = useState({});
@@ -137,6 +138,7 @@ const CurrentRide = () => {
       departureTime: ride.departureTime,
       destinationTime: ride.destinationTime,
       availableSeats: ride.availableSeats,
+      rideid: ride.rideID,
     });
     setEditingRide(ride);
   };
@@ -148,8 +150,9 @@ const CurrentRide = () => {
 
   const handleSave = async () => {
     try {
+      console.log(formData.rideid)
       const Data = new FormData();
-      Data.append("rideID", editingRide.Bookid);
+      Data.append("rideID", formData.rideid);
       Data.append("driverID", userId);
       Data.append("date", formData.date);
       Data.append("departureTime", formData.departureTime);
@@ -159,6 +162,7 @@ const CurrentRide = () => {
       const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/UpdateRideDetails.php', Data);
 
       if (response.data.status === 1) {
+        console.log("done")
         setRides(rides.map(ride =>
           ride.Bookid === editingRide.Bookid
             ? { ...ride, ...formData }
@@ -197,13 +201,16 @@ const CurrentRide = () => {
       <h1>Current Rides</h1>
       {rides.length > 0 ? (
         rides.map((ride) => (
+          
           <div key={ride.Bookid} className="ride-details">
             <p><strong>Departure Point:</strong> {ride.departurePoint}</p>
             <p><strong>Destination Point:</strong> {ride.destinationPoint}</p>
+            
             <p><strong>Date:</strong> {ride.date}</p>
             <p><strong>Time:</strong> {ride.departureTime} - {ride.destinationTime}</p>
             <p><strong>Vehicle:</strong> {ride.vehicleModel}</p>
             <p><strong>Cost per Seat:</strong> LKR {ride.seatCost}</p>
+           
 
 
             {userRole === 'driver' && (
