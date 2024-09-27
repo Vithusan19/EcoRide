@@ -21,7 +21,7 @@ const ViewRides = () => {
 
   const getRides = async () => {
     try {
-      const response = await axios.get('http://localhost/ecoRide-Backend/Connection/Ride/DisplayRide.php');
+      const response = await axios.get('http://localhost/ecoRide-Backend/Connection/Ride/AdminDisplayRide.php');
       sessionStorage.setItem("RideCount", response.data.length);
       setRides(response.data);
     } catch (error) {
@@ -31,7 +31,6 @@ const ViewRides = () => {
       setIsLoading(false);
     }
   };
-
   const handleSelectRide = (ride) => {
     setSelectedRide(ride);
 };
@@ -217,7 +216,10 @@ const ViewRides = () => {
                 <img src={userIcon} alt="user" className="vr-userimg" />
                 <span className="vr-username">{ride.driverName}</span>
               </div>
-              
+              {/* Displaying the ride status */}
+              <span className={`vr-status ${ride.rideStatus === 'active' ? 'active-status' : 'finished-status'}`}>
+                {ride.rideStatus === 'active' ? 'Active' : 'Finished'}
+              </span>
               <span className="vr-time">{calculateElapsedTime(ride.publishedTime, ride.publishedDate)}</span>
               <div className="delete-details-vr" onClick={() => { handleSelectRide(ride); showDeleteDialog(); }}>
                 <img src={deleteIcon} alt="delete" className="vr-deleteimg" />

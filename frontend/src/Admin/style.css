@@ -694,4 +694,16 @@
     font-size: 12px;
   }
   
+  .vr-status {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .active-status {
+    color: green;
+  }
+  
+  .finished-status{
+    color: red;
+  }
   
