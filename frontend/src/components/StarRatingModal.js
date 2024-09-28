@@ -20,7 +20,7 @@ const StarRatingModal = ({ ride, onClose }) => {
   
       // Check if the response status is 1
       if (response.data.status === 1) {
-        toast.success(`Rating submitted successfully. Average rating: ${response.data.averageRating}`);
+        toast.success(`Rating submitted successfully`);
         onClose();
       } else {
         toast.error(response.data.message || "Failed to submit rating");
