@@ -47,6 +47,9 @@ const CurrentRide = () => {
       Data.append("userID", userId);
       const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/CurrentRideUsers.php', Data);
       setRides(response.data);
+      const filteredRides = response.data.filter(ride => ride.status !== 'finished');
+        setRides(filteredRides);
+        
     } catch (error) {
       console.error(error);
       toast.error("Failed to fetch current rides");
@@ -182,6 +185,7 @@ const CurrentRide = () => {
   const handleCancel = () => {
     setEditingRide(null);
   };
+  
   //for driver
   const handleFinishRides = async (ride) => {
     const loadingToast = toast.loading("Finishing ride...");
@@ -190,20 +194,20 @@ const CurrentRide = () => {
 
     try {
         const Data = new FormData();
-        // Data.append("rideID", ride.rideID); // Ensure ride.rideID is defined
-        Data.append("userID", userId); // Ensure userId is defined in your component
+        Data.append("rideID", ride.rideID);
+        Data.append("userID", userId); 
 
         const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/Finishridedriver.php', Data);
 
         if (response.data.status === 1) {
             if (userRole === 'driver') {
-                setShowRatingModal(true);
-                setRideToRate(ride); // Set the ride to rate
-            } else {
-                // toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
-                toast.info("Ride finished successfully!");
-                window.location.reload(); // Refresh the page or update the state to reflect the finished ride
-            }
+             
+                toast.update(loadingToast, { render: "Ride finished successfully!", type: "success", isLoading: false, autoClose: 3000 });
+                setRides((prevRides) => prevRides.filter(r => r.rideID !== ride.rideID));  
+                
+              } else {
+                toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
+              }
         } else {
             toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
             window.location.reload(); 
@@ -213,14 +217,58 @@ const CurrentRide = () => {
         toast.update(loadingToast, { render: "Failed to finish the ride", type: "error", isLoading: false, autoClose: 3000 });
     }
 };
+  // const handleFinishRide = (ride) => {
+  //   if (userRole === 'passenger') {
+  //     setShowRatingModal(true);
+  //     setRideToRate(ride);
+  //   } else {
+  //     toast.info("Ride finished successfully!");
+  //   }
+  // };
   const handleFinishRide = (ride) => {
+    
     if (userRole === 'passenger') {
-      setShowRatingModal(true);
+      setRides((prevRides) => prevRides.filter(r => r.rideID !== ride.rideID));
+      setShowRatingModal(true);  
       setRideToRate(ride);
     } else {
       toast.info("Ride finished successfully!");
     }
   };
+//   const handleFinishRide = async (ride) => {
+//     const loadingToast = toast.loading("Finishing ride...");
+
+//     console.log("Finishing ride with rideID:", ride.rideID, " and userID:", userId);
+
+//     try {
+//         const Data = new FormData();
+//         Data.append("rideID", ride.rideID); // Ensure ride.rideID is defined
+//         Data.append("userID", userId); // Ensure userId is defined in your component
+
+//         const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/Finishridedriver.php', Data);
+
+//         if (response.data.status === 1) {
+//             // Handle passenger's UI
+//             if (userRole === 'passenger') {
+//                 setRides((prevRides) => prevRides.filter(r => r.rideID !== ride.rideID));
+//                 setShowRatingModal(true);  // Show rating modal for the passenger
+//                 setRideToRate(ride);
+//                 toast.update(loadingToast, { render: "Ride finished! Please rate the ride.", type: "success", isLoading: false, autoClose: 3000 });
+//             }
+//             // Handle driver's UI
+//             else if (userRole === 'driver') {
+//                 setRides((prevRides) => prevRides.filter(r => r.rideID !== ride.rideID));
+//                 toast.update(loadingToast, { render: "Ride finished successfully!", type: "success", isLoading: false, autoClose: 3000 });
+//             }
+//         } else {
+//             toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
+//         }
+
+//     } catch (error) {
+//         console.error("Error finishing ride:", error);
+//         toast.update(loadingToast, { render: "Failed to finish the ride", type: "error", isLoading: false, autoClose: 3000 });
+//     }
+// };
 
   const closeRatingModal = () => {
     setShowRatingModal(false);
