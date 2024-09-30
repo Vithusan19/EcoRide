@@ -52,7 +52,7 @@ const CurrentRide = () => {
         
     } catch (error) {
       console.error(error);
-      toast.error("Failed to fetch current rides");
+     // toast.error("Failed to fetch current rides");
     }
   };
 
