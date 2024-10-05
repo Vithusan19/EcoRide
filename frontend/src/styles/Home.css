@@ -599,6 +599,7 @@
   display: flex;
   top: 0;
   transition: all 0.3s ease;
+  margin-top: -65px;
   
 }
 
@@ -609,7 +610,7 @@
   padding: 10px 70px;
   border-radius: 20px;
   border: none;
-  background-color: #00F78D;
+  background-color: #264854;
   font-weight: 600;
   font-size: 15px;
   margin-top: 10px;
@@ -622,7 +623,7 @@
   padding: 10px 70px;
   border-radius: 20px;
   border: none;
-  background-color: #00F78D;
+  background-color: #264854;
   font-weight: 600;
   font-size: 15px;
   margin-top: 10px;
@@ -665,7 +666,7 @@
 
   padding: 10px 0;
   text-transform: uppercase;
-  font-size: 30px;
+  font-size: 25px;
   color: #868080;
   text-align: center;
   margin-bottom: 20px;
@@ -719,6 +720,44 @@
   
  
 }
+
+@keyframes slideInFade {
+  0% {
+    transform: translateX(-50%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.log-form {
+  animation: slideInFade 0.6s ease-in-out;
+}
+
+
+@keyframes gradientGlow {
+  0% {
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 0 5px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.4); /* Reduced shadow */
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.9), rgba(200, 200, 200, 1)); /* White to light grey */
+  }
+  50% {
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3), 0 0 7px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 0, 0, 0.5); /* Slightly brighter shadow */
+    background: linear-gradient(45deg, rgba(255, 255, 255, 1), rgba(150, 150, 150, 1)); /* Bright white to darker grey */
+  }
+  100% {
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 0 5px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.4); /* Back to reduced shadow */
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.9), rgba(200, 200, 200, 1)); /* White to light grey */
+  }
+}
+
+.Home-popup-inner {
+  animation: gradientGlow 9s infinite alternate;
+}
+
+
+
 
 
 /* Responsive styles */
@@ -802,6 +841,7 @@
 {
   display: flex;
   justify-content: space-between;
+  margin-top: -80px;
 }
 .letf-signup
 {
@@ -811,7 +851,9 @@
   align-items: center;
   justify-content: center;
   padding: 10px;
+
 }
+
 .col
 {
   display: flex;
