@@ -47,7 +47,7 @@ const CurrentRide = () => {
       Data.append("userID", userId);
       const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/CurrentRideUsers.php', Data);
       setRides(response.data);
-      const filteredRides = response.data.filter(ride => ride.status !== 'finished');
+      const filteredRides = response.data.filter(ride => ride.status !== 'finished' );
         setRides(filteredRides);
         
     } catch (error) {
@@ -97,25 +97,48 @@ const CurrentRide = () => {
 
 
 
+  // const handleRejectRequest = async (Bookid, requestId) => {
+  //   const loadingToast = toast.loading("Rejecting request...");
+  //   try {
+  //     const Data = new FormData();
+  //     Data.append("Bookid", Bookid);
+  //     Data.append("requestID", requestId);
+
+  //     toast.update(loadingToast, { render: "Request rejected successfully", type: "success", isLoading: false, autoClose: 3000 });
+  //     window.location.reload();
+  //   } catch (error) {
+  //     console.error("Error rejecting request:", error);
+  //     toast.update(loadingToast, { render: "Failed to reject the request", type: "error", isLoading: false, autoClose: 3000 });
+  //   }
+  // };
   const handleRejectRequest = async (Bookid, requestId) => {
     const loadingToast = toast.loading("Rejecting request...");
     try {
       const Data = new FormData();
       Data.append("Bookid", Bookid);
       Data.append("requestID", requestId);
+      
+      const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/RejectRide.php', Data);
+      console.log('Bookid:', Bookid, 'requestID:', requestId);
 
-      toast.update(loadingToast, { render: "Request rejected successfully", type: "success", isLoading: false, autoClose: 3000 });
-      window.location.reload();
+      if (response.data.status === 1) {
+        toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
+        window.location.reload();
+      } else {
+        toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
+        window.location.reload();
+      }
     } catch (error) {
       console.error("Error rejecting request:", error);
       toast.update(loadingToast, { render: "Failed to reject the request", type: "error", isLoading: false, autoClose: 3000 });
     }
   };
 
-  const handleConfirm = (action, Bookid, requestId) => {
-    setConfirmAction({ action, Bookid, requestId });
+  const handleConfirm = (action, Bookid, requestId,ride) => {
+    setConfirmAction({ action, Bookid, requestId,ride });
     setShowConfirmModal(true); // Show confirmation modal
   };
+
 
   const executeConfirmAction = () => {
     if (confirmAction?.action === "accept") {
@@ -289,12 +312,13 @@ const CurrentRide = () => {
             <p><strong>Date:</strong> {ride.date}</p>
             <p><strong>Time:</strong> {ride.departureTime} - {ride.destinationTime}</p>
             <p><strong>Vehicle:</strong> {ride.vehicleModel}</p>
-            <p><strong>Cost per Seat:</strong> LKR {ride.seatCost}</p>
+            {/* <p><strong>Cost per Seat:</strong> LKR {ride.seatCost}</p> */}
            
 
 
             {userRole === 'driver' && (
               <div>
+                <p><strong>Cost per Seat:</strong> LKR {ride.seatCost}</p>
                 <p><strong>Available Seats:</strong> {ride.availableSeats}</p>
                 <button onClick={() => toggleRequests(ride.Bookid)}>
                   {showRequests[ride.Bookid] ? 'Hide Requests' : 'Passenger Requests'}
@@ -306,9 +330,11 @@ const CurrentRide = () => {
                         <div key={index} className="request">
                           <p><strong>Name:</strong> {request.passengerName}</p>
                           <p><strong>Contact:</strong> {request.passengerContact}</p>
+                          <p><strong>From to Where:</strong> {request.place}</p>
                           <p><strong>Seats Requested:</strong> {request.seatsRequested}</p>
-                          <button onClick={() => handleConfirm('accept', ride.Bookid, index)}>Accept</button>
-                          <button onClick={() => handleConfirm('reject', ride.Bookid, index)}>Reject</button>
+                          <p><strong>Cost :</strong> {request.passengercost}</p>
+                          <button onClick={() => handleConfirm('accept', ride.Bookid, index,ride)}>Accept</button>
+                          <button onClick={() => handleConfirm('reject', ride.Bookid, index,ride)}>Reject</button>
                         </div>
                       ))
                     ) : (
@@ -323,6 +349,7 @@ const CurrentRide = () => {
 
             {userRole === 'passenger' && (
               <div>
+                <p><strong>Cost:</strong>LKR {ride.passengercost}</p>
                 <p><strong>Status:</strong> {ride.status.charAt(0).toUpperCase() + ride.status.slice(1)}</p>
                 {ride.status === 'accepted' && (
                   <>
@@ -335,9 +362,11 @@ const CurrentRide = () => {
                         <p><strong>Contact:</strong> {ride.driver.contact}</p>
                       </div>
                     )}
+                   
                     <button className="cancel-booking-button" onClick={() => handleCancelBooking(ride.Bookid)}>
                       Cancel Ride
                     </button>
+                    <button onClick={() => handleFinishRide(ride)}>Finish Ride</button>
                   </>
                 )}
                 {ride.status === 'waiting' && (
@@ -345,7 +374,7 @@ const CurrentRide = () => {
                     Cancel Booking
                   </button>
                 )}
-                <button onClick={() => handleFinishRide(ride)}>Finish Ride</button>
+                {/* <button onClick={() => handleFinishRide(ride)}>Finish Ride</button> */}
               </div>
             )}
 
@@ -357,6 +386,8 @@ const CurrentRide = () => {
                     <p><strong>Name:</strong> {passenger.passengerName}</p>
                     <p><strong>Contact:</strong> {passenger.passengerContact}</p>
                     <p><strong>Seats Requested:</strong> {passenger.seatsRequested}</p>
+                    <p><strong>Seat Cost:</strong> LKR {passenger.passengercost}</p>
+                    <p><strong>From to Where:</strong> {passenger.place}</p>
                   </div>
                 ))}
               </div>
@@ -380,13 +411,26 @@ const CurrentRide = () => {
           onClose={closeRatingModal}
         />
       )}
-      {showConfirmModal && (
+      {/* {showConfirmModal && (
         <ConfirmModal
+        ride={confirmAction?.ride}
           onConfirm={executeConfirmAction}
           onCancel={() => setShowConfirmModal(false)}
         />
-      )}
+      )} */}
+       {showConfirmModal && confirmAction?.ride && (
+  <ConfirmModal
+    show={showConfirmModal}
+    onConfirm={executeConfirmAction}
+    onCancel={() => setShowConfirmModal(false)}
+    action={confirmAction.action}
+    ride={confirmAction.ride}
+    passengercost={confirmAction.ride.passengercost}  
+  />
+)}
       <Footer />
+     
+
     </div>
   );
 };

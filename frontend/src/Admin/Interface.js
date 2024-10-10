@@ -114,7 +114,7 @@ const Interface = () => {
 
   return (
     <>
-      {/* <div>
+      <div>
         <h1>Dashboard</h1>
         <p>Welcome to the admin dashboard.</p>
         <div className="dashboard-container">
@@ -176,7 +176,7 @@ const Interface = () => {
             <Pie data={userData} dataKey="value" cx="50%" cy="50%" innerRadius={70} outerRadius={90} fill="#82ca9d" label />
           </PieChart>
         </div>
-        <div className="chart">
+        {/* <div className="chart">
           <h3>Users and Messages</h3>
           <BarChart width={500} height={300} data={usersMessageData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -186,7 +186,7 @@ const Interface = () => {
             <Legend />
             <Bar dataKey="count" fill="#8884d8" />
           </BarChart>
-        </div>
+        </div> */}
         <div className="chart">
           <h3>Revenue Over Time</h3>
           <LineChart width={600} height={300} data={revenueData}>
@@ -245,7 +245,7 @@ const Interface = () => {
             </form>
           </div>
         </div>
-      )} */}
+      )}
     </>
   );
 };
