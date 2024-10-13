@@ -53,11 +53,11 @@ const Readmore = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false); // State for confirm popup
   const [requestedSeats, setRequestedSeats] = useState(1);
-  const [fromWhere, setFromWhere] = useState("");
+  const [fromtowhere, setFromtowhere] = useState("");
   const [approximateDistance, setApproximateDistance] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const [totalCost, setTotalCost] = useState(0); // New state for total cost
   const [userid, setuserid] = useState("");
   useEffect(() => {
     const userID = sessionStorage.getItem("UserID");
@@ -81,6 +81,65 @@ const Readmore = () => {
     setIsPopupOpen(false);
   };
 
+  // const handleCalculateTotalCost = () => {
+  //   // Calculate the total cost based on the car type, approximate distance, and requested seats
+  //   const carType = card.carType; // Get the car type from the card details
+  //   const distance = parseFloat(approximateDistance); // Ensure distance is a number
+  //   const seats = parseInt(requestedSeats, 10); // Ensure seats are an integer
+
+  //   if (isNaN(distance) || isNaN(seats) || distance <= 0 || seats <= 0) {
+  //     setErrorMessage("Please enter valid numbers for distance and seats.");
+  //     return;
+  //   }
+
+  //   // Calculate total cost using formula
+  //   let basePricePerKm = 0;
+  //   switch (carType) {
+  //     case 'low-consumption':
+  //       basePricePerKm = 100.00;
+  //       break;
+  //     case 'medium-consumption':
+  //       basePricePerKm = 200.00;
+  //       break;
+  //     case 'high-consumption':
+  //       basePricePerKm = 300.00;
+  //       break;
+  //     case 'electric':
+  //       basePricePerKm = 400.00;
+  //       break;
+  //     default:
+  //       basePricePerKm = 100.00; // Default price if car type is not specified
+  //       break;
+  //   }
+
+  //   // Cost multiplier for seats
+  //   const seatMultiplier = 1 + (seats * 0.10);
+  //   const calculatedTotalCost = (basePricePerKm * distance) * seatMultiplier;
+
+  //   setTotalCost(calculatedTotalCost); // Update total cost state
+  // };
+
+  const handleCalculateTotalCost = () => {
+
+    const carType = card.carType;
+    const seatCost = parseFloat(card.seatCost); 
+    const rideDistance = parseFloat(card.ridedistance); 
+    const FromWhere = parseFloat(fromtowhere);
+    const distance = parseFloat(approximateDistance); 
+    const seats = parseInt(requestedSeats, 10);
+
+    
+    if (isNaN(seatCost) || isNaN(rideDistance) || isNaN(distance) || isNaN(seats) || 
+        seatCost <= 0 || rideDistance <= 0 || distance <= 0 || seats <= 0) {
+      setErrorMessage("Please enter valid numbers for distance, seats, and ride details.");
+      return;
+    }
+
+    const costPerKm = seatCost / rideDistance;
+    const calculatedTotalCost = costPerKm * distance * seats;
+    setTotalCost(calculatedTotalCost);
+};
+
   const handleSubmitRequest = (e) => {
     e.preventDefault();
     const availableSeats = card.seats - card.BookingSeats;
@@ -88,15 +147,16 @@ const Readmore = () => {
       setErrorMessage(`You can't request more than ${availableSeats} seats.`);
       return;
     }
-    if (!fromWhere || !approximateDistance) {
+    if (!fromtowhere || !approximateDistance) {
       setErrorMessage("Please provide all the required details.");
       return;
     }
 
-    // Open confirmation popup instead of sending the request directly
+    
+    handleCalculateTotalCost();
     setIsConfirmPopupOpen(true);
   };
-
+  
   const handleConfirmRequest = async () => {
     setIsLoading(true);
     const url = "http://localhost/ecoRide-Backend/Connection/Ride/RequestRide.php";
@@ -104,34 +164,33 @@ const Readmore = () => {
     Data.append("userID", userid);
     Data.append("seatsNo", requestedSeats);
     Data.append("rideID", card.rideID);
-    Data.append("fromWhere", fromWhere);
-    Data.append("approximateDistance", approximateDistance);
-
+    Data.append("fromtowhere", fromtowhere);
+    Data.append("distance", approximateDistance);
     console.log("UserID:", userid);
     console.log("Requested Seats:", requestedSeats);
     console.log("RideID:", card.rideID);
-    console.log("From Where:", fromWhere);
+    console.log("From Where:", fromtowhere);
     console.log("Approximate Distance:", approximateDistance);
 
     try {
-      const response = await axios.post(url, Data);
+        const response = await axios.post(url, Data);
+        console.log("Response Data:", response.data);
 
-      console.log("Response Data:", response.data);
-
-      if (response.data.status === 1) {
-        console.log('Request sent successfully');
-        setIsLoading(false);
-        console.log('Driver Email:', response.data.email);
-      } else {
-        console.log('Failed to Request Ride:', response.data.message);
-      }
+        if (response.data.status === 1) {
+            console.log('Request sent successfully');
+            setIsLoading(false);
+            console.log('Driver Email:', response.data.email);
+        } else {
+            console.log('Failed to Request Ride:', response.data.message);
+        }
     } catch (error) {
-      console.error("Connection error:", error);
+        console.error("Connection error:", error);
     }
 
-    setIsConfirmPopupOpen(false); // Close the confirmation popup
-    setIsPopupOpen(false); // Close the seat request popup
-  };
+    setIsConfirmPopupOpen(false);
+    setIsPopupOpen(false);
+};
+
 
   return (
     <div className="read-container">
@@ -159,7 +218,10 @@ const Readmore = () => {
               <span className="readmore-label"><strong>Route:</strong></span> {card.route}
             </div>
             <div className="readmore-detail">
-              <span className="readmore-label"><strong>Seat Cost:</strong></span> Rs.{card.seatCost}
+              <span className="readmore-label"><strong>Cost per seat:</strong></span> Rs.{card.seatCost}
+            </div>
+            <div className="readmore-detail">
+              <span className="readmore-label"><strong>Total Ride Distance:</strong></span>{card.ridedistance}
             </div>
           </div>
         </div>
@@ -202,9 +264,9 @@ const Readmore = () => {
                   From to Where:
                   <input
                     type="text"
-                    value={fromWhere}
+                    value={fromtowhere}
                     onChange={(e) => {
-                      setFromWhere(e.target.value);
+                      setFromtowhere(e.target.value);
                       setErrorMessage("");
                     }}
                     placeholder="Enter the route"
@@ -212,6 +274,7 @@ const Readmore = () => {
                 </label>
                 <label>
                   Approximate Distance (in km):
+                  <p>Go to <a href="https://www.google.com/maps" target="_blank">Map</a></p>
                   <input
                     type="text"
                     value={approximateDistance}
@@ -250,7 +313,7 @@ const Readmore = () => {
           <div className="readmore-popup">
             <div className="readmore-popup-inner">
               <h3>Confirm Request</h3>
-              <p className="popup-cost">Your total seat cost is: Rs </p>
+              <p className="popup-cost">Your total seat cost is: Rs  {totalCost.toFixed(2)} </p>
               <p className="popup-message">Are you sure you want to request {requestedSeats} seats?</p>
               <div className="readmore-button-container">
                 <button className="readmore-action-button" onClick={() => setIsConfirmPopupOpen(false)}>Cancel</button>

@@ -25,7 +25,9 @@ const Addride = () => {
     seatCost: '',
     gender: '',
     route: '',
-    preferences: ''
+    preferences: '',
+    carType: '',
+    distance: ''
   });
 
   const [userid, setuserid] = useState("");
@@ -38,7 +40,7 @@ const Addride = () => {
     cardExpiryDate: '',
     cardCVV: ''
   });
-
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const todayDate = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
@@ -55,16 +57,26 @@ const Addride = () => {
     } else {
       setFormData({ ...formData, [name]: value });
     }
+
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
 
 
   const handleCardChange = (e) => {
-    const { name, value, type, files } = e.target;
+    const { name, value, type, files, checked } = e.target;
     if (type === 'file') {
       setCardData({ ...cardData, [name]: files[0] });
     } else {
       setCardData({ ...cardData, [name]: value });
+    }
+    if (type === 'checkbox') {
+      setFormData({ ...formData, [name]: checked });
+    } else {
+      setFormData({ ...formData, [name]: value });
     }
   };
 
@@ -79,6 +91,7 @@ const Addride = () => {
     Data.append("vehicleModel", formData.vehicleModel);
     Data.append("seats", formData.seats);
     Data.append("airCondition", formData.airCondition);
+    Data.append("carType", formData.carType);
     Data.append("departurePoint", formData.departurePoint);
     Data.append("destinationPoint", formData.destinationPoint);
     Data.append("date", formData.date);
@@ -89,6 +102,7 @@ const Addride = () => {
     Data.append("route", formData.route);
     Data.append("preferences", formData.preferences);
     Data.append("DriverID", userid);
+    Data.append("ridedistance", formData.distance);
 
     try {
       const response = await axios.post(url, Data);
@@ -100,6 +114,10 @@ const Addride = () => {
       }
     } catch (error) {
       console.error("Connection error:", error);
+    }
+    if (!agreedToTerms) {
+      alert("You must agree to the terms and conditions to proceed.");
+      return;
     }
   };
 
@@ -119,6 +137,51 @@ const Addride = () => {
 
   const handleCancelPayment = () => {
     setShowModal(false);
+  };
+
+
+  useEffect(() => {
+    if (formData.carType && formData.distance && formData.seats) {
+      const costPerSeat = calculateCostPerSeat();
+      setFormData({ ...formData, seatCost: costPerSeat });
+    }
+  }, [formData.carType, formData.distance, formData.seats]);
+
+
+  const calculateCostPerSeat = () => {
+    const { carType, distance, seats } = formData;
+
+    let costPerKm;
+
+    switch (carType) {
+      case 'low-consumption':
+        costPerKm = 30.73; // Cost per km for low-consumption vehicles
+        break;
+      case 'medium-consumption':
+        costPerKm = 45.10; // Cost per km for medium-consumption vehicles
+        break;
+      case 'high-consumption':
+        costPerKm = 60.86; // Cost per km for high-consumption vehicles
+        break;
+      case 'hybrid':
+        costPerKm = 30.20; // Cost per km for electric or hybrid vehicles
+        break;
+
+      default:
+        costPerKm = 0; // Default cost
+    }
+
+    // Calculate the total cost for the ride
+    const totalCost = costPerKm * distance;
+
+    // Apply the 70% discount
+    const discountedCost = totalCost * 0.75;
+
+    // Divide by the number of seats to get the cost per seat
+    const costPerSeat = discountedCost / seats;
+
+    // Round the result to 2 decimal places for precision
+    return costPerSeat.toFixed(2);
   };
 
   return (
@@ -198,8 +261,8 @@ const Addride = () => {
                           <input
                             type="radio"
                             name="carType"
-                            value="electric"
-                            checked={formData.carType === "electric"}
+                            value="hybrid"
+                            checked={formData.carType === "hybrid"}
                             onChange={handleChange}
                             required
                           />
@@ -235,12 +298,26 @@ const Addride = () => {
               <div className="form-row-add">
                 <div className="form-group-add">
                   <label>Date:</label>
-                  <input className="add-input" type="date" name="date" value={formData.date} onChange={handleChange}  required min={todayDate} />
+                  <input className="add-input" type="date" name="date" value={formData.date} onChange={handleChange} required min={todayDate} />
                 </div>
                 <div className="form-group-add">
-                  <label>Seat Cost:</label>
-                  <input className="add-input" type="number" name="seatCost" value={formData.seatCost} onChange={handleChange} required />
+                  <label>Total Distance (km):</label>
+                  <p>Go to <a href="https://www.google.com/maps" target="_blank">Map</a></p>
+                  <input className="add-input" type="number" name="distance" value={formData.distance} onChange={handleChange} required />
                 </div>
+              </div>
+              <div className="form-row-add">       <div className="form-group-add">
+                <label>Seat Cost (Calculated):</label>
+                <input
+                  className="add-input"
+                  type="text"
+                  name="seatCost"
+                  value={formData.seatCost}
+                  onChange={handleChange}
+                  readOnly
+                />
+              </div>
+
               </div>
               <div className="form-row-add">
                 <div className="form-group-add">
@@ -270,6 +347,17 @@ const Addride = () => {
               <div className="form-group-add">
                 <label>Preferences:</label>
                 <textarea className="add-input" name="preferences" value={formData.preferences} onChange={handleChange}></textarea>
+              </div>
+              <div className="form-group-add terms-container">
+                <input
+                  type="checkbox"
+                  name="agreedToTerms"
+                  checked={agreedToTerms}
+                  onChange={(e) => setAgreedToTerms(e.target.checked)}
+                  required />
+                <label htmlFor="agreedToTerms">
+                  I agree to the <strong>Terms and Conditions</strong>
+                </label>
               </div>
               <div className="button-group">
 
@@ -373,7 +461,7 @@ const Addride = () => {
             <span className="close" onClick={handleCancelPayment}>&times;</span>
             <h2 className="modal-title-pay">Payment Information</h2>
             <p className='add-ride-payment'>
-            All drivers are required to pay a specified fee upon accepting each ride request from passengers to the system.
+              All drivers are required to pay a specified fee upon accepting each ride request from passengers to the system.
             </p>
             <div className='atm-container'>
               <img src={visa} alt='visa' />
