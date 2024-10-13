@@ -154,22 +154,28 @@ const Home = () => {
             formData.append("nic", signupForm.nic);
             formData.append("gender", signupForm.gender);
             formData.append("password", signupForm.password);
-
+    
             axios
                 .post(url, formData)
                 .then((response) => {
-                    if (response.data.message === "User Added Successfully") {
+                    const resData = response.data;
+                    if (resData.status === 3) {
                         resetSignupForm();
                         toggleForm();
-                    } else {
+                    } else if (resData.status === 1) {
                         setErrors({ signup: 'User or Email already added' });
+                    } else if (resData.status === 2) {
+                        setErrors({ signup: 'Password not strong enough' });
+                    } else {
+                        setErrors({ signup: 'An unknown error occurred' });
                     }
                 })
                 .catch((error) => {
-                    setErrors({ message: " Not connected." });
+                    setErrors({ message: "Not connected." });
                 });
         }
     };
+    
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
