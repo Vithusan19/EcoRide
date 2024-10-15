@@ -148,7 +148,7 @@ body {
   align-items: center;
 }
 
-.readmore-popup {
+/* .readmore-popup {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -206,6 +206,127 @@ body {
 
 .readmore-action-button:hover {
   background-color: #6e747a;
+} */
+
+/* General popup styles */
+.readmore-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  background-color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  border-radius: 15px;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.readmore-popup.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.readmore-popup-inner {
+  padding: 25px;
+}
+
+.readmore-popup h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 22px;
+  text-align: center;
+}
+
+.readmore-popup label {
+  display: block;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.readmore-popup input[type="number"],
+.readmore-popup input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-top: 10px;
+  margin-bottom: 25px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+/* Differentiate popups with animations */
+.readmore-popup-first .readmore-popup-inner {
+  animation: slideInFromRight 0.4s ease-in-out;
+}
+
+.readmore-popup-second .readmore-popup-inner {
+  animation: slideInFromBottom 0.4s ease-in-out;
+}
+
+/* Keyframes for sliding from right */
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Keyframes for sliding from bottom */
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Button container styling */
+.readmore-button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.readmore-action-button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #343a40;
+  color: white;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.readmore-action-button:hover {
+  background-color: #6e747a;
+}
+
+/* Error message styling */
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+/* Background dimming */
+.dim-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
 
 .readmore-photos-container {
@@ -465,4 +586,15 @@ body {
 
 .popup-message {
   margin-bottom: 20px; 
+}
+.confirmation-points {
+  margin: 10px 0;
+  padding-left: 20px; /* Indent the list */
+  list-style-type: disc; /* Use bullet points */
+}
+
+.terms-checkbox {
+  display: flex;
+  align-items: center; /* Center align checkbox and text */
+  margin-bottom: 15px; /* Space below the checkbox */
 }

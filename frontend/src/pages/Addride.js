@@ -349,16 +349,20 @@ const Addride = () => {
                 <textarea className="add-input" name="preferences" value={formData.preferences} onChange={handleChange}></textarea>
               </div>
               <div className="form-group-add terms-container">
-                <input
-                  type="checkbox"
-                  name="agreedToTerms"
-                  checked={agreedToTerms}
-                  onChange={(e) => setAgreedToTerms(e.target.checked)}
-                  required />
-                <label htmlFor="agreedToTerms">
-                  I agree to the <strong>Terms and Conditions</strong>
-                </label>
-              </div>
+  <input
+    type="checkbox"
+    name="agreedToTerms"
+    checked={agreedToTerms}
+    onChange={(e) => setAgreedToTerms(e.target.checked)}
+    required
+  />
+  <label htmlFor="agreedToTerms">
+    I agree to the <strong>Terms and Conditions</strong>
+  </label>
+</div>
+
+
+
               <div className="button-group">
 
 

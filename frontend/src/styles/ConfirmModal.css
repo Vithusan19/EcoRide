@@ -47,4 +47,18 @@
     background-color: red;
     color: white;
   }
-  
+  .terms-container {
+  display: flex;
+  align-items: last baseline; /* Align checkbox and text vertically */
+  margin: 1em 0; /* Add some spacing above and below */
+  margin-left: -45vw;
+}
+
+.terms-container label {
+  margin-left: -50vw; /* Space between checkbox and label text */
+}
+
+.confirm-modal-buttons {
+  display: flex;
+  justify-content: space-between; /* Align buttons on the left and right */
+}
