@@ -646,6 +646,7 @@
 {
   color:  #7c7a7a;
   margin-left: 20px;
+  
 }
 
 .form-control {
@@ -739,21 +740,21 @@
 
 @keyframes gradientGlow {
   0% {
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 0 5px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.4); /* Reduced shadow */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), 0 0 5px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.7); /* Reduced shadow */
     background: linear-gradient(45deg, rgba(255, 255, 255, 0.9), rgba(200, 200, 200, 1)); /* White to light grey */
   }
   50% {
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3), 0 0 7px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 0, 0, 0.5); /* Slightly brighter shadow */
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3), 0 0 7px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 0, 0, 0.9); /* Slightly brighter shadow */
     background: linear-gradient(45deg, rgba(255, 255, 255, 1), rgba(150, 150, 150, 1)); /* Bright white to darker grey */
   }
   100% {
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 0 5px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.4); /* Back to reduced shadow */
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 0 5px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.5); /* Back to reduced shadow */
     background: linear-gradient(45deg, rgba(255, 255, 255, 0.9), rgba(200, 200, 200, 1)); /* White to light grey */
   }
 }
 
 .Home-popup-inner {
-  animation: gradientGlow 9s infinite alternate;
+  animation: gradientGlow 2s infinite alternate;
 }
 
 
@@ -794,6 +795,24 @@
   .log-form-control {
     padding: 8px;
     width: 100%;
+  }
+  .right-signup .login-text{
+    text-align: left;
+    margin-bottom: 80px;
+  }
+  .right-signup .log-but{
+    margin-right: 30px;
+    margin-bottom: -120px;
+    padding: 10px 20px;  /* Reduced padding */
+    font-size: 12px;    /* Reduced font size */
+    border-radius: 15px; /* Slightly adjust border radius if needed */
+  }
+  .col .login-but{
+    margin-left: 350px;
+    padding: 10px 20px;  /* Reduced padding */
+    font-size: 12px;    /* Reduced font size */
+    border-radius: 15px; /* Slightly adjust border radius if needed */
+    margin-bottom: -100px;
   }
 }
 
@@ -858,10 +877,10 @@
 {
   display: flex;
   gap: 10px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   align-items: center;
   flex-wrap: wrap;
-  
+  margin:0;
  
 }
 .signupBg
@@ -906,7 +925,33 @@
   .login-text
   {
     font-size: small;
+    margin-top: -110px;
   }
+  .log-but{
+    margin-top: -120px;
+    
+  }
+  .register-details-1{
+    margin-top: 15px;
+   
+  }
+  .right-signup .login-text{
+    text-align: left;
+  }
+  .right-signup .log-but{
+    margin-left: 150px;
+    margin-top: -90px;
+    padding: 10px 20px;  /* Reduced padding */
+    font-size: 12px;    /* Reduced font size */
+    border-radius: 15px; /* Slightly adjust border radius if needed */
+  }
+  .col .login-but{
+    margin-left: 350px;
+    padding: 10px 20px;  /* Reduced padding */
+    font-size: 12px;    /* Reduced font size */
+    border-radius: 15px; /* Slightly adjust border radius if needed */
+  }
+ 
 }
 @media (max-width: 740px) {
  
@@ -923,6 +968,7 @@
   .form-control {
     margin-bottom: 1px;
   }
+  
 
 }
 @media (max-width: 540px) {
