@@ -395,7 +395,7 @@ const CurrentRide = () => {
           </div>
         ))
       ) : (
-        <p className="no-rides-message">You have no current rides.</p>
+        <p className="no-rides-message">You have no current ride.</p>
       )}
       {editingRide && (
         <EditRideModal
