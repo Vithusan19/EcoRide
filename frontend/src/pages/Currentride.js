@@ -56,6 +56,8 @@ const CurrentRide = () => {
     }
   };
 
+
+  
   const handleAcceptRequest = async (Bookid, requestId) => {
     const loadingToast = toast.loading("Accepting request...");
     try {
@@ -77,6 +79,7 @@ const CurrentRide = () => {
 
   const handleCancelBooking = async (Bookid) => {
     const loadingToast = toast.loading("Cancelling booking...");
+    console.log(Bookid);
     try {
       const Data = new FormData();
       Data.append("Bookid", Bookid);
@@ -323,6 +326,11 @@ const CurrentRide = () => {
                 <button onClick={() => toggleRequests(ride.Bookid)}>
                   {showRequests[ride.Bookid] ? 'Hide Requests' : 'Passenger Requests'}
                 </button>
+
+                <button onClick={() => handleEditClick(ride)}>Edit Ride</button>
+                <button onClick={() => handleFinishRides(ride)}>Finish Ride</button>
+              </div>
+            )}
                 {showRequests[ride.Bookid] && (
                   <div className="request-details">
                     {ride.requests.length > 0 ? (
@@ -333,20 +341,25 @@ const CurrentRide = () => {
                           <p><strong>From to Where:</strong> {request.place}</p>
                           <p><strong>Seats Requested:</strong> {request.seatsRequested}</p>
                           <p><strong>Cost :</strong> {request.passengercost}</p>
-                          <button onClick={() => handleConfirm('accept', ride.Bookid, index,ride)}>Accept</button>
-                          <button onClick={() => handleConfirm('reject', ride.Bookid, index,ride)}>Reject</button>
-                        </div>
-                      ))
+                          {ride.availableSeats > 0 && ride.availableSeats >= request.seatsRequested ? (
+                <>
+                  <button onClick={() => handleConfirm('accept', ride.Bookid, index, ride)}>
+                    Accept
+                  </button>
+                  <button onClick={() => handleConfirm('reject', ride.Bookid, index, ride)}>
+                    Reject
+                  </button>
+                </>
+              ) : (
+                <p>Insufficient available seats to accept this request.</p>
+              )}
+            </div>
+          ))
                     ) : (
                       <p>No requests available.</p>
                     )}
                   </div>
                 )}
-                <button onClick={() => handleEditClick(ride)}>Edit Ride</button>
-                <button onClick={() => handleFinishRides(ride)}>Finish Ride</button>
-              </div>
-            )}
-
             {userRole === 'passenger' && (
               <div>
                 <p><strong>Cost:</strong>LKR {ride.passengercost}</p>
@@ -397,6 +410,8 @@ const CurrentRide = () => {
       ) : (
         <p className="no-rides-message">You have no current ride.</p>
       )}
+
+      
       {editingRide && (
         <EditRideModal
           formData={formData}
