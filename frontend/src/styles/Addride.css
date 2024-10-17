@@ -591,6 +591,7 @@ height: auto;
   margin-bottom: 10px;
 }
 
+
 .radio-row label {
   display: inline-flex;
   align-items: center;
@@ -600,3 +601,63 @@ height: auto;
 .radio-row input[type="radio"] {
   margin-right: 8px;
 }
+
+/* Styling for the terms and conditions container */
+.terms-conditions-container {
+  background-color: #f9f9f9; /* Light background color for the container */
+  padding: 20px; /* Padding inside the container */
+  border-radius: 10px; /* Rounded corners for the container */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
+  max-width: 900px; /* Limit the width for better readability */
+  margin: 20px auto; /* Center the container and add margin for spacing */
+  border: 1px solid #e0e0e0; /* Light border */
+}
+
+/* Center the heading and add color */
+.terms-heading {
+  text-align:left;
+  color:#2c3e50; /* Example color: a blue shade */
+  margin-bottom: 15px; /* Space below the heading */
+  font-size: 20px; /* Adjust size as needed */
+  font-weight: bold; /* Make the heading bold */
+}
+
+/* Align the unordered list to the left */
+.terms-conditions {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 10px 0; /* Keep margin for separation */
+  text-align: left; /* Ensure the list text is left-aligned */
+  color: #333;
+  font-size: 14px;
+}
+
+.terms-conditions li {
+  margin-bottom: 5px;
+}
+
+/* Center the checkbox with text and reduce the spacing */
+.checkbox-container {
+  display: flex;
+  align-items: center; /* Vertically center the checkbox with the text */
+  gap: 5px; /* Adjust spacing between checkbox and text */
+  margin-top: 10px;
+  justify-content: flex-start; /* Align everything to the left */
+}
+
+.checkbox-container input[type="checkbox"] {
+  margin: 0; /* Remove any default margins */
+  vertical-align: middle; /* Ensure checkbox is aligned vertically */
+  transform: scale(1.1); /* Optional: Slightly enlarge the checkbox */
+}
+
+.checkbox-container label {
+  font-size: 14px;
+  color: #333;
+  white-space: nowrap; /* Ensure text stays on one line */
+  line-height: 1.5; /* Adjust the line height for better vertical alignment */
+  margin: 0; /* Remove label margin */
+  margin-right: 50vw;
+}
+
+

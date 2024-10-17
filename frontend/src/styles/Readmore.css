@@ -178,6 +178,17 @@ body {
   font-weight: bold;
 }
 
+.popup-points {
+  list-style-type: disc; /* Add bullet points */
+  padding-left: 20px; /* Indent the list */
+  margin-bottom: 15px; /* Space between points and the cost */
+}
+
+.popup-points li {
+  margin-bottom: 5px; /* Space between each point */
+  color: #333; /* Adjust text color */
+  font-size: 14px; /* Font size for readability */
+}
 .readmore-popup input[type="number"] {
   width: 100%;
   padding: 10px;
@@ -308,24 +319,7 @@ body {
   margin-bottom: 10px;
 }
 
-/* Responsive design */
-/* 
-@media (max-width: 1200px) {
-  .read-container {
-    width: 90vw;
-    margin-left: 15vh;
-  }
 
-  .readmore-container {
-    margin: 1rem;
-    padding: 20px;
-    width: 90vw;
-  }
-
-  .readmore-photos-container {
-    max-width: 1000px;
-  }
-} */
 
 @media (max-width: 960px) {
   .read-container {
@@ -465,4 +459,67 @@ body {
 
 .popup-message {
   margin-bottom: 20px; 
+}
+.popup-points {
+  list-style-type: none; /* Remove default bullet points */
+  padding: 0; /* Remove default padding */
+  margin: 16px 0; /* Add margin for spacing above and below */
+  font-size: 16px; /* Adjust font size for readability */
+  color: #333; /* Dark gray color for text */
+}
+
+.popup-points li {
+  margin-bottom: 15px; /* Add space between list items */
+  line-height: 1.5; /* Increase line height for better readability */
+  position: relative; /* To position custom bullets if needed */
+}
+
+/* Optional: Custom bullet style (if needed) */
+.popup-points li::before {
+  content: '✔'; /* You can use a checkmark or any symbol */
+  color: #4CAF50; /* Green color for the bullet */
+  position: absolute; /* Position the bullet */
+  left: -20px; /* Adjust position based on your layout */
+}
+
+.agreement-container {
+  display: flex; /* Use flexbox to align items */
+  align-items: center; /* Center align vertically */
+  margin-right: 5vw; /* Right margin for the container */
+  
+}
+
+.agreement-container input {
+  margin-right: -80px; /* Adjust space between checkbox and label */
+}
+
+/* Optional: Adjust the font size and line height for better alignment */
+.agreement-container label {
+  font-size: 16px; /* Adjust font size as needed */
+  line-height: 2; /* Reset line height for better vertical alignment */
+  margin-top:18px;
+}
+.loading-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ensure it takes up the full height of the parent container */
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1); /* Light grey outer border */
+  border-left-color: #306cce; /* Blue spinning color */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite; /* Smooth spinning animation */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
