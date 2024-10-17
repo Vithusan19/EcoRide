@@ -7,6 +7,7 @@ import EditRideModal from '../components/EditRideModal';
 import StarRatingModal from '../components/StarRatingModal';
 import Footer from '../components/Footer';
 import ConfirmModal from '../components/ConfirmModal'; // Import Confirm Modal
+import Modal from 'react-modal';
 
 const CurrentRide = () => {
   const [rides, setRides] = useState([]);
@@ -58,24 +59,7 @@ const CurrentRide = () => {
 
 
   
-  const handleAcceptRequest = async (Bookid, requestId) => {
-    const loadingToast = toast.loading("Accepting request...");
-    try {
-      const Data = new FormData();
-      Data.append("Bookid", Bookid);
-      const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/AcceptRide.php', Data);
-
-      if (response.data.status === 1) {
-        toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
-        window.location.reload(); // Reload the page to show updated ride details
-      } else {
-        toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
-      }
-    } catch (error) {
-      console.error("Error accepting request:", error);
-      toast.update(loadingToast, { render: "Failed to accept the request", type: "error", isLoading: false, autoClose: 3000 });
-    }
-  };
+  
 
   const handleCancelBooking = async (Bookid) => {
     const loadingToast = toast.loading("Cancelling booking...");
@@ -114,6 +98,26 @@ const CurrentRide = () => {
   //     toast.update(loadingToast, { render: "Failed to reject the request", type: "error", isLoading: false, autoClose: 3000 });
   //   }
   // };
+
+  const handleAcceptRequest = async (Bookid, requestId) => {
+    const loadingToast = toast.loading("Accepting request...");
+    try {
+      const Data = new FormData();
+      Data.append("Bookid", Bookid);
+      const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/AcceptRide.php', Data);
+
+      if (response.data.status === 1) {
+        toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
+        window.location.reload(); // Reload the page to show updated ride details
+      } else {
+        toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
+      }
+    } catch (error) {
+      console.error("Error accepting request:", error);
+      toast.update(loadingToast, { render: "Failed to accept the request", type: "error", isLoading: false, autoClose: 3000 });
+    }
+  };
+
   const handleRejectRequest = async (Bookid, requestId) => {
     const loadingToast = toast.loading("Rejecting request...");
     try {
@@ -301,6 +305,123 @@ const CurrentRide = () => {
     setRideToRate(null);
   };
 
+  const ConfirmModal = ({ show, onConfirm, onCancel, action, ride, passengercost }) => {
+    const deduction = (passengercost * 0.1).toFixed(2);  
+    const message = action === 'accept' 
+      ? `For this request, the system will deduct Rs. ${deduction} from your account`
+      : `Are you sure you want to reject the request for the ride from ${ride.departurePoint} to ${ride.destinationPoint}?`;
+  
+    const handleAcceptRequest = async (Bookid) => {
+      const loadingToast = toast.loading("Accepting request...");
+      try {
+        const Data = new FormData();
+        Data.append("Bookid", Bookid);
+  
+        const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/AcceptRide.php', Data);
+  
+        if (response.data.status === 1) {
+          toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
+  
+          // Proceed with deduction after acceptance
+           // Call deduction after successful acceptance
+        } else {
+          toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
+        }
+      } catch (error) {
+        console.error("Error accepting request:", error);
+        toast.update(loadingToast, { render: "Failed to accept the request", type: "error", isLoading: false, autoClose: 3000 });
+      }
+    };
+
+    const handleRejectRequest = async (Bookid, requestId) => {
+      const loadingToast = toast.loading("Rejecting request...");
+      try {
+        const Data = new FormData();
+        Data.append("Bookid", Bookid);
+        Data.append("requestID", requestId);
+        
+        const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/RejectRide.php', Data);
+        console.log('Bookid:', Bookid, 'requestID:', requestId);
+  
+        if (response.data.status === 1) {
+          toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
+          window.location.reload();
+        } else {
+          toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
+          window.location.reload();
+        }
+      } catch (error) {
+        console.error("Error rejecting request:", error);
+        toast.update(loadingToast, { render: "Failed to reject the request", type: "error", isLoading: false, autoClose: 3000 });
+      }
+    };
+  
+    const handleConfirmDeduction = async (Bookid) => {
+      const loadingToast = toast.loading("Processing deduction...");
+      try {
+        const Data = new FormData();
+        Data.append("BookingID", Bookid); // Send the bookingId
+  
+        const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/Deduction.php', Data);
+    
+        if (response.data.status === 1) {
+          handleAcceptRequest(Bookid);
+          toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
+          window.location.reload(); // Reload the page to show updated ride details
+        } else {
+          toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
+        }
+      } catch (error) {
+        console.error("Error processing deduction:", error);
+        toast.update(loadingToast, { render: "Failed to process the deduction", type: "error", isLoading: false, autoClose: 3000 });
+      }
+    };
+  
+    // const handleConfirm = () => {
+    //   if (action === 'accept') {
+    //     // handleAcceptRequest(ride.Bookid); // Accept ride and handle deduction if confirmed
+    //     handleConfirmDeduction(ride.Bookid);
+    //   } else {
+    //     onConfirm(ride.Bookid); // Call the onConfirm handler directly for rejection
+    //   }
+
+    //   if(action==='reject'){
+    //     handleRejectRequest(ride.Bookid);
+    //   }else {
+    //     onConfirm(ride.Bookid); // Call the onConfirm handler directly for rejection
+    //   }
+    // };
+
+    const handleConfirm = () => {
+      if (action === 'accept') {
+        handleConfirmDeduction(ride.Bookid); // Handle deduction before acceptance
+      } else if (action === 'reject') {
+        handleRejectRequest(ride.Bookid, ride.requestId); // Pass the necessary requestId for rejection
+      } else {
+        onConfirm(ride.Bookid); // Call the onConfirm handler directly for other actions
+      }
+    };
+    
+
+    
+  
+    return (
+      <Modal
+        isOpen={show}
+        onRequestClose={onCancel}
+        contentLabel="Confirm Action"
+        ariaHideApp={false}
+      >
+        <h2>Confirm {action.charAt(0).toUpperCase() + action.slice(1)}</h2>
+        <p>{message}</p>
+        <ToastContainer/>
+        <button onClick={handleConfirm}>Yes</button>
+        <button onClick={onCancel}>No</button>
+      </Modal>
+    );
+  };
+  
+
   return (
     <div className="current-ride-container">
       <ToastContainer />
@@ -433,15 +554,15 @@ const CurrentRide = () => {
           onCancel={() => setShowConfirmModal(false)}
         />
       )} */}
-       {showConfirmModal && confirmAction?.ride && (
-  <ConfirmModal
-    show={showConfirmModal}
-    onConfirm={executeConfirmAction}
-    onCancel={() => setShowConfirmModal(false)}
-    action={confirmAction.action}
-    ride={confirmAction.ride}
-    passengercost={confirmAction.ride.passengercost}  
-  />
+      {showConfirmModal && confirmAction && (
+        <ConfirmModal
+          show={showConfirmModal}
+          action={confirmAction.action}
+          ride={confirmAction.ride}
+          passengercost={confirmAction.ride.passengercost}
+          onConfirm={() => executeConfirmAction()}
+          onCancel={() => setShowConfirmModal(false)}
+        />
 )}
       <Footer />
      
