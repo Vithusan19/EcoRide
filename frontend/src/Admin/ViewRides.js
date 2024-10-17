@@ -3,6 +3,8 @@ import userIcon from '../assets/usersIcon.png';
 import deleteIcon from '../assets/delete.png';
 import car from '../assets/car.png';
 import axios from 'axios';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 const ViewRides = () => {
   
@@ -10,7 +12,7 @@ const ViewRides = () => {
   const [searchTermStartPlace, setSearchTermStartPlace] = useState("");
   const [searchTermEndPlace, setSearchTermEndPlace] = useState("");
   const [selectedRide, setSelectedRide] = useState(null);
-  const [isDeleteDialogVisible, setIsDeleteDialogVisible] = useState(false);
+  const [isDeleteDialogVisible, setIsDeleteDialogVisible] = useState("");
   const [rides, setRides] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -33,6 +35,7 @@ const ViewRides = () => {
   };
   const handleSelectRide = (ride) => {
     setSelectedRide(ride);
+    console.log("Selected ride:", ride);
 };
 
   const handleUserSearchChange = (event) => {
@@ -52,6 +55,7 @@ const ViewRides = () => {
   };
 
   const closeModal = () => {
+    console.log("Closing modal");
     setSelectedRide(null);
   };
   
@@ -60,35 +64,76 @@ const ViewRides = () => {
     setIsDeleteDialogVisible(true);
   };
 
+  
   const hideDeleteDialog = () => {
+    console.log("Hiding delete dialog");
     setIsDeleteDialogVisible(false);
   };
 
-  const handleDeleteRide = async () => {
-    console.log('Selected ride:', selectedRide);
-    if (!selectedRide || !selectedRide.rideID) {
-      console.error("No ride selected or invalid ride ID");
-      return; // Exit the function if no ride is selected
-    }
+//   const handleDeleteRide = async () => {
+//     const loadingToast = toast.loading("Deleting ride...");
+//     console.log('Selected ride:', selectedRide);
+    
+//     if (!selectedRide || !selectedRide.rideID) {
+//         console.error("No ride selected or invalid ride ID");
+//         // Close loading toast as the action can't be completed
+//         toast.update(loadingToast, { render: "No ride selected!", type: "error", isLoading: false, autoClose: 3000 });
+//         return; 
+//     }
+
+//     const url = "http://localhost/ecoRide-Backend/Connection/Ride/DeleteRide.php";
+//     let fdata = new FormData();
+//     fdata.append("rideID", selectedRide.rideID); // This will work only if selectedRide is properly set
+//     console.log("rideID", selectedRide.rideID);
+
+//     try {
+//         const response = await axios.post(url, fdata);
+//         console.log(response.data);
+        
+//         // Update loading toast based on the response
+//         if (response.data.message === "Ride deleted successfully") {
+//             toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
+//             setRides(prevRides => prevRides.filter(ride => ride.rideID !== selectedRide.rideID));
+
+//             // window.location.reload(); 
+//             hideDeleteDialog(); // Close the delete dialog
+//             closeModal(); // Close any additional modal if necessary
+//             // Fetch updated rides
+//             setSelectedRide(null) ;
+//             getRides(); 
+//         } else {
+//             // Show an error message if deletion was not successful
+//             toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
+//         }
+//     } catch (error) {
+//         console.error("There was an error deleting the ride!", error);
+//         // Show an error message if there was a problem with the request
+//         toast.update(loadingToast, { render: "Failed to delete the ride. Please try again.", type: "error", isLoading: false, autoClose: 3000 });
+//     }
+// };
+const handleDeleteRide = async () => {
+  const url = "http://localhost/ecoRide-Backend/Connection/Ride/DeleteRide.php";
   
-    const url = "http://localhost/ecoRide-Backend/Connection/Ride/DeleteRide.php";
-    let fdata = new FormData();
-    fdata.append("rideid", selectedRide.rideID);  // This will work only if selectedRide is properly set
-  
-    try {
-      const response = await axios.post(url, fdata);
-      console.log(response.data);
-      if (response.data.message === "Ride deleted successfully") {
-        hideDeleteDialog();
-        closeModal();
-        getRides();  // Fetch updated rides
-      } else {
-        console.log(response.data.message);
-      }
-    } catch (error) {
-      console.error("There was an error deleting the ride!", error);
+
+  let fdata = new FormData();
+  fdata.append("rideID", selectedRide.rideID);  
+
+  try {
+    const response = await axios.post(url, fdata);
+    console.log(response.data);  
+
+    if (response.data.message === "Ride and associated bookings deleted successfully") {
+      hideDeleteDialog();
+      closeModal();
+      getRides();  
+    } else {
+      console.log(response.data.message);
     }
-  };
+  } catch (error) {
+    console.error("There was an error deleting the ride!", error);
+  }
+};
+
   
 
 
@@ -228,7 +273,7 @@ const ViewRides = () => {
           </div>
         ))}
       </div>
-
+      {/* <ToastContainer />  */}
       {selectedRide && (
         <div className="modal">
           <div className="modal-content">
@@ -294,8 +339,25 @@ const ViewRides = () => {
           </div>
         </div>
       )}
+       {/* {isDeleteDialogVisible && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Confirm Deletion</h2>
+            <p>Are you sure you want to delete this ride?</p>
+            <div className="modal-content-delete-button">
+              <button className="confirm-delete-button" onClick={() => { handleDeleteRide();hideDeleteDialog();setSelectedRide(null);getRides();}}>
+                Yes
+              </button>
+              <button className="user-button" onClick={hideDeleteDialog}>
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )} */}
     </>
   );
 };
 
 export default ViewRides;
+// onClick={() => { handleDeleteRide();hideDeleteDialog() }}

@@ -12,6 +12,8 @@ const Interface = () => {
   const [drivercount, setdrivercount] = useState("");
   const [messagecount, setmessagecount] = useState("");
   const [ridecount, setridecount] = useState("");
+  const [totalRevenue, setTotalRevenue] = useState(0);// State for total deduction amount
+  const [monthlyDeductions, setMonthlyDeductions] = useState([]); 
   const [showModal, setShowModal] = useState(false);
   const [adminDetails, setAdminDetails] = useState({
     email: "admin@example.com",
@@ -27,6 +29,7 @@ const Interface = () => {
     const DriverCount = sessionStorage.getItem("DriverCount");
     const MCount = sessionStorage.getItem("messageCount");
     const RideCount = sessionStorage.getItem("RideCount");
+    const total_deduction = sessionStorage.getItem("total_deduction");
     
 
 
@@ -55,10 +58,53 @@ const Interface = () => {
             .catch((error) => {
                 //setErrors({ message: "Message not connected." });
             });
-    
 
-    
   }, []);
+
+  useEffect(() => {
+    const fetchTotalRevenue = async () => {
+      const url = "http://localhost/ecoRide-Backend/Connection/User/TotalDeduction.php";
+  
+      try {
+        const response = await axios.post(url);
+  
+        if (response.data && response.data.total_deduction !== undefined) {
+          const total_deduction = response.data.total_deduction;
+          setTotalRevenue(total_deduction);
+        } else {
+          console.error("No deduction data found.");
+        }
+      } catch (error) {
+        console.error("Error fetching total deduction amount:", error);
+      }
+    };
+  
+    fetchTotalRevenue(); // Fetch total revenue on component mount
+  }, []);
+  
+
+  useEffect(() => {
+    const fetchMonthlyDeductions = async () => {
+        const url = "http://localhost/ecoRide-Backend/Connection/User/MonthlyDeduction.php"; // Update with correct endpoint
+        try {
+            const response = await axios.post(url);
+            if (response.data && Array.isArray(response.data.monthly_deductions)) {
+                const formattedData = response.data.monthly_deductions.map(deduction => ({
+                    month: `${deduction.deduction_year}-${deduction.deduction_month < 10 ? '0' : ''}${deduction.deduction_month}`, // Format month
+                    revenue: deduction.total_deduction
+                }));
+                setMonthlyDeductions(formattedData);
+            } else {
+                console.error("No monthly deduction data found.");
+            }
+        } catch (error) {
+            console.error("Error fetching monthly deductions:", error);
+        }
+    };
+
+    fetchMonthlyDeductions(); // Fetch monthly deductions on component mount
+}, []);
+
 
 
   const counts = {
@@ -66,7 +112,7 @@ const Interface = () => {
     passengerCount: parseInt(usercount) || 0,
     messageCount: parseInt(messagecount) || 0,
     availableRide: parseInt(ridecount) || 0,
-    revenue: 67000,
+    revenue: totalRevenue,
     
   };
 
@@ -76,19 +122,21 @@ const Interface = () => {
   ];
 
   const revenueData = [
-    { month: 'Jan', revenue: 5000 },
-    { month: 'Feb', revenue: 7000 },
-    { month: 'Mar', revenue: 10000 },
-    { month: 'Apr', revenue: 15000 },
-    { month: 'May', revenue: 20000 },
-    { month: 'Jun', revenue: 25000 },
-    { month: 'Jul', revenue: 30000 },
-    { month: 'Aug', revenue: 35000 },
-    { month: 'Sep', revenue: 40000 },
-    { month: 'Oct', revenue: 45000 },
-    { month: 'Nov', revenue: 50000 },
-    { month: 'Dec', revenue: counts.revenue },
+    { month: 'Jan', revenue: monthlyDeductions },
+    { month: 'Feb', revenue: monthlyDeductions },
+    { month: 'Mar', revenue: monthlyDeductions },
+    { month: 'Apr', revenue: monthlyDeductions },
+    { month: 'May', revenue: monthlyDeductions },
+    { month: 'Jun', revenue: monthlyDeductions },
+    { month: 'Jul', revenue: monthlyDeductions },
+    { month: 'Aug', revenue: monthlyDeductions },
+    { month: 'Sep', revenue: monthlyDeductions },
+    { month: 'Oct', revenue: monthlyDeductions },
+    { month: 'Nov', revenue: monthlyDeductions },
+    { month: 'Dec', revenue: monthlyDeductions},
+    { revenue: totalRevenue }, // Use the fetched revenue
   ];
+
 
   const handleEditClick = () => {
     setFormDetails({ ...adminDetails });
@@ -141,7 +189,7 @@ const Interface = () => {
                   <img src={revenue} alt="revenue" className="count-img" />
                   <h3 className="count-title">Revenue</h3>
                 </div>
-                <span className="count-res">LKR {counts.revenue}</span>
+                <span className="count-res">LKR {totalRevenue}</span>
               </div>
               <div className="dashboard-left-count">
                 <div>
@@ -189,9 +237,14 @@ const Interface = () => {
         </div> */}
         <div className="chart">
           <h3>Revenue Over Time</h3>
-          <LineChart width={600} height={300} data={revenueData}>
+          <LineChart width={600} height={300} data={monthlyDeductions}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
+            {/* <XAxis dataKey="deduction_month" label={{ value: 'Month', position: 'bottom' }} />
+            <YAxis label={{ value: 'Total Deductions (LKR)', angle: -90, position: 'insideLeft' }} />
+             */}
+             <XAxis dataKey="month" />
+             <YAxis />
+
             <YAxis />
             <Tooltip />
             <Legend />

@@ -23,7 +23,6 @@ import Footer from '../components/Footer';
 import '../styles/Footer.css';
 import demos from '../assets/Readmore.mp4';
 
-
 const images = {
   'BMW': vehicle1,
   'Mercedes Benz': vehicle2,
@@ -54,14 +53,11 @@ const Readmore = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false); // State for confirm popup
   const [requestedSeats, setRequestedSeats] = useState(1);
-  const [fromWhere, setFromWhere] = useState("");
+  const [fromtowhere, setFromtowhere] = useState("");
   const [approximateDistance, setApproximateDistance] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [termsAccepted, setTermsAccepted] = useState(false); // New state for checkbox
-
-
-
+  const [totalCost, setTotalCost] = useState(0); // New state for total cost
   const [userid, setuserid] = useState("");
   useEffect(() => {
     const userID = sessionStorage.getItem("UserID");
@@ -85,6 +81,65 @@ const Readmore = () => {
     setIsPopupOpen(false);
   };
 
+  // const handleCalculateTotalCost = () => {
+  //   // Calculate the total cost based on the car type, approximate distance, and requested seats
+  //   const carType = card.carType; // Get the car type from the card details
+  //   const distance = parseFloat(approximateDistance); // Ensure distance is a number
+  //   const seats = parseInt(requestedSeats, 10); // Ensure seats are an integer
+
+  //   if (isNaN(distance) || isNaN(seats) || distance <= 0 || seats <= 0) {
+  //     setErrorMessage("Please enter valid numbers for distance and seats.");
+  //     return;
+  //   }
+
+  //   // Calculate total cost using formula
+  //   let basePricePerKm = 0;
+  //   switch (carType) {
+  //     case 'low-consumption':
+  //       basePricePerKm = 100.00;
+  //       break;
+  //     case 'medium-consumption':
+  //       basePricePerKm = 200.00;
+  //       break;
+  //     case 'high-consumption':
+  //       basePricePerKm = 300.00;
+  //       break;
+  //     case 'electric':
+  //       basePricePerKm = 400.00;
+  //       break;
+  //     default:
+  //       basePricePerKm = 100.00; // Default price if car type is not specified
+  //       break;
+  //   }
+
+  //   // Cost multiplier for seats
+  //   const seatMultiplier = 1 + (seats * 0.10);
+  //   const calculatedTotalCost = (basePricePerKm * distance) * seatMultiplier;
+
+  //   setTotalCost(calculatedTotalCost); // Update total cost state
+  // };
+
+  const handleCalculateTotalCost = () => {
+
+    const carType = card.carType;
+    const seatCost = parseFloat(card.seatCost); 
+    const rideDistance = parseFloat(card.ridedistance); 
+    const FromWhere = parseFloat(fromtowhere);
+    const distance = parseFloat(approximateDistance); 
+    const seats = parseInt(requestedSeats, 10);
+
+    
+    if (isNaN(seatCost) || isNaN(rideDistance) || isNaN(distance) || isNaN(seats) || 
+        seatCost <= 0 || rideDistance <= 0 || distance <= 0 || seats <= 0) {
+      setErrorMessage("Please enter valid numbers for distance, seats, and ride details.");
+      return;
+    }
+
+    const costPerKm = seatCost / rideDistance;
+    const calculatedTotalCost = costPerKm * distance * seats;
+    setTotalCost(calculatedTotalCost);
+};
+
   const handleSubmitRequest = (e) => {
     e.preventDefault();
     const availableSeats = card.seats - card.BookingSeats;
@@ -92,15 +147,16 @@ const Readmore = () => {
       setErrorMessage(`You can't request more than ${availableSeats} seats.`);
       return;
     }
-    if (!fromWhere || !approximateDistance) {
+    if (!fromtowhere || !approximateDistance) {
       setErrorMessage("Please provide all the required details.");
       return;
     }
 
-    // Open confirmation popup instead of sending the request directly
+    
+    handleCalculateTotalCost();
     setIsConfirmPopupOpen(true);
   };
-
+  
   const handleConfirmRequest = async () => {
     setIsLoading(true);
     const url = "http://localhost/ecoRide-Backend/Connection/Ride/RequestRide.php";
@@ -108,34 +164,33 @@ const Readmore = () => {
     Data.append("userID", userid);
     Data.append("seatsNo", requestedSeats);
     Data.append("rideID", card.rideID);
-    Data.append("fromWhere", fromWhere);
-    Data.append("approximateDistance", approximateDistance);
-
+    Data.append("fromtowhere", fromtowhere);
+    Data.append("distance", approximateDistance);
     console.log("UserID:", userid);
     console.log("Requested Seats:", requestedSeats);
     console.log("RideID:", card.rideID);
-    console.log("From Where:", fromWhere);
+    console.log("From Where:", fromtowhere);
     console.log("Approximate Distance:", approximateDistance);
 
     try {
-      const response = await axios.post(url, Data);
+        const response = await axios.post(url, Data);
+        console.log("Response Data:", response.data);
 
-      console.log("Response Data:", response.data);
-
-      if (response.data.status === 1) {
-        console.log('Request sent successfully');
-        setIsLoading(false);
-        console.log('Driver Email:', response.data.email);
-      } else {
-        console.log('Failed to Request Ride:', response.data.message);
-      }
+        if (response.data.status === 1) {
+            console.log('Request sent successfully');
+            setIsLoading(false);
+            console.log('Driver Email:', response.data.email);
+        } else {
+            console.log('Failed to Request Ride:', response.data.message);
+        }
     } catch (error) {
-      console.error("Connection error:", error);
+        console.error("Connection error:", error);
     }
 
-    setIsConfirmPopupOpen(false); // Close the confirmation popup
-    setIsPopupOpen(false); // Close the seat request popup
-  };
+    setIsConfirmPopupOpen(false);
+    setIsPopupOpen(false);
+};
+
 
   return (
     <div className="read-container">
@@ -163,7 +218,10 @@ const Readmore = () => {
               <span className="readmore-label"><strong>Route:</strong></span> {card.route}
             </div>
             <div className="readmore-detail">
-              <span className="readmore-label"><strong>Seat Cost:</strong></span> Rs.{card.seatCost}
+              <span className="readmore-label"><strong>Cost per seat:</strong></span> Rs.{card.seatCost}
+            </div>
+            <div className="readmore-detail">
+              <span className="readmore-label"><strong>Total Ride Distance:</strong></span>{card.ridedistance}
             </div>
           </div>
         </div>
@@ -184,131 +242,86 @@ const Readmore = () => {
           <button className="readmore-request-button" onClick={handleRequestRide}>Request Ride</button>
         </div>
 
-        {/* First Popup (Request Seats) */}
-{isPopupOpen && !isConfirmPopupOpen && (
-  <div className={`readmore-popup readmore-popup-first show`}>
-    <div className="readmore-popup-inner">
-      <h3>Request Seats</h3>
-      <form onSubmit={handleSubmitRequest}>
-        <label>
-          Number of Seats:
-          <input
-            type="number"
-            value={requestedSeats}
-            min="1"
-            max={card.seats - card.BookingSeats}
-            onChange={(e) => {
-              setRequestedSeats(e.target.value);
-              setErrorMessage("");
-            }}
-          />
-        </label>
-        <label>
-          From to Where:
-          <input
-            type="text"
-            value={fromWhere}
-            onChange={(e) => {
-              setFromWhere(e.target.value);
-              setErrorMessage("");
-            }}
-            placeholder="Enter the route"
-          />
-        </label>
-        <label>
-          Approximate Distance (in km):
-          <input
-            type="text"
-            value={approximateDistance}
-            onChange={(e) => {
-              setApproximateDistance(e.target.value);
-              setErrorMessage("");
-            }}
-            placeholder="Enter distance"
-          />
-        </label>
-        <div className="readmore-button-container">
-          <button className="readmore-action-button" onClick={handleClosePopup}>
-            Cancel
-          </button>
-          <div className="loadingRequest">
-            {isLoading && (
-              <Hourglass
-                visible={true}
-                height="30"
-                width="30"
-                ariaLabel="hourglass-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-                colors={["#306cce", "#72a1ed"]}
-              />
-            )}
+        {isPopupOpen && (
+          <div className="readmore-popup">
+            <div className="readmore-popup-inner">
+              <h3>Request Seats</h3>
+              <form onSubmit={handleSubmitRequest}>
+                <label>
+                  Number of Seats:
+                  <input
+                    type="number"
+                    value={requestedSeats}
+                    min="1"
+                    max={card.seats - card.BookingSeats}
+                    onChange={(e) => {
+                      setRequestedSeats(e.target.value);
+                      setErrorMessage("");
+                    }}
+                  />
+                </label>
+                <label>
+                  From to Where:
+                  <input
+                    type="text"
+                    value={fromtowhere}
+                    onChange={(e) => {
+                      setFromtowhere(e.target.value);
+                      setErrorMessage("");
+                    }}
+                    placeholder="Enter the route"
+                  />
+                </label>
+                <label>
+                  Approximate Distance (in km):
+                  <p>Go to <a href="https://www.google.com/maps" target="_blank">Map</a></p>
+                  <input
+                    type="text"
+                    value={approximateDistance}
+                    onChange={(e) => {
+                      setApproximateDistance(e.target.value);
+                      setErrorMessage("");
+                    }}
+                    placeholder="Enter distance"
+                  />
+                </label>
+                <div className="readmore-button-container">
+                  <button className="readmore-action-button" onClick={handleClosePopup}>Cancel</button>
+                  <div className="loadingRequest">
+                    {isLoading && (
+                      <Hourglass
+                        visible={true}
+                        height="30"
+                        width="30"
+                        ariaLabel="hourglass-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                        colors={['#306cce', '#72a1ed']}
+                      />
+                    )}
+                  </div>
+                  <button className="readmore-action-button" type="submit">Submit</button>
+                </div>
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
+              </form>
+            </div>
           </div>
-          <button className="readmore-action-button" type="submit">
-            Submit
-          </button>
-        </div>
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
-      </form>
-    </div>
-  </div>
-)}
+        )}
 
-{/* Confirmation Popup (Confirm Request) */}
-{isConfirmPopupOpen && (
-  <div className={`readmore-popup readmore-popup-second show`}>
-    <div className="readmore-popup-inner">
-      <h3>Confirm Request</h3>
-       {/* Added points and checkbox */}
-       <ul style={{ margin: "10px 0" }}>
-        <li>Your booking will be confirmed once the payment is made.</li>
-        <li>Seats are subject to availability.</li>
-      </ul>
-      <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px', flexWrap: 'nowrap' }}>
-  <input
-    type="checkbox"
-    checked={termsAccepted}
-    onChange={(e) => setTermsAccepted(e.target.checked)}
-    style={{ marginRight: '5px' }} // Space between checkbox and text
-  />
-  <label style={{ margin: 0, whiteSpace: 'nowrap' }}>
-    I agree to the terms and conditions
-  </label>
-</div><br></br>
-
-
-       
-      <p className="popup-cost">Your total seat cost is: Rs </p>
-      <p className="popup-message">Are you sure you want to request {requestedSeats} seats?</p>
-
-     
-
-      <div className="readmore-button-container">
-        <button
-          className="readmore-action-button"
-          onClick={() => setIsConfirmPopupOpen(false)}
-        >
-          Cancel
-        </button>
-        <button 
-          className="readmore-action-button" 
-          onClick={handleConfirmRequest} 
-          disabled={!termsAccepted} // Disable if terms not accepted
-        >
-          OK
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
-
-
-{/* Dim background when any popup is open */}
-{(isPopupOpen || isConfirmPopupOpen) && (
-  <div className="dim-background"></div>
-)}
-
+        {/* Confirmation Popup */}
+        {isConfirmPopupOpen && (
+          <div className="readmore-popup">
+            <div className="readmore-popup-inner">
+              <h3>Confirm Request</h3>
+              <p className="popup-cost">Your total seat cost is: Rs  {totalCost.toFixed(2)} </p>
+              <p className="popup-message">Are you sure you want to request {requestedSeats} seats?</p>
+              <div className="readmore-button-container">
+                <button className="readmore-action-button" onClick={() => setIsConfirmPopupOpen(false)}>Cancel</button>
+                <button className="readmore-action-button" onClick={handleConfirmRequest}>OK</button>
+              </div>
+            </div>
+          </div>
+        )}
 
       </div>
 
