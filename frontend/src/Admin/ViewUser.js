@@ -49,28 +49,26 @@ const ViewUser = () => {
   const handleDeleteUser = async () => {
     const url = "http://localhost/ecoRide-Backend/Connection/User/DeleteUser.php";
     let fdata = new FormData();
+    console.log(selectedUser.User_ID);
     fdata.append("userid", selectedUser.User_ID);
 
     try {
       const response = await axios.post(url, fdata);
       console.log(response.data);
-      if (response.data.message === "User Delele Successfully") {
-        //console.log(response.data.message);
-       
+      
+      if (response.data.status === 1) {
+        // Success
         hideDeleteDialog();
         closeModal();
         getUsers();
-
-       
-        
       } else {
+        // Failure or error message
         console.log(response.data.message);
-        
       }
     } catch (error) {
       console.error("There was an error deleting the user!", error);
     }
-  };
+};
 
   const filteredUsers = users
     .filter(user => user.userrole !== "admin")
