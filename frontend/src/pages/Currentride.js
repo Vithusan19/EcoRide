@@ -321,9 +321,6 @@ const CurrentRide = () => {
   
         if (response.data.status === 1) {
           toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
-  
-          // Proceed with deduction after acceptance
-           // Call deduction after successful acceptance
         } else {
           toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
         }
@@ -332,7 +329,7 @@ const CurrentRide = () => {
         toast.update(loadingToast, { render: "Failed to accept the request", type: "error", isLoading: false, autoClose: 3000 });
       }
     };
-
+  
     const handleRejectRequest = async (Bookid, requestId) => {
       const loadingToast = toast.loading("Rejecting request...");
       try {
@@ -341,7 +338,6 @@ const CurrentRide = () => {
         Data.append("requestID", requestId);
         
         const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/RejectRide.php', Data);
-        console.log('Bookid:', Bookid, 'requestID:', requestId);
   
         if (response.data.status === 1) {
           toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
@@ -360,14 +356,14 @@ const CurrentRide = () => {
       const loadingToast = toast.loading("Processing deduction...");
       try {
         const Data = new FormData();
-        Data.append("BookingID", Bookid); // Send the bookingId
+        Data.append("BookingID", Bookid);
   
         const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/Deduction.php', Data);
     
         if (response.data.status === 1) {
           handleAcceptRequest(Bookid);
           toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
-          window.location.reload(); // Reload the page to show updated ride details
+          window.location.reload();
         } else {
           toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
         }
@@ -377,33 +373,36 @@ const CurrentRide = () => {
       }
     };
   
-    // const handleConfirm = () => {
-    //   if (action === 'accept') {
-    //     // handleAcceptRequest(ride.Bookid); // Accept ride and handle deduction if confirmed
-    //     handleConfirmDeduction(ride.Bookid);
-    //   } else {
-    //     onConfirm(ride.Bookid); // Call the onConfirm handler directly for rejection
-    //   }
-
-    //   if(action==='reject'){
-    //     handleRejectRequest(ride.Bookid);
-    //   }else {
-    //     onConfirm(ride.Bookid); // Call the onConfirm handler directly for rejection
-    //   }
-    // };
-
     const handleConfirm = () => {
       if (action === 'accept') {
-        handleConfirmDeduction(ride.Bookid); // Handle deduction before acceptance
+        handleConfirmDeduction(ride.Bookid);
       } else if (action === 'reject') {
-        handleRejectRequest(ride.Bookid, ride.requestId); // Pass the necessary requestId for rejection
+        handleRejectRequest(ride.Bookid, ride.requestId);
       } else {
-        onConfirm(ride.Bookid); // Call the onConfirm handler directly for other actions
+        onConfirm(ride.Bookid);
       }
     };
-    
-
-    
+  
+    // Modal styles
+    const customStyles = {
+      content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        width: '400px',  // Adjust the width
+        padding: '20px', // Padding inside the modal
+        borderRadius: '10px', // Rounded corners
+        transition: 'all 0.3s ease-in-out', // Smooth transition
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' // Shadow effect for better visual appearance
+      },
+      overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Background overlay with opacity
+        transition: 'opacity 0.3s ease-in-out' // Smooth transition for overlay
+      }
+    };
   
     return (
       <Modal
@@ -411,17 +410,19 @@ const CurrentRide = () => {
         onRequestClose={onCancel}
         contentLabel="Confirm Action"
         ariaHideApp={false}
+        style={customStyles} // Apply custom styles
       >
         <h2>Confirm {action.charAt(0).toUpperCase() + action.slice(1)}</h2>
         <p>{message}</p>
-        <ToastContainer/>
+        <ToastContainer />
+        <div className="button-container">
         <button onClick={handleConfirm}>Yes</button>
         <button onClick={onCancel}>No</button>
+      </div>
       </Modal>
     );
   };
   
-
   return (
     <div className="current-ride-container">
       <ToastContainer />

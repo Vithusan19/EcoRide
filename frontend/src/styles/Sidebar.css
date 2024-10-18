@@ -277,3 +277,31 @@
     display: none;
   }
 }
+
+/*Animatins...........*/
+.logo {
+  position: relative; /* Ensures the logo is positioned correctly */
+  display: inline-block; /* Keeps the logo inline */
+}
+
+.logo-img {
+  width: 150px; /* Adjust size of the logo */
+  object-fit: cover; /* Ensure the image covers the entire area */
+  animation: pulse 2s infinite; /* Apply the pulse animation */
+}
+
+/* Keyframes for the pulse animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1); /* Initial size */
+    filter: brightness(1); /* Normal brightness */
+  }
+  50% {
+    transform: scale(1.1); /* Scale up to 110% */
+    filter: brightness(1.3); /* Increase brightness */
+  }
+  100% {
+    transform: scale(1); /* Return to original size */
+    filter: brightness(1); /* Return to normal brightness */
+  }
+}

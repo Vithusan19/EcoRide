@@ -208,3 +208,8 @@ button:hover {
   background-color: #ffc107; 
 }
 
+.button-container {
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  gap: 10px; /* Add space between the buttons */
+}
