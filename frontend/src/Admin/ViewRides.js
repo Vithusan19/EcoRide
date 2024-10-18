@@ -3,8 +3,8 @@ import userIcon from '../assets/usersIcon.png';
 import deleteIcon from '../assets/delete.png';
 import car from '../assets/car.png';
 import axios from 'axios';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ViewRides = () => {
   
@@ -112,27 +112,32 @@ const ViewRides = () => {
 //     }
 // };
 const handleDeleteRide = async () => {
+  const loadingToast = toast.loading("Delete Ride...");
   const url = "http://localhost/ecoRide-Backend/Connection/Ride/DeleteRide.php";
   
-
+  // Create FormData and append rideID and rateID
   let fdata = new FormData();
-  fdata.append("rideID", selectedRide.rideID);  
+  fdata.append("rideID", selectedRide.rideID);  // Make sure rideID is sent
+  fdata.append("rateID", selectedRide.rateID);  // Make sure rateID is sent
+fdata.append("BookingID",selectedRide.bookid);
 
   try {
     const response = await axios.post(url, fdata);
     console.log(response.data);  
-
-    if (response.data.message === "Ride and associated bookings deleted successfully") {
+    if (response.data.status === 1) {
+      toast.update(loadingToast, { render: "Ride deleted successfully", type: "success", isLoading: false, autoClose: 3000 });
       hideDeleteDialog();
       closeModal();
-      getRides();  
+      getRides();
     } else {
-      console.log(response.data.message);
+      toast.update(loadingToast, { render: "Failed to delete ride", type: "error", isLoading: false, autoClose: 3000 });
     }
+    
   } catch (error) {
     console.error("There was an error deleting the ride!", error);
   }
 };
+
 
   
 
@@ -204,7 +209,7 @@ const handleDeleteRide = async () => {
   return (
     <>
       <h1>Ride Details</h1>
-      <p>Here are the user details.</p>
+      <p className="head-para">Here are the user details.</p>
 
       <div className="search-con">
         <input
@@ -355,6 +360,7 @@ const handleDeleteRide = async () => {
           </div>
         </div>
       )} */}
+      <ToastContainer />
     </>
   );
 };
