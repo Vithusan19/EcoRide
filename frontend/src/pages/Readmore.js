@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import '../styles/Readmore.css';
 import vehicle1 from "../assets/1.jpg";
 import vehicle2 from "../assets/2.jpg";
@@ -72,6 +75,7 @@ const Readmore = () => {
     const [hours, minutes] = timeString.split(':');
     return `${hours}:${minutes}`;
   };
+  
 
   const handleRequestRide = () => {
     setIsPopupOpen(true);
@@ -81,43 +85,7 @@ const Readmore = () => {
     setIsPopupOpen(false);
   };
 
-  // const handleCalculateTotalCost = () => {
-  //   // Calculate the total cost based on the car type, approximate distance, and requested seats
-  //   const carType = card.carType; // Get the car type from the card details
-  //   const distance = parseFloat(approximateDistance); // Ensure distance is a number
-  //   const seats = parseInt(requestedSeats, 10); // Ensure seats are an integer
-
-  //   if (isNaN(distance) || isNaN(seats) || distance <= 0 || seats <= 0) {
-  //     setErrorMessage("Please enter valid numbers for distance and seats.");
-  //     return;
-  //   }
-
-  //   // Calculate total cost using formula
-  //   let basePricePerKm = 0;
-  //   switch (carType) {
-  //     case 'low-consumption':
-  //       basePricePerKm = 100.00;
-  //       break;
-  //     case 'medium-consumption':
-  //       basePricePerKm = 200.00;
-  //       break;
-  //     case 'high-consumption':
-  //       basePricePerKm = 300.00;
-  //       break;
-  //     case 'electric':
-  //       basePricePerKm = 400.00;
-  //       break;
-  //     default:
-  //       basePricePerKm = 100.00; // Default price if car type is not specified
-  //       break;
-  //   }
-
-  //   // Cost multiplier for seats
-  //   const seatMultiplier = 1 + (seats * 0.10);
-  //   const calculatedTotalCost = (basePricePerKm * distance) * seatMultiplier;
-
-  //   setTotalCost(calculatedTotalCost); // Update total cost state
-  // };
+  
 
   const handleCalculateTotalCost = () => {
 
@@ -159,6 +127,7 @@ const Readmore = () => {
   
   const handleConfirmRequest = async () => {
     setIsLoading(true);
+    toast.info('Processing your request...'); // Show a loading toast
     const url = "http://localhost/ecoRide-Backend/Connection/Ride/RequestRide.php";
     const Data = new FormData();
     Data.append("userID", userid);
@@ -185,7 +154,11 @@ const Readmore = () => {
         }
     } catch (error) {
         console.error("Connection error:", error);
-    }
+    }     finally {
+      setIsLoading(false); // Stop the loading state
+      setIsConfirmPopupOpen(false); // Close the confirmation popup
+      setIsPopupOpen(false); // Close the original popup
+  }
 
     setIsConfirmPopupOpen(false);
     setIsPopupOpen(false);
@@ -308,20 +281,47 @@ const Readmore = () => {
           </div>
         )}
 
-        {/* Confirmation Popup */}
+       {/* Confirmation Popup */}
         {isConfirmPopupOpen && (
           <div className="readmore-popup">
             <div className="readmore-popup-inner">
               <h3>Confirm Request</h3>
-              <p className="popup-cost">Your total seat cost is: Rs  {totalCost.toFixed(2)} </p>
-              <p className="popup-message">Are you sure you want to request {requestedSeats} seats?</p>
-              <div className="readmore-button-container">
-                <button className="readmore-action-button" onClick={() => setIsConfirmPopupOpen(false)}>Cancel</button>
-                <button className="readmore-action-button" onClick={handleConfirmRequest}>OK</button>
-              </div>
-            </div>
-          </div>
-        )}
+                
+              {/* New Heading Above List */}
+              <h4>Please Review the Following Points</h4>
+                
+              <ul className="popup-points">
+                <li>The seat cost is automatically calculated by the system based on the distance traveled in the selected car type.</li>
+                <li>After confirmation, passengers can contact drivers for details and pay directly after the ride.</li>
+              </ul>
+
+            {/* Checkbox and Agreement Sentence */}
+        <div className="agreement-container">
+          <input type="checkbox" id="agreeCheckbox" required />
+          <label htmlFor="agreeCheckbox">Agree</label>
+        </div>
+
+      
+      <p className="popup-cost">Your total seat cost is: <span style={{ fontWeight: 'bold' }}>Rs {totalCost.toFixed(2)}</span> </p>
+      <p className="popup-message">Are you sure you want to request {requestedSeats} seats?</p>
+        
+     
+
+      <div className="readmore-button-container">
+        <button className="readmore-action-button" onClick={() => setIsConfirmPopupOpen(false)}>Cancel</button>
+        <button className="readmore-action-button" onClick={handleConfirmRequest}> {isLoading ? 'Processing...' : 'OK'}</button>
+      </div>
+    
+      
+    {/* Optional: Display a loading spinner if the request is being processed */}
+{isLoading && (
+  <div className="loading-indicator">
+    <div className="spinner"></div>
+  </div>
+)}
+    </div>
+  </div>
+)}
 
       </div>
 

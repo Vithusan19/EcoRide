@@ -348,18 +348,33 @@ const Addride = () => {
                 <label>Preferences:</label>
                 <textarea className="add-input" name="preferences" value={formData.preferences} onChange={handleChange}></textarea>
               </div>
-              <div className="form-group-add terms-container">
-  <input
-    type="checkbox"
-    name="agreedToTerms"
-    checked={agreedToTerms}
-    onChange={(e) => setAgreedToTerms(e.target.checked)}
-    required
-  />
-  <label htmlFor="agreedToTerms">
-    I agree to the <strong>Terms and Conditions</strong>
-  </label>
+              <div>
+              <div className="terms-conditions-container">
+                <h3 className="terms-heading">Terms and Conditions</h3>
+                <ul className="terms-conditions">
+                  <li>A 10% deduction will be applied to each payment request, which will be used for system maintenance and operational costs.</li>
+                  <li>Seat costs are automatically calculated by the system based on the car type and the travel distance, ensuring a fair and accurate fare for all trips.</li>
+                  <li>Drivers can collect payment directly from passengers at the end of the ride, ensuring a smooth and transparent transaction process.</li>
+                </ul>
+
+                <div className="checkbox-container">
+                  <input
+                    type="checkbox"
+                    name="agreedToTerms"
+                    id="agreedToTerms"
+                    checked={agreedToTerms}
+                    onChange={(e) => setAgreedToTerms(e.target.checked)}
+                    required
+                  />
+                  
+                  <label htmlFor="agreedToTerms">
+                    I agree to the <strong>Terms and Conditions</strong>
+                  </label>
+  </div>
 </div>
+
+</div>
+
 
 
 

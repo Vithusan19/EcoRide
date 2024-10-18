@@ -411,7 +411,13 @@ const Home = () => {
                                         <div className='col'>
                                             <input type="password" className="form-control" placeholder="Enter Password" name="password" value={signupForm.password} onChange={handleInputChange} />
                                             <input type="password" className="form-control" placeholder="Confirm password" name="confirmPassword" value={signupForm.confirmPassword} onChange={handleInputChange} />
+                                        </div >
+
+
+                                        <div className="valid">
+                                        Password must contain at least 8 characters, including one uppercase, one lowercase, one number, and one special character.
                                         </div>
+                                        
                                         {errors.message && <div className="signup-error">{errors.message}</div>}
                                         {errors.password && <div className="signup-error">{errors.password}</div>}
                                         {errors.signup && <div className="signup-error">{errors.signup}</div>}
