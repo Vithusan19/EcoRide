@@ -26,9 +26,17 @@ const Sidebar = () => {
         <BiMenu className="mobmenu-icon" />
       </div>
 
-      <div className="logo">
+      {/* <div className="logo">
         <img src={logo} alt="EcoRide logo" className="logo-img" />
-      </div>
+      </div> */}
+      <div className="logo">
+    <img src={logo} alt="EcoRide logo" className="logo-img" />
+</div>
+
+
+
+
+
 
       <div className={`menu-list ${isOpen ? "open" : ""}`}>
         <Link to="/home" className="item">

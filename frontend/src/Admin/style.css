@@ -240,8 +240,8 @@
       background: white;
       padding: 20px;
       border-radius: 0.5rem;
-      width: 50%;
-      height: 200px;
+      width: 25%;
+      height: 150px;
      display: flex;
      flex-direction: column;
       margin-top: 0 auto;
@@ -250,6 +250,8 @@
     .modal-content-delete-button
     {
       display: flex;
+      gap: 5vw;
+      margin-left: 2vw;
 
     }
 
@@ -320,7 +322,7 @@
     padding: 6px 20px;
     background: #9da2a0;
     font-weight: 600;
-    color: white;
+    color: rgb(6, 24, 83);
     border-radius: 1rem;
     cursor: pointer;
     margin-left: 10px;
@@ -483,6 +485,25 @@
     }
   }
   /* interface */
+  .head-para {
+    font-weight: 700; /* Strong bold effect */
+    font-size: 1.2rem; /* Slightly larger font size */
+    color: #000000; /* Darker text */
+    background-color: #ebe8e8; /* Light grey background */
+    padding: 20px; /* More padding for spacing */
+    border-radius: 12px; /* Smooth, rounded corners */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Stronger shadow for depth */
+    text-align: justify; /* Justified text for clean edges */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* 3D text effect */
+    transition: transform 0.3s ease, background-color 0.3s ease-in-out; /* Add transform to hover */
+}
+
+.head-para:hover {
+    background-color: #d4d4d4; /* Slightly darker background on hover */
+    transform: translateY(-5px); /* Lift the paragraph when hovered */
+}
+
+  
   .dashboard-container
   {
     margin-top: 50px;
@@ -490,6 +511,7 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    
   }
   .dashboard-left-con
   {
@@ -612,6 +634,63 @@
     margin: 50px 20px;
   }
 
+  .dashboard-right-con {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin-right: 10vw;
+}
+
+.admin-user {
+    background-color: #fff; /* White background */
+    padding: 20px;
+    border-radius: 12px; /* Smooth rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft card shadow */
+    width: 300px; /* Set a fixed width for the card */
+    text-align: center; /* Center-align text and content */
+    transition: box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+.admin-user:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+.admin-user-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.admin-user-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Circular image */
+    object-fit: cover; /* Keep the aspect ratio */
+    margin-bottom: 15px;
+}
+
+.admin-user-info p {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+.admin-user-edit-but {
+    background-color: #03c471;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+.admin-user-edit-but:hover {
+    background-color: #3c3a30; /* Darker blue on hover */
+}
 
 
 

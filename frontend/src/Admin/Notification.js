@@ -26,7 +26,7 @@ const Notification = () => {
   return (
     <>
       <h1>Messages</h1>
-      <p>Here are your messages.</p>
+      <p className='head-para'>Here are your messages.</p>
       
       <div className='message-container'>
         {messages.map((message, index) => (

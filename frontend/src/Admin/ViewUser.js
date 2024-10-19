@@ -80,7 +80,7 @@ const ViewUser = () => {
   return (
     <>
       <h1 className="userdetails-tittle">User Details</h1>
-      <p>Here are the user details.</p>
+      <p  className='head-para'>Here are the user details.</p>
       <div className="search-con">
         <input
           type="text"
@@ -96,7 +96,7 @@ const ViewUser = () => {
             <img className="users-img" src={userIcon} alt="" />
             <div className="users-bar-text">
               <h2>User-ID: {user.User_ID}</h2>
-              <p>Name: {user.UserName}</p>
+              <p className="user">Name: {user.UserName}</p>
               <button className="user-button" onClick={() => handleViewMore(user)}>
                 View more
               </button>
@@ -105,28 +105,30 @@ const ViewUser = () => {
         ))}
       </div>
 
-      {selectedUser && (
-        <div className="modal">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h2>User Details</h2>
-              <button className="close-button" onClick={closeModal}>
-                &times;
-              </button>
-            </div>
-            <p><strong>ID:</strong> {selectedUser.User_ID}</p>
-            <p><strong>Username:</strong> {selectedUser.UserName}</p>
-            <p><strong>Name:</strong> {selectedUser.Name}</p>
-            <p><strong>Email:</strong> {selectedUser.Email}</p>
-            <p><strong>Phone number:</strong> {selectedUser.PhoneNo}</p>
-            <p><strong>NIC Number:</strong> {selectedUser.NicNo}</p>
-            <p><strong>Gender:</strong> {selectedUser.Gender}</p>
-            <button className="delete-button" onClick={showDeleteDialog}>
-              Delete User
-            </button>
-          </div>
-        </div>
-      )}
+     {selectedUser && !isDeleteDialogVisible && (
+  <div className="modal">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h2>User Details</h2>
+        <button className="close-button" onClick={closeModal}>
+          &times;
+        </button>
+      </div>
+      <p><strong>ID:</strong> {selectedUser.User_ID}</p>
+      <p><strong>Username:</strong> {selectedUser.UserName}</p>
+      <p><strong>Name:</strong> {selectedUser.Name}</p>
+      <p><strong>Email:</strong> {selectedUser.Email}</p>
+      <p><strong>Phone number:</strong> {selectedUser.PhoneNo}</p>
+      <p><strong>NIC Number:</strong> {selectedUser.NicNo}</p>
+      <p><strong>Gender:</strong> {selectedUser.Gender}</p>
+      <button className="delete-button" onClick={showDeleteDialog}>
+        Delete User
+      </button>
+    </div>
+  </div>
+)}
+
+    
 
       {isDeleteDialogVisible && (
         <div className="modal">

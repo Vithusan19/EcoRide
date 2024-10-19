@@ -192,7 +192,30 @@ const Home = () => {
         <>
             {/* Navbar */}
             <div id="navbar-container">
+            {/* <div class="nav-img-container">
                 <img src={logo} alt="logo" className="nav-img" />
+                </div> */}
+                <div class="cube">
+                    <div class="face front">
+                        <img src={logo} alt="logo" className="nav-img" />
+                    </div>
+                    <div class="face back">
+                        <img src={logo} alt="logo" className="nav-img" />
+                    </div>
+                    <div class="face left">
+                        <img src={logo} alt="logo" className="nav-img" />
+                    </div>
+                    <div class="face right">
+                        <img src={logo} alt="logo" className="nav-img" />
+                    </div>
+                    <div class="face top">
+                        <img src={logo} alt="logo" className="nav-img" />
+                    </div>
+                    <div class="face bottom">
+                        <img src={logo} alt="logo" className="nav-img" />
+                    </div>
+                </div>
+
                 <div className="nav-menu">
                     <Link activeClass="active" to="navbar-container" spy={true} smooth={true} offset={0} duration={100} className="nav-menu-item">Home</Link>
                     <Link activeClass="active" to="about" spy={true} smooth={true} offset={0} duration={100} className="nav-menu-item">About Us</Link>

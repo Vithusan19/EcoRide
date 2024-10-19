@@ -164,7 +164,7 @@ const Interface = () => {
     <>
       <div>
         <h1>Dashboard</h1>
-        <p>Welcome to the admin dashboard.</p>
+        <p  className='head-para'>Welcome to the admin dashboard.</p>
         <div className="dashboard-container">
           <div className="dashboard-left-con">
             <div className="dashboard-left-up">

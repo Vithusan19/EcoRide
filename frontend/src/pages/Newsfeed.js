@@ -40,7 +40,7 @@ const Newsfeed = () => {
       card.vehicleModel.toLowerCase().includes(searchQuery.toLowerCase()) ||
       card.departurePoint.toLowerCase().includes(searchQuery.toLowerCase()) ||
       card.destinationPoint.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      card.route.some(routePoint => routePoint.toLowerCase().includes(searchQuery.toLowerCase()))
+      (Array.isArray(card.route) && card.route.some(routePoint => routePoint.toLowerCase().includes(searchQuery.toLowerCase()))) 
     )
   );
 
