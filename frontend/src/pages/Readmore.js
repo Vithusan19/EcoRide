@@ -62,6 +62,7 @@ const Readmore = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [totalCost, setTotalCost] = useState(0); // New state for total cost
   const [userid, setuserid] = useState("");
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   useEffect(() => {
     const userID = sessionStorage.getItem("UserID");
     setuserid(userID);
@@ -126,6 +127,11 @@ const Readmore = () => {
   };
   
   const handleConfirmRequest = async () => {
+    if (!agreedToTerms) {
+      alert("You must agree to the terms and conditions to proceed.");
+      return;
+    }
+
     setIsLoading(true);
     toast.info('Processing your request...'); // Show a loading toast
     const url = "http://localhost/ecoRide-Backend/Connection/Ride/RequestRide.php";
@@ -297,8 +303,16 @@ const Readmore = () => {
 
             {/* Checkbox and Agreement Sentence */}
         <div className="agreement-container">
-          <input type="checkbox" id="agreeCheckbox" required />
+        <input
+                    type="checkbox"
+                    name="agreedToTerms"
+                    id="agreedToTerms"
+                    checked={agreedToTerms}
+                    onChange={(e) => setAgreedToTerms(e.target.checked)}
+                    required
+                  />
           <label htmlFor="agreeCheckbox">Agree</label>
+
         </div>
 
       
