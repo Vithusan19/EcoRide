@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import '../styles/RideHistory.css';
 const RideHistory = () => {
   const [rideHistory, setRideHistory] = useState([]);
   const [error, setError] = useState(null);
@@ -42,21 +42,19 @@ const RideHistory = () => {
   }
 
   return (
-    <div>
+    <div className="ride-history-container">
       <h2>Your Ride History</h2>
       {rideHistory.length > 0 ? (
         <ul>
           {rideHistory.map((ride, index) => (
             // <li key={index}>
-              <div className="profile-details" key={index}>
-              <p>Departure: {ride.departurePoint}</p>
-              <p>Destination: {ride.destinationPoint}</p>
-              <p>Date: {ride.date}</p>
-              <p>Vehicle Number: {ride.vehicleNo || "N/A"}</p>
-              {/* <p>Status: {ride.rideStatus}</p> */}
-              
-              <hr />
-              </div>
+            <div className="profile-details" key={index}>
+            <p><strong>Departure:</strong> {ride.departurePoint}</p>
+            <p><strong>Destination:</strong> {ride.destinationPoint}</p>
+            <p><strong>Date:</strong> {ride.date}</p>
+            <p><strong>Vehicle Number:</strong> {ride.vehicleNo || "N/A"}</p>
+            <hr />
+          </div>
               
             // </li>
           ))}

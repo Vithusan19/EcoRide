@@ -159,31 +159,32 @@
   background-color: #ffffff;
   padding: 20px;
   margin-left: 12vw;
-  margin-top: 45vh;
+  margin-top: 50vh;
 }
-
 
 /* Profile Card */
 .profile-card {
   background-color: white;
   width: 100%;
-  max-width: 1000px;
+  max-width: 600px; /* Adjust the width for a more centered layout */
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   display: flex;
-  flex-direction: row;
+  flex-direction: column; /* Change to column to stack image on top */
+  align-items: center;
   animation: fadeIn 1s ease-in-out;
 }
 
-/* Profile Left (Image) */
+/* Profile Left (Image on Top) */
 .profile-left {
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   background: #f0f0f0;
   padding: 20px;
+  width: 100%;
+  border-bottom: 2px solid #105806; /* Add separator between image and content */
 }
 
 .profile-photo {
@@ -203,18 +204,17 @@
 
 /* Profile Content */
 .profile-content {
-  flex: 2;
   padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: center; /* Center the content */
 }
 
 h1 {
   font-size: 28px;
   margin-bottom: 20px;
   color: #333;
-  text-align: center;
 }
 
 /* Profile Details */
@@ -229,7 +229,7 @@ h1 {
 .profile-details p {
   font-size: 18px;
   margin-bottom: 10px;
-  text-align:justify;
+  text-align: justify;
 }
 
 .profile-details strong {
@@ -242,7 +242,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  margin-top: 20px;
+  margin-top: 5px;
 }
 
 .button-container button {
@@ -258,7 +258,7 @@ h1 {
 }
 
 .button-container button:hover {
-  background-color: #0a4405;
+  background-color: #00F78D;
   transform: scale(1.05);
 }
 
