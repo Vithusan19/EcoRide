@@ -1,0 +1,46 @@
+/* src/components/LoadingAnimation.css */
+.loading-animation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full screen height */
+    background-color: #f0f0f0; /* Optional background color */
+}
+
+.loading-cube { /* Updated to prevent conflict */
+    width: 100px;
+    height: 100px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotateLoadingCube 3s infinite linear; /* Updated animation name */
+}
+
+.loading-face { /* Updated to prevent conflict */
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: rgba(226, 231, 235, 0.8);
+    border: 2px solid #fff; /* Optional border */
+    box-shadow: 0 0 10px rgba(22, 14, 107, 0.3);
+}
+
+.loading-front { transform: translateZ(50px); }
+.loading-back { transform: rotateY(180deg) translateZ(50px); }
+.loading-left { transform: rotateY(-90deg) translateZ(50px); }
+.loading-right { transform: rotateY(90deg) translateZ(50px); }
+.loading-top { transform: rotateX(90deg) translateZ(50px); }
+.loading-bottom { transform: rotateX(-90deg) translateZ(50px); }
+
+@keyframes rotateLoadingCube {
+    from { transform: rotateX(0) rotateY(0); }
+    to { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+.loading-text {
+    margin-top: 20px;
+    font-size: 24px;
+    color: #333;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
