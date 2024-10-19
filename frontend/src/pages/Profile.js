@@ -11,6 +11,7 @@ import bg from '../assets/step-7.jpg';
 import bg2 from '../assets/step-8.avif';
 import bg3 from '../assets/step-9.jpeg';
 import Footer from '../components/Footer';
+import History from '../components/RideHistory';
 
 const UserProfile = ({ userID }) => {
   const [profile, setProfile] = useState(null);
@@ -188,6 +189,7 @@ const UserProfile = ({ userID }) => {
           <p><strong>Phone number:</strong> {profile.PhoneNo}</p>
           <p><strong>NIC Number:</strong> {profile.NicNo}</p>
           <p><strong>Gender:</strong> {profile.Gender}</p>
+          <History/>
         </div>
       )}
       <div className="button-container">
@@ -196,10 +198,11 @@ const UserProfile = ({ userID }) => {
         <button onClick={handleDeleteAccount}>Delete Account</button>
         <button onClick={toggleLogoutConfirmation}>Logout</button>
       </div>
+      
     </div>
   </div>
   
-      
+     
 
       {showDeleteConfirmation && (
         <DeleteConfirmation
