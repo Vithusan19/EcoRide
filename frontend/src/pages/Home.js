@@ -18,6 +18,8 @@ import serve3 from '../assets/serve3.png';
 import axios from 'axios';
 import Forgot from './Forgot';
 import { RotatingLines } from "react-loader-spinner";
+import LoadingAnimation from '../components/LoadingAnimation'; // Make sure this path is correct
+
 
 const Home = () => {
     const [MsgName, setMsgName] = useState("");
@@ -31,10 +33,24 @@ const Home = () => {
     const [signupForm, setSignupForm] = useState({ name: '', username: '', email: '', phone: '', nic: '', gender: '', password: '', confirmPassword: '' });
     const [errors, setErrors] = useState({});
     const [successMessage, setSuccessMessage] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
+    // const [isLoading, setIsLoading] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [loadingScreen, setLoadingScreen] = useState(true); // State for loading screen
+    const [isLoading, setIsLoading] = useState(true); // State to control loading animation
+
 
     const navigate = useNavigate();
+
+
+   useEffect(() => {
+        // Simulate loading time
+        const timer = setTimeout(() => {
+            setIsLoading(false); // After 3 seconds, hide loading animation
+        }, 3000); // 3000 milliseconds = 3 seconds
+
+        // Clean up the timer on component unmount
+        return () => clearTimeout(timer);
+    }, []);
    
     useEffect(() => {
         // Check if user is logged in
@@ -186,11 +202,15 @@ const Home = () => {
         }
     };
 
+    if (isLoading) {
+        return <LoadingAnimation />; // Show loading animation
+    }
+
     const year = new Date();
 
     return (
         <>
-            {/* Navbar */}
+           {/* Navbar */}
             <div id="navbar-container">
             {/* <div class="nav-img-container">
                 <img src={logo} alt="logo" className="nav-img" />
@@ -461,6 +481,7 @@ const Home = () => {
                     </div>
                 </div>
             )}
+        
         </>
     );
 }
