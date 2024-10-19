@@ -128,12 +128,76 @@ const Addride = () => {
   const handlePrevStep = () => {
     setStep(step - 1);
   };
-
-  const handleCardSubmit = (e) => {
+  
+  const handleCardSubmit = async (e) => {
     e.preventDefault();
-    console.log(cardData);
-    setShowModal(false);
-  };
+    // Proceed only if the modal is shown
+    if (!showModal) {
+      alert("Please open the payment modal to proceed.");
+      return;
+    }
+
+      // Basic validation checks
+  if (!cardData.cardName || !cardData.cardNumber || !cardData.cardExpiryDate || !cardData.cardCVV) {
+    alert("Please fill in all payment fields.");
+    return;
+  }
+
+  // Check if the card number is valid (simple validation)
+  if (!/^\d{16}$/.test(cardData.cardNumber)) {
+    alert("Please enter a valid 16-digit card number.");
+    return;
+  }
+
+  // Check if CVV is valid
+  if (!/^\d{3,4}$/.test(cardData.cardCVV)) {
+    alert("Please enter a valid CVV.");
+    return;
+  }
+    // Define the URL for submitting card details
+    const url = "http://localhost/ecoRide-Backend/Connection/Ride/AddPayment.php"; // Update with your actual endpoint for processing payment
+
+    // Create a new FormData object
+    const cardDataForm = new FormData();
+    
+    // Append card data to the FormData object
+    cardDataForm.append("driverID", userid); // Add driverID to FormData
+    cardDataForm.append("cardName", cardData.cardName);
+    cardDataForm.append("cardNumber", cardData.cardNumber);
+    cardDataForm.append("cardExpiryDate", cardData.cardExpiryDate);
+    cardDataForm.append("cardCVV", cardData.cardCVV);
+
+
+    console.log("driverID", userid);
+    console.log("cardName", cardData.cardName);
+    console.log("cardNumber", cardData.cardNumber);
+    console.log("cardExpiryDate", cardData.cardExpiryDate);
+    console.log("cardCVV", cardData.cardCVV);
+    
+
+    try {
+      // Make the POST request to submit card details
+      const response = await axios.post(url, cardDataForm);
+      console.log(response.data);
+      if (response.data.status === 1) {
+        console.log('Payment processed successfully');
+        // Optionally close the modal or navigate to a success page
+        setShowModal(false);
+      } else {
+        console.log(response.data.message);
+        alert(response.data.message); // Alert the user with the error message
+      }
+    } catch (error) {
+      console.error("Payment processing error:", error);
+      alert("There was an error processing your payment. Please try again."); // Alert on error
+    }
+};
+
+  // const handleCardSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log(cardData);
+  //   setShowModal(false);
+  // };
 
   const handleCancelPayment = () => {
     setShowModal(false);
@@ -506,7 +570,7 @@ const Addride = () => {
               <div className="form-row">
                 <div className="form-group">
                   <label>CVV:</label>
-                  <input className="add-input" type="text" name="cardCVV" value={cardData.cardCVV} onChange={handleCardChange} />
+                  <input className="add-input" type="password" name="cardCVV" value={cardData.cardCVV} onChange={handleCardChange} />
                 </div>
               </div>
               <div className="button-group">
