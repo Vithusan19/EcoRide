@@ -181,6 +181,7 @@ const Addride = () => {
       console.log(response.data);
       if (response.data.status === 1) {
         console.log('Payment processed successfully');
+        window.location.href = '/newsfeed'; 
         // Optionally close the modal or navigate to a success page
         setShowModal(false);
       } else {
@@ -564,7 +565,7 @@ const Addride = () => {
                 </div>
                 <div className="form-group">
                   <label>Expiry Date:</label>
-                  <input className="add-input" type="date" name="cardExpiryDate" value={cardData.cardExpiryDate} onChange={handleCardChange} />
+                  <input className="add-input" type="date" name="cardExpiryDate" value={cardData.cardExpiryDate} onChange={handleCardChange} required min={todayDate}/>
                 </div>
               </div>
               <div className="form-row">
