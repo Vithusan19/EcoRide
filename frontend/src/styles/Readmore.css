@@ -517,7 +517,7 @@ body {
 /* Optional: Adjust the font size and line height for better alignment */
 .agreement-container label {
   font-size: 16px; /* Adjust font size as needed */
-  line-height: 0; /* Reset line height for better vertical alignment */
+  line-height: 2; /* Reset line height for better vertical alignment */
   margin-top:18px;
   
 }
