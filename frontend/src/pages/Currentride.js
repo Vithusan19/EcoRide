@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import EditRideModal from '../components/EditRideModal';
 import StarRatingModal from '../components/StarRatingModal';
 import Footer from '../components/Footer';
-import ConfirmModal from '../components/ConfirmModal'; // Import Confirm Modal
+import ConfirmModal from '../components/ConfirmModal'; 
 import Modal from 'react-modal';
 
 const CurrentRide = () => {
@@ -20,8 +20,8 @@ const CurrentRide = () => {
   const [formData, setFormData] = useState({});
   const [showRatingModal, setShowRatingModal] = useState(false);
   const [rideToRate, setRideToRate] = useState(null);
-  const [showConfirmModal, setShowConfirmModal] = useState(false); // For confirmation modal
-  const [confirmAction, setConfirmAction] = useState(null); // Store the action to confirm
+  const [showConfirmModal, setShowConfirmModal] = useState(false); 
+  const [confirmAction, setConfirmAction] = useState(null); 
 
   useEffect(() => {
     const userID = sessionStorage.getItem("UserID");
@@ -83,22 +83,6 @@ const CurrentRide = () => {
   };
 
 
-
-  // const handleRejectRequest = async (Bookid, requestId) => {
-  //   const loadingToast = toast.loading("Rejecting request...");
-  //   try {
-  //     const Data = new FormData();
-  //     Data.append("Bookid", Bookid);
-  //     Data.append("requestID", requestId);
-
-  //     toast.update(loadingToast, { render: "Request rejected successfully", type: "success", isLoading: false, autoClose: 3000 });
-  //     window.location.reload();
-  //   } catch (error) {
-  //     console.error("Error rejecting request:", error);
-  //     toast.update(loadingToast, { render: "Failed to reject the request", type: "error", isLoading: false, autoClose: 3000 });
-  //   }
-  // };
-
   const handleAcceptRequest = async (Bookid, requestId) => {
     const loadingToast = toast.loading("Accepting request...");
     try {
@@ -108,7 +92,7 @@ const CurrentRide = () => {
 
       if (response.data.status === 1) {
         toast.update(loadingToast, { render: response.data.message, type: "success", isLoading: false, autoClose: 3000 });
-        window.location.reload(); // Reload the page to show updated ride details
+        window.location.reload(); 
       } else {
         toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
       }
@@ -143,7 +127,7 @@ const CurrentRide = () => {
 
   const handleConfirm = (action, Bookid, requestId,ride) => {
     setConfirmAction({ action, Bookid, requestId,ride });
-    setShowConfirmModal(true); // Show confirmation modal
+    setShowConfirmModal(true); 
   };
 
 
@@ -153,7 +137,7 @@ const CurrentRide = () => {
     } else if (confirmAction?.action === "reject") {
       handleRejectRequest(confirmAction.Bookid, confirmAction.requestId);
     }
-    setShowConfirmModal(false); // Hide confirmation modal
+    setShowConfirmModal(false); 
   };
 
   const toggleDriverDetails = (rideId) => {
@@ -183,6 +167,30 @@ const CurrentRide = () => {
     setFormData(prevState => ({ ...prevState, [name]: value }));
   };
 
+  const canCancelBooking = (departureTime) => {
+    console.log("Received departureTime:", departureTime);
+    console.log("Type of departureTime:", typeof departureTime);
+  
+    const today = new Date(); 
+    const formattedDepartureTime = `${today.toISOString().split("T")[0]}T${departureTime}`; 
+  
+    console.log("Formatted departureTime:", formattedDepartureTime);
+  
+    const rideStartTime = new Date(formattedDepartureTime).getTime(); 
+    console.log("Converted rideStartTime:", rideStartTime); 
+  
+    const currentTime = Date.now(); 
+    console.log("Current time:", currentTime);
+  
+    const timeDiff = rideStartTime - currentTime; 
+    console.log("Time difference:", timeDiff);
+  
+    return timeDiff > 3600000;
+  };
+  
+  
+  
+  
   const handleSave = async () => {
     try {
       console.log(formData.rideid)
@@ -247,14 +255,7 @@ const CurrentRide = () => {
         toast.update(loadingToast, { render: "Failed to finish the ride", type: "error", isLoading: false, autoClose: 3000 });
     }
 };
-  // const handleFinishRide = (ride) => {
-  //   if (userRole === 'passenger') {
-  //     setShowRatingModal(true);
-  //     setRideToRate(ride);
-  //   } else {
-  //     toast.info("Ride finished successfully!");
-  //   }
-  // };
+
   const handleFinishRide = (ride) => {
     
     if (userRole === 'passenger') {
@@ -265,40 +266,7 @@ const CurrentRide = () => {
       toast.info("Ride finished successfully!");
     }
   };
-//   const handleFinishRide = async (ride) => {
-//     const loadingToast = toast.loading("Finishing ride...");
 
-//     console.log("Finishing ride with rideID:", ride.rideID, " and userID:", userId);
-
-//     try {
-//         const Data = new FormData();
-//         Data.append("rideID", ride.rideID); // Ensure ride.rideID is defined
-//         Data.append("userID", userId); // Ensure userId is defined in your component
-
-//         const response = await axios.post('http://localhost/ecoRide-Backend/Connection/Ride/Finishridedriver.php', Data);
-
-//         if (response.data.status === 1) {
-//             // Handle passenger's UI
-//             if (userRole === 'passenger') {
-//                 setRides((prevRides) => prevRides.filter(r => r.rideID !== ride.rideID));
-//                 setShowRatingModal(true);  // Show rating modal for the passenger
-//                 setRideToRate(ride);
-//                 toast.update(loadingToast, { render: "Ride finished! Please rate the ride.", type: "success", isLoading: false, autoClose: 3000 });
-//             }
-//             // Handle driver's UI
-//             else if (userRole === 'driver') {
-//                 setRides((prevRides) => prevRides.filter(r => r.rideID !== ride.rideID));
-//                 toast.update(loadingToast, { render: "Ride finished successfully!", type: "success", isLoading: false, autoClose: 3000 });
-//             }
-//         } else {
-//             toast.update(loadingToast, { render: response.data.message, type: "error", isLoading: false, autoClose: 3000 });
-//         }
-
-//     } catch (error) {
-//         console.error("Error finishing ride:", error);
-//         toast.update(loadingToast, { render: "Failed to finish the ride", type: "error", isLoading: false, autoClose: 3000 });
-//     }
-// };
 
   const closeRatingModal = () => {
     setShowRatingModal(false);
@@ -392,15 +360,15 @@ const CurrentRide = () => {
         bottom: 'auto',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
-        width: '400px',  // Adjust the width
-        padding: '20px', // Padding inside the modal
-        borderRadius: '10px', // Rounded corners
-        transition: 'all 0.3s ease-in-out', // Smooth transition
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' // Shadow effect for better visual appearance
+        width: '400px',  
+        padding: '20px', 
+        borderRadius: '10px', 
+        transition: 'all 0.3s ease-in-out', 
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' 
       },
       overlay: {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Background overlay with opacity
-        transition: 'opacity 0.3s ease-in-out' // Smooth transition for overlay
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+        transition: 'opacity 0.3s ease-in-out' 
       }
     };
   
@@ -410,7 +378,7 @@ const CurrentRide = () => {
         onRequestClose={onCancel}
         contentLabel="Confirm Action"
         ariaHideApp={false}
-        style={customStyles} // Apply custom styles
+        style={customStyles} 
       >
         <h2>Confirm {action.charAt(0).toUpperCase() + action.slice(1)}</h2>
         <p>{message}</p>
@@ -498,9 +466,13 @@ const CurrentRide = () => {
                       </div>
                     )}
                    
-                    <button className="cancel-booking-button" onClick={() => handleCancelBooking(ride.Bookid)}>
-                      Cancel Ride
-                    </button>
+                   {canCancelBooking(ride.departureTime) ? (
+  <button className="cancel-booking-button" onClick={() => handleCancelBooking(ride.Bookid)}>
+    Cancel Ride
+  </button>
+) : (
+  <p>You can no longer cancel this ride (less than 1 hour remaining).</p>
+)}
                     <button onClick={() => handleFinishRide(ride)}>Finish Ride</button>
                   </>
                 )}
