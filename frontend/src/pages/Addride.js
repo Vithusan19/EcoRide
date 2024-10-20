@@ -364,11 +364,25 @@ const Addride = () => {
                   <label>Date:</label>
                   <input className="add-input" type="date" name="date" value={formData.date} onChange={handleChange} required min={todayDate} />
                 </div>
-                <div className="form-group-add">
-                  <label>Total Distance (km):</label>
-                  <p>Go to <a href="https://www.google.com/maps" target="_blank">Map</a></p>
-                  <input className="add-input" type="number" name="distance" value={formData.distance} onChange={handleChange} required />
-                </div>
+              <div className="form-group-add" style={{ display: 'flex', flexDirection: 'column' }}>
+                  <label style={{ display: 'flex', alignItems: 'center' }}>
+                    Total Distance (km):  
+                    <button className='readmore-map' style={{ marginLeft: '10px', display: 'inline-flex', alignItems: 'center',justifyContent:'center' }}>
+                      <a style={{marginTop:'10px'}} href="https://www.google.com/maps" target="_blank">Go to Map</a>
+                    </button>
+                  </label>
+
+                  <input 
+                    className="add-input" 
+                    type="number" 
+                    name="distance" 
+                    value={formData.distance} 
+                    onChange={handleChange} 
+                    required 
+                    style={{ marginTop: '-5px' }} /* Moves input field up */
+                  />
+              </div>
+
               </div>
               <div className="form-row-add">       <div className="form-group-add">
                 <label>Seat Cost (Calculated):</label>
