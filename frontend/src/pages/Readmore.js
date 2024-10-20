@@ -253,7 +253,7 @@ const Readmore = () => {
                 </label>
                 <label>
                   Approximate Distance (in km):
-                  <p>Go to <a href="https://www.google.com/maps" target="_blank">Map</a></p>
+                  <p className='readpara'> <button className='readmore-map'><a href="https://www.google.com/maps" target="_blank">Go to Map</a></button></p>
                   <input
                     type="text"
                     value={approximateDistance}
@@ -299,6 +299,8 @@ const Readmore = () => {
               <ul className="popup-points">
                 <li>The seat cost is automatically calculated by the system based on the distance traveled in the selected car type.</li>
                 <li>After confirmation, passengers can contact drivers for details and pay directly after the ride.</li>
+                <li>Passengers must cancel the ride at least 1 hour before the ride if it accepted by the driver.</li>
+
               </ul>
 
             {/* Checkbox and Agreement Sentence */}
@@ -311,7 +313,8 @@ const Readmore = () => {
                     onChange={(e) => setAgreedToTerms(e.target.checked)}
                     required
                   />
-          <label htmlFor="agreeCheckbox">Agree</label>
+          <label htmlFor="agreeCheckbox" style={{ position: 'relative', left: '-140px' }}> Agree</label>
+
 
         </div>
 

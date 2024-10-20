@@ -19,25 +19,7 @@
   height: 60vh;
   margin-left: 8vw;
 }
-.header-image-1 {
-  transform-style: preserve-3d;
-  animation: wave-ripple 3s infinite ease-in-out;
-}
 
-@keyframes wave-ripple {
-  0%, 100% {
-      transform: perspective(400px) rotateX(0deg) rotateY(0deg);
-  }
-  25% {
-      transform: perspective(400px) rotateX(10deg) rotateY(10deg);
-  }
-  50% {
-      transform: perspective(400px) rotateX(0deg) rotateY(20deg);
-  }
-  75% {
-      transform: perspective(400px) rotateX(-10deg) rotateY(10deg);
-  }
-}
 
 
 .header-text {

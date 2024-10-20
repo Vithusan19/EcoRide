@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import '../styles/ChangePassword.css'
 
 const ChangePasswordModal = ({ onClose, onSave }) => {
   const [currentPassword, setCurrentPassword] = useState("");

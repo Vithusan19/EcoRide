@@ -189,7 +189,7 @@ const UserProfile = ({ userID }) => {
           <p><strong>Phone number:</strong> {profile.PhoneNo}</p>
           <p><strong>NIC Number:</strong> {profile.NicNo}</p>
           <p><strong>Gender:</strong> {profile.Gender}</p>
-          <History/>
+         
         </div>
       )}
       <div className="button-container">
@@ -198,7 +198,7 @@ const UserProfile = ({ userID }) => {
         <button onClick={handleDeleteAccount}>Delete Account</button>
         <button onClick={toggleLogoutConfirmation}>Logout</button>
       </div>
-      
+      <History/>
     </div>
   </div>
   

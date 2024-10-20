@@ -218,6 +218,27 @@ body {
 .readmore-action-button:hover {
   background-color: #6e747a;
 }
+.readmore-map{
+  background-color:#c0c0c0;
+  color: white;
+  height: 30px;
+  bottom: 20px;
+  
+}
+.readmore-map a{
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  justify-content: center;
+  font-weight:bold;
+  position: relative;
+  top: -7px;
+}
+.readpara{
+ 
+    display: flex;
+    align-items: center; /* Aligns the items (text and button) vertically in the center */
+ 
+}
 
 .readmore-photos-container {
   margin-top: 20px;
@@ -490,7 +511,7 @@ body {
 }
 
 .agreement-container input {
-  margin-right: -80px; /* Adjust space between checkbox and label */
+  margin-right: 130px; /* Adjust space between checkbox and label */
 }
 
 /* Optional: Adjust the font size and line height for better alignment */
@@ -498,6 +519,7 @@ body {
   font-size: 16px; /* Adjust font size as needed */
   line-height: 2; /* Reset line height for better vertical alignment */
   margin-top:18px;
+  
 }
 .loading-indicator {
   display: flex;
