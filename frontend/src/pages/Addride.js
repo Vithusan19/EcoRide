@@ -42,10 +42,7 @@ const Addride = () => {
   });
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const todayDate = new Date().toISOString().split('T')[0];
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = (today.getMonth() + 1).toString().padStart(2, '0'); // Get the current month and add leading zero if necessary
-  const todayMonthYear = `${year}-${month}`; // Format as "YYYY-MM"
+
   useEffect(() => {
     const userID = sessionStorage.getItem("UserID");
     setuserid(userID);
@@ -131,7 +128,7 @@ const Addride = () => {
   const handlePrevStep = () => {
     setStep(step - 1);
   };
-
+  
   const handleCardSubmit = async (e) => {
     e.preventDefault();
     // Proceed only if the modal is shown
@@ -140,29 +137,29 @@ const Addride = () => {
       return;
     }
 
-    // Basic validation checks
-    if (!cardData.cardName || !cardData.cardNumber || !cardData.cardExpiryDate || !cardData.cardCVV) {
-      alert("Please fill in all payment fields.");
-      return;
-    }
+      // Basic validation checks
+  if (!cardData.cardName || !cardData.cardNumber || !cardData.cardExpiryDate || !cardData.cardCVV) {
+    alert("Please fill in all payment fields.");
+    return;
+  }
 
-    // Check if the card number is valid (simple validation)
-    if (!/^\d{16}$/.test(cardData.cardNumber)) {
-      alert("Please enter a valid 16-digit card number.");
-      return;
-    }
+  // Check if the card number is valid (simple validation)
+  if (!/^\d{16}$/.test(cardData.cardNumber)) {
+    alert("Please enter a valid 16-digit card number.");
+    return;
+  }
 
-    // Check if CVV is valid
-    if (!/^\d{3,4}$/.test(cardData.cardCVV)) {
-      alert("Please enter a valid CVV.");
-      return;
-    }
+  // Check if CVV is valid
+  if (!/^\d{3,4}$/.test(cardData.cardCVV)) {
+    alert("Please enter a valid CVV.");
+    return;
+  }
     // Define the URL for submitting card details
     const url = "http://localhost/ecoRide-Backend/Connection/Ride/AddPayment.php"; // Update with your actual endpoint for processing payment
 
     // Create a new FormData object
     const cardDataForm = new FormData();
-
+    
     // Append card data to the FormData object
     cardDataForm.append("driverID", userid); // Add driverID to FormData
     cardDataForm.append("cardName", cardData.cardName);
@@ -176,7 +173,7 @@ const Addride = () => {
     console.log("cardNumber", cardData.cardNumber);
     console.log("cardExpiryDate", cardData.cardExpiryDate);
     console.log("cardCVV", cardData.cardCVV);
-
+    
 
     try {
       // Make the POST request to submit card details
@@ -184,7 +181,6 @@ const Addride = () => {
       console.log(response.data);
       if (response.data.status === 1) {
         console.log('Payment processed successfully');
-        window.location.href = '/newsfeed';
         // Optionally close the modal or navigate to a success page
         setShowModal(false);
       } else {
@@ -195,7 +191,7 @@ const Addride = () => {
       console.error("Payment processing error:", error);
       alert("There was an error processing your payment. Please try again."); // Alert on error
     }
-  };
+};
 
   // const handleCardSubmit = (e) => {
   //   e.preventDefault();
@@ -368,25 +364,11 @@ const Addride = () => {
                   <label>Date:</label>
                   <input className="add-input" type="date" name="date" value={formData.date} onChange={handleChange} required min={todayDate} />
                 </div>
-                <div className="form-group-add" style={{ display: 'flex', flexDirection: 'column' }}>
-                  <label style={{ display: 'flex', alignItems: 'center' }}>
-                    Total Distance (km):
-                    <button className='readmore-map' style={{ marginLeft: '10px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <a style={{ marginTop: '10px' }} href="https://www.google.com/maps" target="_blank">Go to Map</a>
-                    </button>
-                  </label>
-
-                  <input
-                    className="add-input"
-                    type="number"
-                    name="distance"
-                    value={formData.distance}
-                    onChange={handleChange}
-                    required
-                    style={{ marginTop: '-5px' }} /* Moves input field up */
-                  />
+                <div className="form-group-add">
+                  <label>Total Distance (km):</label>
+                  <p>Go to <a href="https://www.google.com/maps" target="_blank">Map</a></p>
+                  <input className="add-input" type="number" name="distance" value={formData.distance} onChange={handleChange} required />
                 </div>
-
               </div>
               <div className="form-row-add">       <div className="form-group-add">
                 <label>Seat Cost (Calculated):</label>
@@ -431,31 +413,31 @@ const Addride = () => {
                 <textarea className="add-input" name="preferences" value={formData.preferences} onChange={handleChange}></textarea>
               </div>
               <div>
-                <div className="terms-conditions-container">
-                  <h3 className="terms-heading">Terms and Conditions</h3>
-                  <ul className="terms-conditions">
-                    <li>A 10% deduction will be applied to each payment request, which will be used for system maintenance and operational costs.</li>
-                    <li>Seat costs are automatically calculated by the system based on the car type and the travel distance, ensuring a fair and accurate fare for all trips.</li>
-                    <li>Drivers can collect payment directly from passengers at the end of the ride, ensuring a smooth and transparent transaction process.</li>
-                  </ul>
+              <div className="terms-conditions-container">
+                <h3 className="terms-heading">Terms and Conditions</h3>
+                <ul className="terms-conditions">
+                  <li>A 10% deduction will be applied to each payment request, which will be used for system maintenance and operational costs.</li>
+                  <li>Seat costs are automatically calculated by the system based on the car type and the travel distance, ensuring a fair and accurate fare for all trips.</li>
+                  <li>Drivers can collect payment directly from passengers at the end of the ride, ensuring a smooth and transparent transaction process.</li>
+                </ul>
 
-                  <div className="checkbox-container">
-                    <input
-                      type="checkbox"
-                      name="agreedToTerms"
-                      id="agreedToTerms"
-                      checked={agreedToTerms}
-                      onChange={(e) => setAgreedToTerms(e.target.checked)}
-                      required
-                    />
+                <div className="checkbox-container">
+                  <input
+                    type="checkbox"
+                    name="agreedToTerms"
+                    id="agreedToTerms"
+                    checked={agreedToTerms}
+                    onChange={(e) => setAgreedToTerms(e.target.checked)}
+                    required
+                  />
+                  
+                  <label htmlFor="agreedToTerms">
+                    I agree to the <strong>Terms and Conditions</strong>
+                  </label>
+  </div>
+</div>
 
-                    <label htmlFor="agreedToTerms">
-                      I agree to the <strong>Terms and Conditions</strong>
-                    </label>
-                  </div>
-                </div>
-
-              </div>
+</div>
 
 
 
@@ -582,15 +564,7 @@ const Addride = () => {
                 </div>
                 <div className="form-group">
                   <label>Expiry Date:</label>
-                  <input
-                    className="add-input"
-                    type="month"
-                    name="cardExpiryDate"
-                    value={cardData.cardExpiryDate}
-                    onChange={handleCardChange}
-                    required
-                    min={todayMonthYear}
-                  />
+                  <input className="add-input" type="date" name="cardExpiryDate" value={cardData.cardExpiryDate} onChange={handleCardChange} />
                 </div>
               </div>
               <div className="form-row">

@@ -394,7 +394,7 @@ const CurrentRide = () => {
   return (
     <div className="current-ride-container">
       <ToastContainer />
-      <h1>Current Rides</h1>
+      <h1 style={{textAlign:"center"}}> Current Rides</h1>
       {rides.length > 0 ? (
         rides.map((ride) => (
           
