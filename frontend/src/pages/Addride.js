@@ -287,7 +287,7 @@ const Addride = () => {
                 </div>
                 <div className="form-row-add">
                   <div className="form-group-add">
-                    <label>Car Type:</label>
+                    <label>Vehicle Type:</label>
                     <div className="radio-group">
                       <div className="radio-row">
                         <label>
@@ -299,7 +299,7 @@ const Addride = () => {
                             onChange={handleChange}
                             required
                           />
-                          Low Consumption Vehicles
+                          Low Consumption Vehicle(15km/l)
                         </label>
                         <label>
                           <input
@@ -310,7 +310,7 @@ const Addride = () => {
                             onChange={handleChange}
                             required
                           />
-                          Medium Consumption Vehicles
+                          Medium Consumption Vehicle(10km/l)
                         </label>
                       </div>
                       <div className="radio-row">
@@ -323,7 +323,7 @@ const Addride = () => {
                             onChange={handleChange}
                             required
                           />
-                          High Consumption Vehicles
+                          High Consumption Vehicle(7km/l)
                         </label>
                         <label>
                           <input
@@ -334,7 +334,7 @@ const Addride = () => {
                             onChange={handleChange}
                             required
                           />
-                          Electric or Hybrid Vehicles
+                          Electric or Hybrid Vehicle(20km/l)
                         </label>
                       </div>
                     </div>
