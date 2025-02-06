@@ -1,26 +1,68 @@
-# EcoRide
-EcoRide is an eco-friendly ride-sharing application developed with a React frontend and PHP backend. The project aims to promote sustainable transportation by connecting users with ride-sharing options that minimize environmental impact.
+# EcoRide - Carpooling Website (Frontend)
 
-# Features
+EcoRide is a carpooling platform that connects drivers and passengers for shared rides, promoting cost savings and environmental benefits. This repository contains the frontend built with React.
 
-User authentication and profile management
-Ride request and booking system
-Real-time route matching with eco-friendly options
-Payment integration for hassle-free transactions
-Admin dashboard to manage rides and users
+## 🚀 Features
 
-# Tech Stack
+- 🔹 User authentication (Sign up, Login, Logout)
+- 🔹 Ride booking & ride creation
+- 🔹 Real-time ride status updates
+- 🔹 Responsive design for all devices
+- 🔹 Admin dashboard for user & ride management
 
-Frontend: React.js
-Backend: PHP
-Database: MySQL
-Styling: CSS (use Taiwan.css for responsive and styled UI)
-API: RESTful APIs to handle data exchange between frontend and backend
-Getting Started
+## 🛠️ Tech Stack
 
-Prerequisites
-Ensure you have the following installed:
+- **Frontend:** React,  CSS
+- **State Management:** React Context API / Redux (if applicable)
+- **Backend:** PHP, SQL (Check backend repository)
+- **Version Control:** Git & GitHub
 
-Node.js
-PHP and Composer
-MySQL
+## 📌 Getting Started
+
+### 1️⃣ Clone the Repository
+```bash
+ git clone https://github.com/vithusan19/ecoride-frontend.git
+ cd ecoride-frontend
+```
+
+### 2️⃣ Install Dependencies
+```bash
+ npm install
+```
+
+### 3️⃣ Run the Application
+```bash
+ npm start
+```
+The app will be available at `http://localhost:3000/`
+
+## ⚙️ Configuration
+Create a `.env` file in the root directory and add necessary environment variables like API endpoints:
+```env
+REACT_APP_API_BASE_URL=http://your-backend-url.com/api
+```
+
+## 📂 Project Structure
+```
+/ecoride-frontend
+│── src/
+│   ├── components/   # Reusable UI components
+│   ├── pages/        # Application pages
+│   ├── context/      # State management
+│   ├── assets/       # Images & static files
+│   ├── utils/        # Utility functions
+│── public/          # Static assets
+│── .env.example      # Environment variables example
+│── package.json
+│── README.md
+```
+
+## 👥 Contributors
+Want to contribute? Feel free to fork the repository and create a pull request!
+
+## 📧 Contact
+For any issues or feature requests, contact me at **vithu0919@gmail.com**
+
+---
+💡 **Star** the repository if you find it useful! ⭐
+
